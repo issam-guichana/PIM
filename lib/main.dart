@@ -4,13 +4,13 @@ import 'package:provider/provider.dart';
 
 void main() {
   runApp(
-    MultiProvider(
-      providers: [
-        // ChangeNotifierProvider(create: (_) => AuthProvider()),
-
-      ],
-      child: const MyApp(),
-    ),
+    // MultiProvider(
+    //   providers: [
+    //     // ChangeNotifierProvider(create: (_) => AuthProvider()),
+    //   ],
+    //   child: const MyApp(),
+    // ),
+    const MyApp(),
   );
 }
 

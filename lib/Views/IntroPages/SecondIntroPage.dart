@@ -1,0 +1,84 @@
+import 'package:flutter/material.dart';
+import 'package:pim_project/Views/Auth/LoginScreen.dart';
+
+class SecondIntroScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: SafeArea(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Expanded(
+              flex: 3,
+              child: Center(
+                child: Image.asset(
+                  'Assets/SplashScreen/splash_image.png',
+                  width: screenWidth * 0.8,
+                  height: screenHeight * 0.5,
+                  fit: BoxFit.contain,
+                ),
+              ),
+            ),
+            Expanded(
+              flex: 1,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                child: Column(
+                  children: [
+                    const Text(
+                      'Attention !  Join usand inspire with your words!',
+                      style: TextStyle(
+                        fontSize: 24,
+                        color: Color(0xFF723D92),
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 24),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children:  [
+                            CircleAvatar(
+                              radius: 5,
+                              backgroundColor:const  Color(0xFF723D92).withOpacity(0.4),
+                            ),
+                            const SizedBox(width: 4),
+                            const CircleAvatar(
+                              radius: 5,
+                              backgroundColor: Color(0xFF723D92),
+                            ),
+                          ],
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => LoginScreen()),
+                            );
+                          },
+                          child:const CircleAvatar(
+                            radius: 24,
+                            backgroundColor: Color(0xFF723D92),
+                            child: Icon(
+                              Icons.arrow_forward,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

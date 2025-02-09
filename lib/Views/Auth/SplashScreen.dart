@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:pim_project/Views/IntroPages/FirstIntroPage.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -11,23 +12,25 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
 
-    Timer(const Duration(seconds: 3), () {
+    Timer(const Duration(seconds: 2), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => SplashScreen()),
+        MaterialPageRoute(builder: (context) => FirstIntroScreen()),
       );
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Colors.white,
       body: Center(
         child: Image.asset(
-          'assets/splash_image.png',
-          width: 250,
-          height: 400,
+          'Assets/SplashScreen/splash_image.png',
+          width: screenWidth * 0.9 ,
+          height: screenHeight * 0.8,
         ),
       ),
     );
