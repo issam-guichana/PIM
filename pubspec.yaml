@@ -64,7 +64,10 @@ flutter:
   # /////////////////////////// Assets //////////////////////////////////////////
   assets:
     - Assets/SplashScreen/splash_image.png
-
+    - Assets/HomePatientAssets/fils.png
+    - Assets/HomePatientAssets/doctor.png
+    - Assets/HomePatientAssets/brain.png
+    - Assets/HomePatientAssets/avatar.png
 
 
 
