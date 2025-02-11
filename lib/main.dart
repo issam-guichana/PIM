@@ -1,17 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:pim_project/Views/Auth/SplashScreen.dart';
-import 'package:provider/provider.dart';
+import 'Views//Auth/Watch/watch_dashboard.dart';
+
+
 
 void main() {
-  runApp(
-    MultiProvider(
-      providers: [
-        // ChangeNotifierProvider(create: (_) => AuthProvider()),
-
-      ],
-      child: const MyApp(),
-    ),
-  );
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -20,14 +13,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
+      title: 'Flutter Watch Dashboard',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+        primarySwatch: Colors.blue,
       ),
-      home:  SplashScreen(),
-
+      home:HealthDataScreen(),
     );
   }
 }
-
