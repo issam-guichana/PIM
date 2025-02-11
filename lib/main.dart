@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pim_project/Controllers/AuthProviders/AuthProvider.dart';
-import 'package:pim_project/Views/Auth/SplashScreen.dart';
+import 'package:pim_project/Views/AuthPages/ForgotPwdScreen.dart';
+import 'package:pim_project/Views/AuthPages/SplashScreen.dart';
 import 'package:pim_project/Views/HomePages/PatientHomePage.dart';
 import 'package:provider/provider.dart';
 
@@ -27,7 +28,8 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home:  SplashScreen(),
-      // home:  HomePage(),
+
+      // home:  ForgotPasswordScreen() ,
 
     );
   }

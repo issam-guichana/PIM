@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pim_project/Views/Auth/LoginScreen.dart';
+import 'package:pim_project/Views/AuthPages/LoginScreen.dart';
 
 class SecondIntroScreen extends StatelessWidget {
   @override
