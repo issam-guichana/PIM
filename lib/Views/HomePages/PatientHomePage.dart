@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pim_project/Views/AssistantVocalScreens/SpeechInteractionPage.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -114,9 +115,14 @@ class HomePage extends StatelessWidget {
                       size: 40, color: Color(0xFF723D92)),
                 ),
                 FloatingActionButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SpeechInteractionPage()),
+                    );
+                  },
                   backgroundColor: const Color(0xFF723D92),
-                  child: const Icon(Icons.mic, size: 30),
+                  child: const Icon(Icons.mic,color: Colors.white, size: 30),
                 ),
               ],
             ),
