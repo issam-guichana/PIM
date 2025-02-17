@@ -2,11 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pim_project/Controllers/AuthProviders/AuthProvider.dart';
 import 'package:provider/provider.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:pim_project/Views/HomePages/ParentHomePage.dart'; // Assurez-vous que cette importation est correcte
-import 'package:pim_project/Views/HomePages/ParentHomePage.dart';
-
 import '../../routes/routes.dart';
-import '../HomePages/PatientHomePage.dart'; // Assurez-vous que cette importation est correcte
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -32,7 +28,7 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                // Logo - Agrandi
+                // Logo
                 Image.asset(
                   'Assets/SplashScreen/splash_image.png',
                   width: 300,
@@ -56,7 +52,10 @@ class _LoginScreenState extends State<LoginScreen> {
                           // Email
                           const Align(
                             alignment: Alignment.centerLeft,
-                            child: Text("Email", style: TextStyle(fontSize: 16, color: Color(0xFF723D92))),
+                            child: Text(
+                              "Email",
+                              style: TextStyle(fontSize: 16, color: Color(0xFF723D92)),
+                            ),
                           ),
                           const SizedBox(height: 5),
                           TextFormField(
@@ -83,7 +82,10 @@ class _LoginScreenState extends State<LoginScreen> {
                           // Password
                           const Align(
                             alignment: Alignment.centerLeft,
-                            child: Text("Password", style: TextStyle(fontSize: 16, color: Color(0xFF723D92))),
+                            child: Text(
+                              "Password",
+                              style: TextStyle(fontSize: 16, color: Color(0xFF723D92)),
+                            ),
                           ),
                           const SizedBox(height: 5),
                           TextFormField(
@@ -129,23 +131,43 @@ class _LoginScreenState extends State<LoginScreen> {
                             onPressed: () async {
                               if (_formKey.currentState?.validate() ?? false) {
                                 final authProvider = Provider.of<AuthProvider>(context, listen: false);
+                                // Afficher un indicateur de chargement
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(content: Text('Logging in...')),
+                                );
+
                                 final success = await authProvider.login(
                                   _emailController.text,
                                   _passwordController.text,
                                 );
 
                                 if (success) {
-  print("Login successful. User role: ${authProvider.user?.role}");
-  if (authProvider.user?.role == 'user') {
-    Navigator.pushReplacementNamed(context, AppRoutes.HomePatient);
-  } else if (authProvider.user?.role == 'parent') {
-    Navigator.pushReplacementNamed(context, AppRoutes.HomeParent);
-  } else {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Role not recognized')),
-    );
-  }
-}
+                                  print("Login successful. User role: ${authProvider.user?.role}");
+
+                                  // Récupérer l'ID de l'utilisateur
+                                  final userId = authProvider.user?.id;
+
+                                  if (userId != null) {
+                                    if (authProvider.user!.role == 'user') {
+                                      // Naviguer vers la page de profil
+                                      Navigator.pushReplacementNamed(context, AppRoutes.HomePatient);
+                                    } else if (authProvider.user!.role == 'parent') {
+                                      Navigator.pushReplacementNamed(context, AppRoutes.HomeParent);
+                                    } else {
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                        const SnackBar(content: Text('Role not recognized')),
+                                      );
+                                    }
+                                  } else {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(content: Text('User ID is null')),
+                                    );
+                                  }
+                                } else {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(content: Text(authProvider.error ?? 'Login failed')),
+                                  );
+                                }
                               }
                             },
                             style: ElevatedButton.styleFrom(

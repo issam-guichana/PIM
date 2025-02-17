@@ -1,107 +1,125 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../../Controllers/ProfileController.dart';
+import 'EdituserProfile.dart';
 
-class CustomBottomNavBarPatient extends StatelessWidget {
+class CustomBottomBarPatient extends StatefulWidget {
+  final Function(int) onItemSelected;
   final int selectedIndex;
-  final Function(int) onItemTapped;
 
-  const CustomBottomNavBarPatient({
+  const CustomBottomBarPatient({
     super.key,
-    required this.selectedIndex,
-    required this.onItemTapped,
+    required this.onItemSelected,
+    this.selectedIndex = 0,
   });
 
   @override
-  Widget build(BuildContext context) {
-    return Stack(
-      alignment: Alignment.bottomCenter,
-      children: [
-        Container(
-          height: 80,
-          decoration: BoxDecoration(
-            color: const Color(0xFF723D92), // Couleur de la barre de navigation
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(30),
-              topRight: Radius.circular(30),
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.15),
-                blurRadius: 12,
-                offset: const Offset(0, -2),
-              ),
-            ],
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              _buildNavItem(Icons.home, 'Home', 0),
-              const SizedBox(width: 80), // Espace pour l'icône de caméra
-              _buildNavItem(Icons.person, 'Profile', 2),
-            ],
-          ),
+  State<CustomBottomBarPatient> createState() => _CustomBottomBarState();
+}
+
+class _CustomBottomBarState extends State<CustomBottomBarPatient> {
+  final List<IconData> _icons = [
+    Icons.home,
+    Icons.calendar_today,
+    Icons.bar_chart,
+    Icons.person, // Profile icon is at index 3
+  ];
+
+  void _onIconTapped(int index, BuildContext context) {
+    if (index == 3) { // Vérifie si l'utilisateur clique sur "profile"
+      final profileController = Provider.of<ProfileController>(context, listen: false);
+
+      // Appeler la fonction pour afficher le modal d'édition du profil
+      showModalBottomSheet(
+        context: context,
+        builder: (context) => EditProfileModal(
+          userId: profileController.userId,
+          onUpdate: (success) {
+            if (success) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text("Profile updated successfully!")),
+              );
+            }
+          },
         ),
-        Positioned(
-          top: -35,
-          child: GestureDetector(
-            onTap: () => onItemTapped(1),
-            child: Container(
-              height: 100,
-              width: 100,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: const Color.fromARGB(255, 254, 251, 255), // Couleur du cercle de la caméra
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.15),
-                    blurRadius: 12,
-                    offset: const Offset(0, -2),
-                  ),
-                ],
-              ),
-              child: Center(
-                child: Container(
-                  height: 80,
-                  width: 80,
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Color(0xFF723D92), // Couleur de fond du cercle de caméra
-                  ),
+      );
+    } else {
+      widget.onItemSelected(index);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Container(
+        margin: const EdgeInsets.all(16),
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        height: 70,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(30),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black12.withOpacity(0.2),
+              spreadRadius: 2,
+              blurRadius: 12,
+              offset: const Offset(0, 4),
+            ),
+          ],
+        ),
+        child: Stack(
+          alignment: Alignment.center,
+          clipBehavior: Clip.none,
+          children: [
+            // Navigation Icons
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: List.generate(_icons.length, (index) {
+                return GestureDetector(
+                  onTap: () => _onIconTapped(index, context),
                   child: Icon(
-                    Icons.camera_alt,
-                    color: selectedIndex == 1 ? Colors.white : Colors.white.withOpacity(0.6), // Change la couleur de la caméra
-                    size: 50,
+                    _icons[index],
+                    size: 28,
+                    color: widget.selectedIndex == index
+                        ? Colors.deepPurple
+                        : Colors.grey.shade400,
+                  ),
+                );
+              }),
+            ),
+
+            // Center Camera Button
+            Positioned(
+              top: -30, // Floating Effect
+              child: GestureDetector(
+                onTap: () {
+                  // Handle Camera Action
+                },
+                child: Container(
+                  width: 60,
+                  height: 60,
+                  decoration: BoxDecoration(
+                    color: Colors.deepPurple,
+                    shape: BoxShape.circle,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.deepPurple.withOpacity(0.4),
+                        blurRadius: 15,
+                        spreadRadius: 3,
+                        offset: const Offset(0, 5),
+                      ),
+                    ],
+                  ),
+                  child: const Icon(
+                    Icons.camera,
+                    color: Colors.white,
+                    size: 30,
                   ),
                 ),
               ),
             ),
-          ),
+          ],
         ),
-      ],
-    );
-  }
-
-  Widget _buildNavItem(IconData icon, String label, int index) {
-    final isSelected = selectedIndex == index;
-    return GestureDetector(
-      onTap: () => onItemTapped(index),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(
-            icon,
-            color: isSelected ? Colors.white : Colors.white.withOpacity(0.6), // Changement de couleur
-            size: 40,
-          ),
-          const SizedBox(height: 4),
-          Text(
-            label,
-            style: TextStyle(
-              fontWeight: FontWeight.w600,
-              fontSize: 14,
-              color: isSelected ? Colors.white : Colors.white.withOpacity(0.6), // Changement de couleur
-            ),
-          ),
-        ],
       ),
     );
   }

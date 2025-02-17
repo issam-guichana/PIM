@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-
+import 'package:provider/provider.dart';
+import '../../Controllers/AuthProviders/AuthProvider.dart'; // Importer AuthProvider
 import 'CustomBottomNavBar.dart';
+import 'EdituserProfile.dart'; // Assurez-vous d'importer EditProfileModal
 
 class HomePagePatient extends StatefulWidget {
   const HomePagePatient({super.key});
@@ -16,11 +18,13 @@ class _HomePagePatientState extends State<HomePagePatient> {
     setState(() {
       _selectedIndex = index;
     });
-    // Ajoutez ici la logique de navigation si nécessaire
   }
 
   @override
   Widget build(BuildContext context) {
+    final authProvider = Provider.of<AuthProvider>(context);
+    final userId = authProvider.user?.id; // Récupérer l'ID de l'utilisateur
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: Column(
@@ -51,7 +55,6 @@ class _HomePagePatientState extends State<HomePagePatient> {
             ],
           ),
           const SizedBox(height: 16),
-          const SizedBox(height: 40),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: Card(
@@ -95,12 +98,30 @@ class _HomePagePatientState extends State<HomePagePatient> {
             ),
           ),
           const Spacer(),
-         
         ],
       ),
-      bottomNavigationBar: CustomBottomNavBarPatient(
+      bottomNavigationBar: CustomBottomBarPatient(
         selectedIndex: _selectedIndex,
-        onItemTapped: _onItemTapped,
+        onItemSelected: (index) {
+          if (index == 3 && userId != null) {
+            // Naviguer vers l'écran d'édition du profil
+            showModalBottomSheet(
+              context: context,
+              builder: (context) => EditProfileModal(
+                userId: userId,
+                onUpdate: (success) {
+                  if (success) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("Profile updated successfully!")),
+                    );
+                  }
+                },
+              ),
+            );
+          } else {
+            _onItemTapped(index); // Appeler la fonction pour d'autres index
+          }
+        },
       ),
     );
   }
@@ -118,14 +139,13 @@ class _HomePagePatientState extends State<HomePagePatient> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Image.asset(image),
-          const SizedBox(height: 8),
+          const SizedBox(width: 8), // Correction ici pour l'espacement
           Column(
             children: [
               Text(
                 name,
                 textAlign: TextAlign.center,
-                style:
-                    const TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+                style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
               ),
               const Icon(Icons.phone_enabled_outlined,
                   size: 25, color: Color(0xFF723D92)),
