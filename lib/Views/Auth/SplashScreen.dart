@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import '../../routes/routes.dart'; // Assurez-vous d'importer le bon fichier de routes
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -10,26 +11,25 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   @override
-  void initState() {
-    super.initState();
-
-    Timer(const Duration(seconds: 3), () {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => SplashScreen()),
-      );
-    });
-  }
-
+  @override
+void initState() {
+  super.initState();
+  Timer(const Duration(seconds: 2), () {
+    Navigator.pushReplacementNamed(context, AppRoutes.firstIntro); // Naviguer vers la première page d'intro
+  });
+}
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Colors.white,
       body: Center(
         child: Image.asset(
-          'assets/splash_image.png',
-          width: 250,
-          height: 400,
+          'Assets/SplashScreen/splash_image.png',
+          width: screenWidth * 0.9,
+          height: screenHeight * 0.8,
         ),
       ),
     );

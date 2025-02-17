@@ -1,11 +1,21 @@
 import 'package:flutter/material.dart';
-import 'Views//Auth/Watch/watch_dashboard.dart';
+import 'package:pim_project/Controllers/AuthProviders/AuthProvider.dart';
+import 'package:pim_project/Views/Auth/SplashScreen.dart';
+import 'package:provider/provider.dart';
 
-
+import 'routes/routes.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => AuthProvider()),
+      ],
+      child: const MyApp(),
+    )
+  );
 }
+
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -13,11 +23,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Watch Dashboard',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: true,
       ),
-      home:HealthDataScreen(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const SplashScreen(),
+        ...AppRoutes.getRoutes(), // Ajoutez toutes les routes définies
+      },
     );
   }
 }

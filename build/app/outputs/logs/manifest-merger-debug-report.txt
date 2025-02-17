@@ -1,7 +1,17 @@
 -- Merging decision tree log ---
 application
-INJECTED from /Users/nawelkaabi/Documents/GitHub/PIM/android/app/src/main/AndroidManifest.xml:2:5-33:19
-INJECTED from /Users/nawelkaabi/Documents/GitHub/PIM/android/app/src/debug/AndroidManifest.xml
+INJECTED from /Users/nawelkaabi/Desktop/PIMnawel2/android/app/src/main/AndroidManifest.xml:2:5-33:19
+INJECTED from /Users/nawelkaabi/Desktop/PIMnawel2/android/app/src/debug/AndroidManifest.xml
+MERGED from [com.google.android.gms:play-services-auth:21.0.0] /Users/nawelkaabi/.gradle/caches/transforms-3/3c72559058e33b68bad65d8760eb3610/transformed/jetified-play-services-auth-21.0.0/AndroidManifest.xml:22:5-38:19
+MERGED from [com.google.android.gms:play-services-auth:21.0.0] /Users/nawelkaabi/.gradle/caches/transforms-3/3c72559058e33b68bad65d8760eb3610/transformed/jetified-play-services-auth-21.0.0/AndroidManifest.xml:22:5-38:19
+MERGED from [com.google.android.gms:play-services-fido:20.0.1] /Users/nawelkaabi/.gradle/caches/transforms-3/1f63c3b005ac8568128ba33b5bb92d64/transformed/jetified-play-services-fido-20.0.1/AndroidManifest.xml:7:5-8:19
+MERGED from [com.google.android.gms:play-services-fido:20.0.1] /Users/nawelkaabi/.gradle/caches/transforms-3/1f63c3b005ac8568128ba33b5bb92d64/transformed/jetified-play-services-fido-20.0.1/AndroidManifest.xml:7:5-8:19
+MERGED from [com.google.android.gms:play-services-base:18.0.1] /Users/nawelkaabi/.gradle/caches/transforms-3/990bd840ae842bdd30fc346ade6cd011/transformed/jetified-play-services-base-18.0.1/AndroidManifest.xml:19:5-23:19
+MERGED from [com.google.android.gms:play-services-base:18.0.1] /Users/nawelkaabi/.gradle/caches/transforms-3/990bd840ae842bdd30fc346ade6cd011/transformed/jetified-play-services-base-18.0.1/AndroidManifest.xml:19:5-23:19
+MERGED from [com.google.android.gms:play-services-tasks:18.0.1] /Users/nawelkaabi/.gradle/caches/transforms-3/82706c394abf56a1b0229327a3be0a8f/transformed/jetified-play-services-tasks-18.0.1/AndroidManifest.xml:5:5-20
+MERGED from [com.google.android.gms:play-services-tasks:18.0.1] /Users/nawelkaabi/.gradle/caches/transforms-3/82706c394abf56a1b0229327a3be0a8f/transformed/jetified-play-services-tasks-18.0.1/AndroidManifest.xml:5:5-20
+MERGED from [com.google.android.gms:play-services-basement:18.2.0] /Users/nawelkaabi/.gradle/caches/transforms-3/1d230c3ee366b3d2e9296a03dad2d30e/transformed/jetified-play-services-basement-18.2.0/AndroidManifest.xml:20:5-24:19
+MERGED from [com.google.android.gms:play-services-basement:18.2.0] /Users/nawelkaabi/.gradle/caches/transforms-3/1d230c3ee366b3d2e9296a03dad2d30e/transformed/jetified-play-services-basement-18.2.0/AndroidManifest.xml:20:5-24:19
 MERGED from [androidx.window:window:1.2.0] /Users/nawelkaabi/.gradle/caches/transforms-3/8859fd2468ade3ef2655d1f63d6737f2/transformed/jetified-window-1.2.0/AndroidManifest.xml:22:5-29:19
 MERGED from [androidx.window:window:1.2.0] /Users/nawelkaabi/.gradle/caches/transforms-3/8859fd2468ade3ef2655d1f63d6737f2/transformed/jetified-window-1.2.0/AndroidManifest.xml:22:5-29:19
 MERGED from [androidx.core:core:1.13.1] /Users/nawelkaabi/.gradle/caches/transforms-3/889ae3adf7a24645889ee22f4dad2cac/transformed/core-1.13.1/AndroidManifest.xml:28:5-89
@@ -15,25 +25,31 @@ MERGED from [androidx.startup:startup-runtime:1.1.1] /Users/nawelkaabi/.gradle/c
 MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /Users/nawelkaabi/.gradle/caches/transforms-3/d21e37b6169caa7895fc002c1192b0f1/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:24:5-25:19
 MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /Users/nawelkaabi/.gradle/caches/transforms-3/d21e37b6169caa7895fc002c1192b0f1/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:24:5-25:19
 	android:extractNativeLibs
-		INJECTED from /Users/nawelkaabi/Documents/GitHub/PIM/android/app/src/debug/AndroidManifest.xml
+		INJECTED from /Users/nawelkaabi/Desktop/PIMnawel2/android/app/src/debug/AndroidManifest.xml
 	android:appComponentFactory
 		ADDED from [androidx.core:core:1.13.1] /Users/nawelkaabi/.gradle/caches/transforms-3/889ae3adf7a24645889ee22f4dad2cac/transformed/core-1.13.1/AndroidManifest.xml:28:18-86
 	android:name
-		INJECTED from /Users/nawelkaabi/Documents/GitHub/PIM/android/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/nawelkaabi/Desktop/PIMnawel2/android/app/src/main/AndroidManifest.xml
 manifest
-ADDED from /Users/nawelkaabi/Documents/GitHub/PIM/android/app/src/main/AndroidManifest.xml:1:1-45:12
-MERGED from /Users/nawelkaabi/Documents/GitHub/PIM/android/app/src/main/AndroidManifest.xml:1:1-45:12
-INJECTED from /Users/nawelkaabi/Documents/GitHub/PIM/android/app/src/debug/AndroidManifest.xml:1:1-7:12
-INJECTED from /Users/nawelkaabi/Documents/GitHub/PIM/android/app/src/debug/AndroidManifest.xml:1:1-7:12
-INJECTED from /Users/nawelkaabi/Documents/GitHub/PIM/android/app/src/debug/AndroidManifest.xml:1:1-7:12
+ADDED from /Users/nawelkaabi/Desktop/PIMnawel2/android/app/src/main/AndroidManifest.xml:1:1-45:12
+MERGED from /Users/nawelkaabi/Desktop/PIMnawel2/android/app/src/main/AndroidManifest.xml:1:1-45:12
+INJECTED from /Users/nawelkaabi/Desktop/PIMnawel2/android/app/src/debug/AndroidManifest.xml:1:1-7:12
+INJECTED from /Users/nawelkaabi/Desktop/PIMnawel2/android/app/src/debug/AndroidManifest.xml:1:1-7:12
+INJECTED from /Users/nawelkaabi/Desktop/PIMnawel2/android/app/src/debug/AndroidManifest.xml:1:1-7:12
+MERGED from [:google_sign_in_android] /Users/nawelkaabi/Desktop/PIMnawel2/build/google_sign_in_android/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-9:12
+MERGED from [com.google.android.gms:play-services-auth:21.0.0] /Users/nawelkaabi/.gradle/caches/transforms-3/3c72559058e33b68bad65d8760eb3610/transformed/jetified-play-services-auth-21.0.0/AndroidManifest.xml:17:1-40:12
+MERGED from [com.google.android.gms:play-services-auth-api-phone:18.0.2] /Users/nawelkaabi/.gradle/caches/transforms-3/dd463c72232b623fcf1714c51d608baa/transformed/jetified-play-services-auth-api-phone-18.0.2/AndroidManifest.xml:2:1-7:12
+MERGED from [com.google.android.gms:play-services-auth-base:18.0.10] /Users/nawelkaabi/.gradle/caches/transforms-3/b87a8bb45b2d98c331eb34ad797f4891/transformed/jetified-play-services-auth-base-18.0.10/AndroidManifest.xml:2:1-7:12
+MERGED from [com.google.android.gms:play-services-fido:20.0.1] /Users/nawelkaabi/.gradle/caches/transforms-3/1f63c3b005ac8568128ba33b5bb92d64/transformed/jetified-play-services-fido-20.0.1/AndroidManifest.xml:2:1-10:12
+MERGED from [com.google.android.gms:play-services-base:18.0.1] /Users/nawelkaabi/.gradle/caches/transforms-3/990bd840ae842bdd30fc346ade6cd011/transformed/jetified-play-services-base-18.0.1/AndroidManifest.xml:16:1-24:12
+MERGED from [com.google.android.gms:play-services-tasks:18.0.1] /Users/nawelkaabi/.gradle/caches/transforms-3/82706c394abf56a1b0229327a3be0a8f/transformed/jetified-play-services-tasks-18.0.1/AndroidManifest.xml:2:1-6:12
+MERGED from [com.google.android.gms:play-services-basement:18.2.0] /Users/nawelkaabi/.gradle/caches/transforms-3/1d230c3ee366b3d2e9296a03dad2d30e/transformed/jetified-play-services-basement-18.2.0/AndroidManifest.xml:16:1-26:12
 MERGED from [androidx.fragment:fragment:1.7.1] /Users/nawelkaabi/.gradle/caches/transforms-3/ca4d40f38b71d4c621d36eba6fe2f4a4/transformed/fragment-1.7.1/AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.window:window:1.2.0] /Users/nawelkaabi/.gradle/caches/transforms-3/8859fd2468ade3ef2655d1f63d6737f2/transformed/jetified-window-1.2.0/AndroidManifest.xml:17:1-31:12
 MERGED from [androidx.window:window-java:1.2.0] /Users/nawelkaabi/.gradle/caches/transforms-3/8a650b2c5ea333036303d473a939db42/transformed/jetified-window-java-1.2.0/AndroidManifest.xml:17:1-21:12
+MERGED from [androidx.loader:loader:1.1.0] /Users/nawelkaabi/.gradle/caches/transforms-3/35103da8c548e54984ac7bf0469f6384/transformed/loader-1.1.0/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.activity:activity:1.8.1] /Users/nawelkaabi/.gradle/caches/transforms-3/90da4fa7ab29bed17775e89b3905b1f1/transformed/jetified-activity-1.8.1/AndroidManifest.xml:17:1-22:12
-MERGED from [androidx.loader:loader:1.0.0] /Users/nawelkaabi/.gradle/caches/transforms-3/a818e414c52385021f1d9677e7b7ca4e/transformed/loader-1.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.viewpager:viewpager:1.0.0] /Users/nawelkaabi/.gradle/caches/transforms-3/aa0545052c10d03c17d2b473348f6ff3/transformed/viewpager-1.0.0/AndroidManifest.xml:17:1-22:12
-MERGED from [androidx.lifecycle:lifecycle-livedata-core-ktx:2.7.0] /Users/nawelkaabi/.gradle/caches/transforms-3/051f9dac57ad8cee60cc5a95eb8d9d7f/transformed/jetified-lifecycle-livedata-core-ktx-2.7.0/AndroidManifest.xml:2:1-7:12
-MERGED from [androidx.lifecycle:lifecycle-livedata:2.7.0] /Users/nawelkaabi/.gradle/caches/transforms-3/82d8b2a7d9fca5e641d160069565b477/transformed/lifecycle-livedata-2.7.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.7.0] /Users/nawelkaabi/.gradle/caches/transforms-3/7b5a837770709484bd30395a2788a4e5/transformed/lifecycle-viewmodel-2.7.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.7.0] /Users/nawelkaabi/.gradle/caches/transforms-3/6964f45bcdaad7c523c03595346078c4/transformed/lifecycle-livedata-core-2.7.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.7.0] /Users/nawelkaabi/.gradle/caches/transforms-3/2b2bf4b21be1acb6d8aafc6e5e4bedac/transformed/jetified-lifecycle-viewmodel-savedstate-2.7.0/AndroidManifest.xml:17:1-22:12
@@ -53,49 +69,63 @@ MERGED from [androidx.interpolator:interpolator:1.0.0] /Users/nawelkaabi/.gradle
 MERGED from [androidx.window.extensions.core:core:1.0.0] /Users/nawelkaabi/.gradle/caches/transforms-3/61fbac9cdc1a22c54aa04ec76334a907/transformed/jetified-core-1.0.0/AndroidManifest.xml:2:1-7:12
 MERGED from [com.getkeepsafe.relinker:relinker:1.4.5] /Users/nawelkaabi/.gradle/caches/transforms-3/84b17be5f49a910e04e8c35fea028f28/transformed/jetified-relinker-1.4.5/AndroidManifest.xml:2:1-7:12
 	package
-		INJECTED from /Users/nawelkaabi/Documents/GitHub/PIM/android/app/src/debug/AndroidManifest.xml
+		INJECTED from /Users/nawelkaabi/Desktop/PIMnawel2/android/app/src/debug/AndroidManifest.xml
 	android:versionName
-		INJECTED from /Users/nawelkaabi/Documents/GitHub/PIM/android/app/src/debug/AndroidManifest.xml
+		INJECTED from /Users/nawelkaabi/Desktop/PIMnawel2/android/app/src/debug/AndroidManifest.xml
 	android:versionCode
-		INJECTED from /Users/nawelkaabi/Documents/GitHub/PIM/android/app/src/debug/AndroidManifest.xml
+		INJECTED from /Users/nawelkaabi/Desktop/PIMnawel2/android/app/src/debug/AndroidManifest.xml
 	xmlns:android
-		ADDED from /Users/nawelkaabi/Documents/GitHub/PIM/android/app/src/main/AndroidManifest.xml:1:11-69
+		ADDED from /Users/nawelkaabi/Desktop/PIMnawel2/android/app/src/main/AndroidManifest.xml:1:11-69
 queries
-ADDED from /Users/nawelkaabi/Documents/GitHub/PIM/android/app/src/main/AndroidManifest.xml:39:5-44:15
+ADDED from /Users/nawelkaabi/Desktop/PIMnawel2/android/app/src/main/AndroidManifest.xml:39:5-44:15
 intent#action:name:android.intent.action.PROCESS_TEXT+data:mimeType:text/plain
-ADDED from /Users/nawelkaabi/Documents/GitHub/PIM/android/app/src/main/AndroidManifest.xml:40:9-43:18
+ADDED from /Users/nawelkaabi/Desktop/PIMnawel2/android/app/src/main/AndroidManifest.xml:40:9-43:18
 action#android.intent.action.PROCESS_TEXT
-ADDED from /Users/nawelkaabi/Documents/GitHub/PIM/android/app/src/main/AndroidManifest.xml:41:13-72
+ADDED from /Users/nawelkaabi/Desktop/PIMnawel2/android/app/src/main/AndroidManifest.xml:41:13-72
 	android:name
-		ADDED from /Users/nawelkaabi/Documents/GitHub/PIM/android/app/src/main/AndroidManifest.xml:41:21-70
+		ADDED from /Users/nawelkaabi/Desktop/PIMnawel2/android/app/src/main/AndroidManifest.xml:41:21-70
 data
-ADDED from /Users/nawelkaabi/Documents/GitHub/PIM/android/app/src/main/AndroidManifest.xml:42:13-50
+ADDED from /Users/nawelkaabi/Desktop/PIMnawel2/android/app/src/main/AndroidManifest.xml:42:13-50
 	android:mimeType
-		ADDED from /Users/nawelkaabi/Documents/GitHub/PIM/android/app/src/main/AndroidManifest.xml:42:19-48
+		ADDED from /Users/nawelkaabi/Desktop/PIMnawel2/android/app/src/main/AndroidManifest.xml:42:19-48
 uses-permission#android.permission.INTERNET
-ADDED from /Users/nawelkaabi/Documents/GitHub/PIM/android/app/src/debug/AndroidManifest.xml:6:5-66
+ADDED from /Users/nawelkaabi/Desktop/PIMnawel2/android/app/src/debug/AndroidManifest.xml:6:5-66
+MERGED from [:google_sign_in_android] /Users/nawelkaabi/Desktop/PIMnawel2/build/google_sign_in_android/intermediates/merged_manifest/debug/AndroidManifest.xml:7:5-67
+MERGED from [:google_sign_in_android] /Users/nawelkaabi/Desktop/PIMnawel2/build/google_sign_in_android/intermediates/merged_manifest/debug/AndroidManifest.xml:7:5-67
 	android:name
-		ADDED from /Users/nawelkaabi/Documents/GitHub/PIM/android/app/src/debug/AndroidManifest.xml:6:22-64
+		ADDED from /Users/nawelkaabi/Desktop/PIMnawel2/android/app/src/debug/AndroidManifest.xml:6:22-64
 uses-sdk
-INJECTED from /Users/nawelkaabi/Documents/GitHub/PIM/android/app/src/debug/AndroidManifest.xml reason: use-sdk injection requested
-INJECTED from /Users/nawelkaabi/Documents/GitHub/PIM/android/app/src/debug/AndroidManifest.xml
-INJECTED from /Users/nawelkaabi/Documents/GitHub/PIM/android/app/src/debug/AndroidManifest.xml
+INJECTED from /Users/nawelkaabi/Desktop/PIMnawel2/android/app/src/debug/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /Users/nawelkaabi/Desktop/PIMnawel2/android/app/src/debug/AndroidManifest.xml
+INJECTED from /Users/nawelkaabi/Desktop/PIMnawel2/android/app/src/debug/AndroidManifest.xml
+MERGED from [:google_sign_in_android] /Users/nawelkaabi/Desktop/PIMnawel2/build/google_sign_in_android/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:google_sign_in_android] /Users/nawelkaabi/Desktop/PIMnawel2/build/google_sign_in_android/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.gms:play-services-auth:21.0.0] /Users/nawelkaabi/.gradle/caches/transforms-3/3c72559058e33b68bad65d8760eb3610/transformed/jetified-play-services-auth-21.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-auth:21.0.0] /Users/nawelkaabi/.gradle/caches/transforms-3/3c72559058e33b68bad65d8760eb3610/transformed/jetified-play-services-auth-21.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-auth-api-phone:18.0.2] /Users/nawelkaabi/.gradle/caches/transforms-3/dd463c72232b623fcf1714c51d608baa/transformed/jetified-play-services-auth-api-phone-18.0.2/AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.gms:play-services-auth-api-phone:18.0.2] /Users/nawelkaabi/.gradle/caches/transforms-3/dd463c72232b623fcf1714c51d608baa/transformed/jetified-play-services-auth-api-phone-18.0.2/AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.gms:play-services-auth-base:18.0.10] /Users/nawelkaabi/.gradle/caches/transforms-3/b87a8bb45b2d98c331eb34ad797f4891/transformed/jetified-play-services-auth-base-18.0.10/AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.gms:play-services-auth-base:18.0.10] /Users/nawelkaabi/.gradle/caches/transforms-3/b87a8bb45b2d98c331eb34ad797f4891/transformed/jetified-play-services-auth-base-18.0.10/AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.gms:play-services-fido:20.0.1] /Users/nawelkaabi/.gradle/caches/transforms-3/1f63c3b005ac8568128ba33b5bb92d64/transformed/jetified-play-services-fido-20.0.1/AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.gms:play-services-fido:20.0.1] /Users/nawelkaabi/.gradle/caches/transforms-3/1f63c3b005ac8568128ba33b5bb92d64/transformed/jetified-play-services-fido-20.0.1/AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.gms:play-services-base:18.0.1] /Users/nawelkaabi/.gradle/caches/transforms-3/990bd840ae842bdd30fc346ade6cd011/transformed/jetified-play-services-base-18.0.1/AndroidManifest.xml:18:5-43
+MERGED from [com.google.android.gms:play-services-base:18.0.1] /Users/nawelkaabi/.gradle/caches/transforms-3/990bd840ae842bdd30fc346ade6cd011/transformed/jetified-play-services-base-18.0.1/AndroidManifest.xml:18:5-43
+MERGED from [com.google.android.gms:play-services-tasks:18.0.1] /Users/nawelkaabi/.gradle/caches/transforms-3/82706c394abf56a1b0229327a3be0a8f/transformed/jetified-play-services-tasks-18.0.1/AndroidManifest.xml:4:5-43
+MERGED from [com.google.android.gms:play-services-tasks:18.0.1] /Users/nawelkaabi/.gradle/caches/transforms-3/82706c394abf56a1b0229327a3be0a8f/transformed/jetified-play-services-tasks-18.0.1/AndroidManifest.xml:4:5-43
+MERGED from [com.google.android.gms:play-services-basement:18.2.0] /Users/nawelkaabi/.gradle/caches/transforms-3/1d230c3ee366b3d2e9296a03dad2d30e/transformed/jetified-play-services-basement-18.2.0/AndroidManifest.xml:18:5-43
+MERGED from [com.google.android.gms:play-services-basement:18.2.0] /Users/nawelkaabi/.gradle/caches/transforms-3/1d230c3ee366b3d2e9296a03dad2d30e/transformed/jetified-play-services-basement-18.2.0/AndroidManifest.xml:18:5-43
 MERGED from [androidx.fragment:fragment:1.7.1] /Users/nawelkaabi/.gradle/caches/transforms-3/ca4d40f38b71d4c621d36eba6fe2f4a4/transformed/fragment-1.7.1/AndroidManifest.xml:5:5-44
 MERGED from [androidx.fragment:fragment:1.7.1] /Users/nawelkaabi/.gradle/caches/transforms-3/ca4d40f38b71d4c621d36eba6fe2f4a4/transformed/fragment-1.7.1/AndroidManifest.xml:5:5-44
 MERGED from [androidx.window:window:1.2.0] /Users/nawelkaabi/.gradle/caches/transforms-3/8859fd2468ade3ef2655d1f63d6737f2/transformed/jetified-window-1.2.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.window:window:1.2.0] /Users/nawelkaabi/.gradle/caches/transforms-3/8859fd2468ade3ef2655d1f63d6737f2/transformed/jetified-window-1.2.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.window:window-java:1.2.0] /Users/nawelkaabi/.gradle/caches/transforms-3/8a650b2c5ea333036303d473a939db42/transformed/jetified-window-java-1.2.0/AndroidManifest.xml:19:5-44
 MERGED from [androidx.window:window-java:1.2.0] /Users/nawelkaabi/.gradle/caches/transforms-3/8a650b2c5ea333036303d473a939db42/transformed/jetified-window-java-1.2.0/AndroidManifest.xml:19:5-44
+MERGED from [androidx.loader:loader:1.1.0] /Users/nawelkaabi/.gradle/caches/transforms-3/35103da8c548e54984ac7bf0469f6384/transformed/loader-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.loader:loader:1.1.0] /Users/nawelkaabi/.gradle/caches/transforms-3/35103da8c548e54984ac7bf0469f6384/transformed/loader-1.1.0/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.activity:activity:1.8.1] /Users/nawelkaabi/.gradle/caches/transforms-3/90da4fa7ab29bed17775e89b3905b1f1/transformed/jetified-activity-1.8.1/AndroidManifest.xml:20:5-44
 MERGED from [androidx.activity:activity:1.8.1] /Users/nawelkaabi/.gradle/caches/transforms-3/90da4fa7ab29bed17775e89b3905b1f1/transformed/jetified-activity-1.8.1/AndroidManifest.xml:20:5-44
-MERGED from [androidx.loader:loader:1.0.0] /Users/nawelkaabi/.gradle/caches/transforms-3/a818e414c52385021f1d9677e7b7ca4e/transformed/loader-1.0.0/AndroidManifest.xml:20:5-44
-MERGED from [androidx.loader:loader:1.0.0] /Users/nawelkaabi/.gradle/caches/transforms-3/a818e414c52385021f1d9677e7b7ca4e/transformed/loader-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.viewpager:viewpager:1.0.0] /Users/nawelkaabi/.gradle/caches/transforms-3/aa0545052c10d03c17d2b473348f6ff3/transformed/viewpager-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.viewpager:viewpager:1.0.0] /Users/nawelkaabi/.gradle/caches/transforms-3/aa0545052c10d03c17d2b473348f6ff3/transformed/viewpager-1.0.0/AndroidManifest.xml:20:5-44
-MERGED from [androidx.lifecycle:lifecycle-livedata-core-ktx:2.7.0] /Users/nawelkaabi/.gradle/caches/transforms-3/051f9dac57ad8cee60cc5a95eb8d9d7f/transformed/jetified-lifecycle-livedata-core-ktx-2.7.0/AndroidManifest.xml:5:5-44
-MERGED from [androidx.lifecycle:lifecycle-livedata-core-ktx:2.7.0] /Users/nawelkaabi/.gradle/caches/transforms-3/051f9dac57ad8cee60cc5a95eb8d9d7f/transformed/jetified-lifecycle-livedata-core-ktx-2.7.0/AndroidManifest.xml:5:5-44
-MERGED from [androidx.lifecycle:lifecycle-livedata:2.7.0] /Users/nawelkaabi/.gradle/caches/transforms-3/82d8b2a7d9fca5e641d160069565b477/transformed/lifecycle-livedata-2.7.0/AndroidManifest.xml:20:5-44
-MERGED from [androidx.lifecycle:lifecycle-livedata:2.7.0] /Users/nawelkaabi/.gradle/caches/transforms-3/82d8b2a7d9fca5e641d160069565b477/transformed/lifecycle-livedata-2.7.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.7.0] /Users/nawelkaabi/.gradle/caches/transforms-3/7b5a837770709484bd30395a2788a4e5/transformed/lifecycle-viewmodel-2.7.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.7.0] /Users/nawelkaabi/.gradle/caches/transforms-3/7b5a837770709484bd30395a2788a4e5/transformed/lifecycle-viewmodel-2.7.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.7.0] /Users/nawelkaabi/.gradle/caches/transforms-3/6964f45bcdaad7c523c03595346078c4/transformed/lifecycle-livedata-core-2.7.0/AndroidManifest.xml:20:5-44
@@ -133,9 +163,43 @@ MERGED from [androidx.window.extensions.core:core:1.0.0] /Users/nawelkaabi/.grad
 MERGED from [com.getkeepsafe.relinker:relinker:1.4.5] /Users/nawelkaabi/.gradle/caches/transforms-3/84b17be5f49a910e04e8c35fea028f28/transformed/jetified-relinker-1.4.5/AndroidManifest.xml:5:5-43
 MERGED from [com.getkeepsafe.relinker:relinker:1.4.5] /Users/nawelkaabi/.gradle/caches/transforms-3/84b17be5f49a910e04e8c35fea028f28/transformed/jetified-relinker-1.4.5/AndroidManifest.xml:5:5-43
 	android:targetSdkVersion
-		INJECTED from /Users/nawelkaabi/Documents/GitHub/PIM/android/app/src/debug/AndroidManifest.xml
+		INJECTED from /Users/nawelkaabi/Desktop/PIMnawel2/android/app/src/debug/AndroidManifest.xml
 	android:minSdkVersion
-		INJECTED from /Users/nawelkaabi/Documents/GitHub/PIM/android/app/src/debug/AndroidManifest.xml
+		INJECTED from /Users/nawelkaabi/Desktop/PIMnawel2/android/app/src/debug/AndroidManifest.xml
+activity#com.google.android.gms.auth.api.signin.internal.SignInHubActivity
+ADDED from [com.google.android.gms:play-services-auth:21.0.0] /Users/nawelkaabi/.gradle/caches/transforms-3/3c72559058e33b68bad65d8760eb3610/transformed/jetified-play-services-auth-21.0.0/AndroidManifest.xml:23:9-27:75
+	android:excludeFromRecents
+		ADDED from [com.google.android.gms:play-services-auth:21.0.0] /Users/nawelkaabi/.gradle/caches/transforms-3/3c72559058e33b68bad65d8760eb3610/transformed/jetified-play-services-auth-21.0.0/AndroidManifest.xml:25:13-46
+	android:exported
+		ADDED from [com.google.android.gms:play-services-auth:21.0.0] /Users/nawelkaabi/.gradle/caches/transforms-3/3c72559058e33b68bad65d8760eb3610/transformed/jetified-play-services-auth-21.0.0/AndroidManifest.xml:26:13-37
+	android:theme
+		ADDED from [com.google.android.gms:play-services-auth:21.0.0] /Users/nawelkaabi/.gradle/caches/transforms-3/3c72559058e33b68bad65d8760eb3610/transformed/jetified-play-services-auth-21.0.0/AndroidManifest.xml:27:13-72
+	android:name
+		ADDED from [com.google.android.gms:play-services-auth:21.0.0] /Users/nawelkaabi/.gradle/caches/transforms-3/3c72559058e33b68bad65d8760eb3610/transformed/jetified-play-services-auth-21.0.0/AndroidManifest.xml:24:13-93
+service#com.google.android.gms.auth.api.signin.RevocationBoundService
+ADDED from [com.google.android.gms:play-services-auth:21.0.0] /Users/nawelkaabi/.gradle/caches/transforms-3/3c72559058e33b68bad65d8760eb3610/transformed/jetified-play-services-auth-21.0.0/AndroidManifest.xml:33:9-37:51
+	android:exported
+		ADDED from [com.google.android.gms:play-services-auth:21.0.0] /Users/nawelkaabi/.gradle/caches/transforms-3/3c72559058e33b68bad65d8760eb3610/transformed/jetified-play-services-auth-21.0.0/AndroidManifest.xml:35:13-36
+	android:visibleToInstantApps
+		ADDED from [com.google.android.gms:play-services-auth:21.0.0] /Users/nawelkaabi/.gradle/caches/transforms-3/3c72559058e33b68bad65d8760eb3610/transformed/jetified-play-services-auth-21.0.0/AndroidManifest.xml:37:13-48
+	android:permission
+		ADDED from [com.google.android.gms:play-services-auth:21.0.0] /Users/nawelkaabi/.gradle/caches/transforms-3/3c72559058e33b68bad65d8760eb3610/transformed/jetified-play-services-auth-21.0.0/AndroidManifest.xml:36:13-107
+	android:name
+		ADDED from [com.google.android.gms:play-services-auth:21.0.0] /Users/nawelkaabi/.gradle/caches/transforms-3/3c72559058e33b68bad65d8760eb3610/transformed/jetified-play-services-auth-21.0.0/AndroidManifest.xml:34:13-89
+activity#com.google.android.gms.common.api.GoogleApiActivity
+ADDED from [com.google.android.gms:play-services-base:18.0.1] /Users/nawelkaabi/.gradle/caches/transforms-3/990bd840ae842bdd30fc346ade6cd011/transformed/jetified-play-services-base-18.0.1/AndroidManifest.xml:20:9-22:45
+	android:exported
+		ADDED from [com.google.android.gms:play-services-base:18.0.1] /Users/nawelkaabi/.gradle/caches/transforms-3/990bd840ae842bdd30fc346ade6cd011/transformed/jetified-play-services-base-18.0.1/AndroidManifest.xml:22:19-43
+	android:theme
+		ADDED from [com.google.android.gms:play-services-base:18.0.1] /Users/nawelkaabi/.gradle/caches/transforms-3/990bd840ae842bdd30fc346ade6cd011/transformed/jetified-play-services-base-18.0.1/AndroidManifest.xml:21:19-78
+	android:name
+		ADDED from [com.google.android.gms:play-services-base:18.0.1] /Users/nawelkaabi/.gradle/caches/transforms-3/990bd840ae842bdd30fc346ade6cd011/transformed/jetified-play-services-base-18.0.1/AndroidManifest.xml:20:19-85
+meta-data#com.google.android.gms.version
+ADDED from [com.google.android.gms:play-services-basement:18.2.0] /Users/nawelkaabi/.gradle/caches/transforms-3/1d230c3ee366b3d2e9296a03dad2d30e/transformed/jetified-play-services-basement-18.2.0/AndroidManifest.xml:21:9-23:69
+	android:value
+		ADDED from [com.google.android.gms:play-services-basement:18.2.0] /Users/nawelkaabi/.gradle/caches/transforms-3/1d230c3ee366b3d2e9296a03dad2d30e/transformed/jetified-play-services-basement-18.2.0/AndroidManifest.xml:23:13-66
+	android:name
+		ADDED from [com.google.android.gms:play-services-basement:18.2.0] /Users/nawelkaabi/.gradle/caches/transforms-3/1d230c3ee366b3d2e9296a03dad2d30e/transformed/jetified-play-services-basement-18.2.0/AndroidManifest.xml:22:13-58
 uses-library#androidx.window.extensions
 ADDED from [androidx.window:window:1.2.0] /Users/nawelkaabi/.gradle/caches/transforms-3/8859fd2468ade3ef2655d1f63d6737f2/transformed/jetified-window-1.2.0/AndroidManifest.xml:23:9-25:40
 	android:required
