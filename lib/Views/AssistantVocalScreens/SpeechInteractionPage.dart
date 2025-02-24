@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
 import 'dart:math' as math;
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class SpeechInteractionPage extends StatefulWidget {
+  const SpeechInteractionPage({super.key});
   @override
   _SpeechInteractionPageState createState() => _SpeechInteractionPageState();
 }
@@ -14,84 +17,161 @@ class _SpeechInteractionPageState extends State<SpeechInteractionPage>
   bool isAIResponding = false;
   String userMessage = '';
   String aiResponse = '';
+  bool _isSpeechInitialized = false;
 
   final SpeechToText _speechToText = SpeechToText();
-  bool _speechEnabled = false;
-
   late AnimationController _animationController;
+
+  // Gemini configuration
+  static const String _geminiApiUrl = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent';
+  static const String _geminiApiKey = 'AIzaSyB-lwjXMpc6O-pb7ZYSkXpNynowfQLwKKU'; // Replace with your actual API key
+
+  static const String _customInstruction = '''
+   You are a friendly and patient vocal assistant designed to help Alzheimer's patients in Tunisian language(Darija).
+    Your responses should be short (5-7 words), clear, and simple to understand.
+     Speak in a warm and reassuring tone, avoiding complex words. If the user is confused, respond calmly and supportively.
+      Provide gentle reminders for daily tasks (e.g., medication, eating) and assist with orientation (e.g., reminding them where they are or who their family members are).
+       If a user repeats a question, answer without frustration, varying the response slightly.
+    Ask simple engaging questions to keep them talking. Keep the conversation slow, friendly, and positive.
+  ''';
 
   @override
   void initState() {
     super.initState();
     _animationController = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 2),
-    )..repeat();
+      duration: const Duration(milliseconds: 1500),
+    );
     _initSpeech();
   }
 
-  void _initSpeech() async {
-    _speechEnabled = await _speechToText.initialize();
-    setState(() {});
+  Future<void> _initSpeech() async {
+    try {
+      final enabled = await _speechToText.initialize(
+        onStatus: (status) => debugPrint('Speech status: $status'),
+        onError: (error) => debugPrint('Speech error: $error'),
+      );
+      if (mounted) {
+        setState(() => _isSpeechInitialized = enabled);
+      }
+    } catch (e) {
+      debugPrint('Speech initialization error: $e');
+      if (mounted) {
+        setState(() => _isSpeechInitialized = false);
+      }
+    }
   }
 
   void _startListening() async {
-    if (_speechEnabled) {
-      await _speechToText.listen(
-        onResult: _onSpeechResult,
-        listenFor: Duration(seconds: 30),
-        partialResults: true,
-        cancelOnError: true,
-        listenMode: ListenMode.confirmation,
-        localeId: 'ar-TN',
-      );
-      setState(() {
-        isListening = true;
-      });
-    }
+    if (!_isSpeechInitialized) return;
+
+    setState(() {
+      isListening = true;
+      userMessage = '';
+      _animationController.repeat();
+    });
+
+    await _speechToText.listen(
+      onResult: _onSpeechResult,
+      listenFor: const Duration(seconds: 30),
+      pauseFor: const Duration(seconds: 3),
+      partialResults: true,
+      cancelOnError: true,
+      listenMode: ListenMode.confirmation,
+      localeId: 'ar-TN',
+    );
   }
 
   void _stopListening() async {
     await _speechToText.stop();
-    setState(() {
-      isListening = false;
-    });
-    // Trigger AI response when we have a message
-    if (userMessage.isNotEmpty) {
-      _handleAIResponse();
+    if (mounted) {
+      setState(() {
+        isListening = false;
+        _animationController.stop();
+      });
+    }
+    if (userMessage.trim().isNotEmpty) {
+      await _handleAIResponse();
     }
   }
 
   void _onSpeechResult(SpeechRecognitionResult result) {
-    setState(() {
-      userMessage = result.recognizedWords;
-    });
-  }
-
-  void _handleAIResponse() {
-    setState(() {
-      isAIResponding = true;
-    });
-
-    // Simulate AI response - replace with your actual AI logic
-    Future.delayed(const Duration(seconds: 2), () {
+    if (mounted) {
       setState(() {
-        aiResponse = 'This is a sample AI response to: $userMessage';
-        isAIResponding = false;
+        userMessage = result.recognizedWords;
       });
-    });
+    }
+    if (result.finalResult) {
+      _stopListening();
+    }
   }
 
-  Future<void> _toggleListening() async {
-    if (_speechToText.isNotListening) {
-      _startListening();
-    } else {
-      _stopListening();
+  Future<void> _handleAIResponse() async {
+    if (mounted) {
+      setState(() {
+        isAIResponding = true;
+        _animationController.repeat();
+      });
+    }
+
+    try {
+      final response = await http.post(
+        Uri.parse(_geminiApiUrl),
+        headers: {
+          'Content-Type': 'application/json',
+          'x-goog-api-key': _geminiApiKey,
+        },
+        body: jsonEncode({
+          'contents': [
+            {
+              'parts': [
+                {'text': _customInstruction},
+                {'text': userMessage}
+              ]
+            }
+          ],
+          'generationConfig': {
+            'temperature': 0.7,
+            'topK': 40,
+            'topP': 0.95,
+            'maxOutputTokens': 1024,
+          }
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        if (mounted) {
+          setState(() {
+            aiResponse = data['candidates'][0]['content']['parts'][0]['text'] ?? 'ما فماش رد من الـ AI';
+          });
+        }
+      } else {
+        if (mounted) {
+          setState(() {
+            aiResponse = 'خطأ: ${response.statusCode}';
+          });
+        }
+      }
+    } catch (e) {
+      if (mounted) {
+        setState(() {
+          aiResponse = 'مشكلة: $e';
+        });
+      }
+    } finally {
+      if (mounted) {
+        setState(() {
+          isAIResponding = false;
+          _animationController.stop();
+        });
+      }
     }
   }
 
   @override
   void dispose() {
+    _speechToText.stop();
     _animationController.dispose();
     super.dispose();
   }
@@ -103,117 +183,118 @@ class _SpeechInteractionPageState extends State<SpeechInteractionPage>
       appBar: AppBar(
         backgroundColor: const Color(0xFF723D92),
         elevation: 0,
-        title: const Text(
-          'AI Assistant',
-          style: TextStyle(color: Colors.white),
-        ),
+        title: const Text('AI Assistant', style: TextStyle(color: Colors.white)),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => Navigator.pop(context),
         ),
       ),
-      body: Column(
-        children: [
-          Container(
-            height: 100,
-            decoration: const BoxDecoration(
-              color: Color(0xFF723D92),
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(30),
-                bottomRight: Radius.circular(30),
+      body: SafeArea(
+        child: Column(
+          children: [
+            Container(
+              height: 100,
+              decoration: const BoxDecoration(
+                color: Color(0xFF723D92),
+                borderRadius: BorderRadius.vertical(bottom: Radius.circular(30)),
               ),
-            ),
-            child: Center(
-              child: Text(
-                isListening ? 'Listening...' :
-                isAIResponding ? 'AI is responding...' :
-                _speechEnabled ? 'Tap the microphone to start' : 'Speech not available',
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 18,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ),
-          ),
-
-          Expanded(
-            child: ListView(
-              padding: const EdgeInsets.all(20),
-              children: [
-                if (userMessage.isNotEmpty)
-                  _buildMessageBubble(
-                    message: userMessage,
-                    isUser: true,
-                  ),
-                if (aiResponse.isNotEmpty)
-                  _buildMessageBubble(
-                    message: aiResponse,
-                    isUser: false,
-                  ),
-              ],
-            ),
-          ),
-
-          AnimatedBuilder(
-            animation: _animationController,
-            builder: (context, child) {
-              return Container(
-                height: 100,
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: CustomPaint(
-                  size: const Size(double.infinity, 100),
-                  painter: WaveformPainter(
-                    animation: _animationController,
-                    isActive: isListening || isAIResponding,
-                    color: const Color(0xFF723D92),
-                  ),
-                ),
-              );
-            },
-          ),
-
-          Container(
-            padding: const EdgeInsets.all(20),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                FloatingActionButton(
-                  heroTag: 'micButton',
-                  backgroundColor: isListening ? Colors.red : const Color(0xFF723D92),
-                  onPressed: _speechEnabled ? _toggleListening : null,
-                  child: Icon(
-                    isListening ? Icons.stop : Icons.mic,
+              child: Center(
+                child: Text(
+                  _getStatusText(),
+                  style: const TextStyle(
                     color: Colors.white,
-                    size: 30,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
                   ),
+                  textAlign: TextAlign.center,
                 ),
-              ],
+              ),
             ),
-          ),
-        ],
+            Expanded(
+              child: SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  children: [
+                    if (userMessage.isNotEmpty)
+                      _buildMessageBubble(message: userMessage, isUser: true),
+                    if (aiResponse.isNotEmpty)
+                      _buildMessageBubble(message: aiResponse, isUser: false),
+                  ],
+                ),
+              ),
+            ),
+            AnimatedBuilder(
+              animation: _animationController,
+              builder: (context, child) {
+                return Container(
+                  height: 80,
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: CustomPaint(
+                    size: const Size(double.infinity, 80),
+                    painter: WaveformPainter(
+                      animation: _animationController,
+                      isActive: isListening || isAIResponding,
+                      color: const Color(0xFF723D92),
+                    ),
+                  ),
+                );
+              },
+            ),
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: FloatingActionButton(
+                backgroundColor: isListening ? Colors.red : const Color(0xFF723D92),
+                onPressed: _isSpeechInitialized
+                    ? (isListening ? _stopListening : _startListening)
+                    : null,
+                child: Icon(
+                  isListening ? Icons.stop : Icons.mic,
+                  color: Colors.white,
+                  size: 30,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
 
+  String _getStatusText() {
+    if (!_isSpeechInitialized) return 'الصوت غير متوفر';
+    if (isListening) return 'نسمع فيك...';
+    if (isAIResponding) return 'الـ AI يجاوبك...';
+    return 'اضغط على الميكرو باش تبدا';
+  }
+
   Widget _buildMessageBubble({required String message, required bool isUser}) {
-    return Align(
-      alignment: isUser ? Alignment.centerRight : Alignment.centerLeft,
-      child: Container(
-        margin: const EdgeInsets.only(bottom: 12),
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-        decoration: BoxDecoration(
-          color: isUser ? const Color(0xFF723D92) : Colors.grey[200],
-          borderRadius: BorderRadius.circular(20),
-        ),
-        constraints: BoxConstraints(
-          maxWidth: MediaQuery.of(context).size.width * 0.75,
-        ),
-        child: Text(
-          message,
-          style: TextStyle(
-            color: isUser ? Colors.white : Colors.black87,
-            fontSize: 16,
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: Align(
+        alignment: isUser ? Alignment.centerRight : Alignment.centerLeft,
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          decoration: BoxDecoration(
+            color: isUser ? const Color(0xFF723D92) : Colors.grey[200],
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.1),
+                blurRadius: 4,
+                offset: const Offset(0, 2),
+              ),
+            ],
+          ),
+          constraints: BoxConstraints(
+            maxWidth: MediaQuery.of(context).size.width * 0.75,
+          ),
+          child: Text(
+            message,
+            style: TextStyle(
+              color: isUser ? Colors.white : Colors.black87,
+              fontSize: 16,
+            ),
           ),
         ),
       ),
@@ -237,29 +318,29 @@ class WaveformPainter extends CustomPainter {
     if (!isActive) return;
 
     final paint = Paint()
-      ..color = color.withOpacity(0.5)
-      ..strokeWidth = 3
+      ..color = color.withOpacity(0.6)
+      ..strokeWidth = 2.5
       ..strokeCap = StrokeCap.round;
 
-    final width = size.width;
-    final height = size.height;
-    const bars = 60;
-    final barWidth = width / bars;
+    const bars = 40;
+    final barWidth = size.width / bars;
+    final centerY = size.height / 2;
 
     for (var i = 0; i < bars; i++) {
       final x = i * barWidth;
       final normalized = (i / bars) * 2 * math.pi;
-      final wave = math.sin(normalized + (animation.value * 2 * math.pi));
-      final barHeight = (height / 2) * wave.abs();
+      final wave = math.sin(normalized + (animation.value * 4 * math.pi));
+      final barHeight = (size.height * 0.4) * wave.abs();
 
       canvas.drawLine(
-        Offset(x, height / 2 - barHeight / 2),
-        Offset(x, height / 2 + barHeight / 2),
+        Offset(x, centerY - barHeight),
+        Offset(x, centerY + barHeight),
         paint,
       );
     }
   }
 
   @override
-  bool shouldRepaint(WaveformPainter oldDelegate) => true;
+  bool shouldRepaint(WaveformPainter oldDelegate) =>
+      isActive != oldDelegate.isActive || animation.value != oldDelegate.animation.value;
 }
