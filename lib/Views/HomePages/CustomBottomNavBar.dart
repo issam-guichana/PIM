@@ -1,107 +1,110 @@
 import 'package:flutter/material.dart';
 
-class CustomBottomNavBarPatient extends StatelessWidget {
+
+class CustomBottomNavBarPatient extends StatefulWidget {
   final int selectedIndex;
-  final Function(int) onItemTapped;
+  final Function(int) onItemSelected;
 
   const CustomBottomNavBarPatient({
-    super.key,
+    Key? key,
     required this.selectedIndex,
-    required this.onItemTapped,
-  });
+    required this.onItemSelected, required Null Function(int index) onItemTapped,
+  }) : super(key: key);
+
+  @override
+  _CustomBottomNavBarPatientState createState() => _CustomBottomNavBarPatientState();
+}
+
+class _CustomBottomNavBarPatientState extends State<CustomBottomNavBarPatient> {
+  final List<IconData> _icons = [
+    Icons.home,
+    Icons.bar_chart,
+    Icons.camera_alt, // Camera in the center
+    Icons.calendar_today,
+    Icons.person, // Profile icon
+  ];
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      alignment: Alignment.bottomCenter,
-      children: [
-        Container(
-          height: 80,
-          decoration: BoxDecoration(
-            color: const Color(0xFF723D92), // Couleur de la barre de navigation
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(30),
-              topRight: Radius.circular(30),
+    return SafeArea(
+      child: Container(
+        margin: const EdgeInsets.all(16),
+        height: 60,
+        decoration: BoxDecoration(
+          color: const Color(0xFF723D92), // Purple background
+          borderRadius: BorderRadius.circular(30),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black12.withOpacity(0.2),
+              spreadRadius: 2,
+              blurRadius: 12,
+              offset: const Offset(0, 4),
             ),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.15),
-                blurRadius: 12,
-                offset: const Offset(0, -2),
-              ),
-            ],
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              _buildNavItem(Icons.home, 'Home', 0),
-              const SizedBox(width: 80), // Espace pour l'icône de caméra
-              _buildNavItem(Icons.person, 'Profile', 2),
-            ],
-          ),
+          ],
         ),
-        Positioned(
-          top: -35,
-          child: GestureDetector(
-            onTap: () => onItemTapped(1),
-            child: Container(
-              height: 100,
-              width: 100,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: const Color.fromARGB(255, 254, 251, 255), // Couleur du cercle de la caméra
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.15),
-                    blurRadius: 12,
-                    offset: const Offset(0, -2),
-                  ),
-                ],
-              ),
-              child: Center(
+        child: Stack(
+          clipBehavior: Clip.none,
+          alignment: Alignment.center,
+          children: [
+            // Floating Camera Button in Center
+            Positioned(
+              top: -35,
+              child: GestureDetector(
+                onTap: () => widget.onItemSelected(2), // Camera index
                 child: Container(
-                  height: 80,
-                  width: 80,
-                  decoration: const BoxDecoration(
+                  width: 70,
+                  height: 70,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
                     shape: BoxShape.circle,
-                    color: Color(0xFF723D92), // Couleur de fond du cercle de caméra
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.deepPurple.withOpacity(0.4),
+                        blurRadius: 15,
+                        spreadRadius: 3,
+                        offset: const Offset(0, 5),
+                      ),
+                    ],
                   ),
-                  child: Icon(
+                  child: const Icon(
                     Icons.camera_alt,
-                    color: selectedIndex == 1 ? Colors.white : Colors.white.withOpacity(0.6), // Change la couleur de la caméra
+                    color: Color(0xFF2F1E56),
                     size: 50,
                   ),
                 ),
               ),
             ),
-          ),
-        ),
-      ],
-    );
-  }
 
-  Widget _buildNavItem(IconData icon, String label, int index) {
-    final isSelected = selectedIndex == index;
-    return GestureDetector(
-      onTap: () => onItemTapped(index),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(
-            icon,
-            color: isSelected ? Colors.white : Colors.white.withOpacity(0.6), // Changement de couleur
-            size: 40,
-          ),
-          const SizedBox(height: 4),
-          Text(
-            label,
-            style: TextStyle(
-              fontWeight: FontWeight.w600,
-              fontSize: 14,
-              color: isSelected ? Colors.white : Colors.white.withOpacity(0.6), // Changement de couleur
+            // Navigation Icons (excluding the camera in the center)
+            Positioned(
+              bottom: 12,
+              left: 0,
+              right: 0,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: List.generate(_icons.length, (index) {
+                  if (index == 2) return const SizedBox(width: 60); // Skip space for the camera
+
+                  return GestureDetector(
+                    onTap: () {
+                      if (index == 4) {
+                        // Navigate to Edit Profile when clicking on profile icon
+                        
+                      } else {
+                        widget.onItemSelected(index);
+                      }
+                    },
+                    child: Icon(
+                      _icons[index],
+                      size: 40,
+                      color: widget.selectedIndex == index ? Colors.white : Colors.white.withOpacity(0.6),
+                    ),
+                  );
+                }),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

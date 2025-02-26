@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'CustomBottomNavBar.dart';
+import 'package:pim_project/Views/HomePages/CustomBottomNavBar.dart' show CustomBottomNavBarPatient;
 
 class HomePagePatient extends StatefulWidget {
   const HomePagePatient({super.key});
@@ -16,7 +15,7 @@ class _HomePagePatientState extends State<HomePagePatient> {
     setState(() {
       _selectedIndex = index;
     });
-    // Ajoutez ici la logique de navigation si nécessaire
+    // Add navigation logic here if necessary
   }
 
   @override
@@ -38,19 +37,22 @@ class _HomePagePatientState extends State<HomePagePatient> {
                   height: 200,
                 ),
               ),
-              Align(
-                alignment: Alignment.topRight,
+              Positioned(
+                top: 20,
+                right: 20,
                 child: IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    print("Notifications pressed");
+                  },
                   icon: const Icon(
                     Icons.notifications,
-                    size: 50,
+                    size: 40,
+                    color: Colors.black,
                   ),
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 16),
           const SizedBox(height: 40),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -94,13 +96,31 @@ class _HomePagePatientState extends State<HomePagePatient> {
               ),
             ),
           ),
+          const SizedBox(height: 20),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pushNamed(context, '/healthScreen');
+            },
+            child: const Text('Go to Health Screen'),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color(0xFF723D92),
+              padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+              textStyle: const TextStyle(fontSize: 16),
+            ),
+          ),
           const Spacer(),
-         
         ],
       ),
       bottomNavigationBar: CustomBottomNavBarPatient(
         selectedIndex: _selectedIndex,
-        onItemTapped: _onItemTapped,
+        onItemSelected: (int index) {  
+          setState(() {
+            _selectedIndex = index;
+          });
+          // Add navigation logic if needed
+          print("Selected Index: $index");
+        },
+        onItemTapped: (int index) {  },
       ),
     );
   }
@@ -117,16 +137,17 @@ class _HomePagePatientState extends State<HomePagePatient> {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Image.asset(image),
-          const SizedBox(height: 8),
+          Image.asset(image, width: 50, height: 50, fit: BoxFit.cover),
+          const SizedBox(width: 10),
           Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
                 name,
                 textAlign: TextAlign.center,
-                style:
-                    const TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+                style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
               ),
+              const SizedBox(height: 5),
               const Icon(Icons.phone_enabled_outlined,
                   size: 25, color: Color(0xFF723D92)),
             ],

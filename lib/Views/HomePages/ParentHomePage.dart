@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:pim_project/Controllers/AuthProviders/AuthProvider.dart';
+import 'package:pim_project/Views/HomePages/CustomBottomNavBarParent.dart';
+import 'package:provider/provider.dart';
 
-import 'CustomBottomNavBar.dart';
 
 class HomePageParent extends StatefulWidget {
   const HomePageParent({super.key});
@@ -21,6 +23,9 @@ class _HomePageParentState extends State<HomePageParent> {
 
   @override
   Widget build(BuildContext context) {
+    final authProvider = Provider.of<AuthProvider>(context);
+    final userId = authProvider.user?.id; // Récupérer l'ID de l'utilisateur
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: Column(
@@ -97,7 +102,7 @@ class _HomePageParentState extends State<HomePageParent> {
           const Spacer(),
         ],
       ),
-      bottomNavigationBar: CustomBottomNavBarPatient(
+      bottomNavigationBar: CustomBottomNavBarParent(
         selectedIndex: _selectedIndex,
         onItemTapped: _onItemTapped,
       ),

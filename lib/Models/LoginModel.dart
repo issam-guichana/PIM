@@ -1,19 +1,22 @@
 class User {
-  final String email;
-  final String token;
-  final String role; // Ajout du champ pour le rôle
+  final String? email;
+  final String? id;
+  final String? token;
+  final String? role;
 
   User({
-    required this.email,
-    required this.token,
-    required this.role, // Ajout du rôle dans le constructeur
+    this.id,
+    this.email,
+    this.token,
+    this.role,
   });
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
-      email: json['email'] ?? '',
-      token: json['access_token'] ?? '', // Assurez-vous que le token est correctement nommé
-      role: json['role'] ?? '', // Récupération du rôle depuis le JSON
+      id: json['_id'],  // Assuming '_id' is the key in the JSON response.
+      email: json['email'],
+      token: json['access_token'],  // Make sure the response key is 'access_token'.
+      role: json['role'],
     );
   }
 }

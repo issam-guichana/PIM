@@ -1,0 +1,11 @@
+framework module health_kit_reporter {
+  umbrella header "health_kit_reporter-umbrella.h"
+
+  export *
+  module * { export * }
+}
+
+module health_kit_reporter.Swift {
+  header "health_kit_reporter-Swift.h"
+  requires objc
+}
