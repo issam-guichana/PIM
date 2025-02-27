@@ -9,29 +9,41 @@ class HealthScreen extends StatefulWidget {
 
 class _HealthScreenState extends State<HealthScreen> {
   final HealthController _healthController = HealthController();
-  int steps = 0;
-  double heartRate = 0;
-  double calories = 0;
+  Map<String, dynamic> healthData = {
+    'steps': 0,
+    'heartRate': 0.0,
+    'caloriesBurned': 0.0
+  };
 
-  Future<void> fetchData() async {
-    await _healthController.fetchAndSendHealthData();
-    setState(() {});
+  @override
+  void initState() {
+    super.initState();
+    _healthController.listenForHealthUpdates((data) {
+      setState(() {
+        healthData = data;
+      });
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Données HealthKit")),
+      appBar: AppBar(title: Text('Santé')),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text("Pas : $steps"),
-            Text("Fréquence cardiaque : $heartRate bpm"),
-            Text("Calories : $calories kcal"),
+            Text("👣 Pas : ${healthData['steps']}", style: TextStyle(fontSize: 20)),
+            Text("❤️ Fréquence cardiaque : ${healthData['heartRate']} bpm",
+                style: TextStyle(fontSize: 20)),
+            Text("🔥 Calories brûlées : ${healthData['caloriesBurned']} kcal",
+                style: TextStyle(fontSize: 20)),
+            SizedBox(height: 20),
             ElevatedButton(
-              onPressed: fetchData,
-              child: Text("Rafraîchir"),
+              onPressed: () async {
+                await _healthController.fetchAndSendHealthData();
+              },
+              child: Text("📥 Récupérer et envoyer les données"),
             ),
           ],
         ),
