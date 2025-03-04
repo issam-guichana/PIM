@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pim_project/Views/HomePages/PatientHomePage.dart';
+
 import 'package:pim_project/Views/HomePages/health_screen.dart';
+
 
 import '../Views/Auth/LoginScreen.dart';
 import '../Views/HomePages/ParentHomePage.dart';
@@ -14,8 +16,7 @@ class AppRoutes {
   static const String secondIntro = '/secondIntro';
   static const String homeParent = '/homePageParent';
   static const String health = '/health';
- 
-
+  static const String healthHistory = '/healthHistory'; 
 
   static Map<String, WidgetBuilder> getRoutes() {
     return {
@@ -24,8 +25,8 @@ class AppRoutes {
       login: (context) => const LoginScreen(),
       homePatient: (context) => const HomePagePatient(),
       homeParent: (context) => const HomePageParent(),
-       health: (context) => HealthScreen(),
- 
+      health: (context) => const HealthScreen(),
+    
     };
   }
 }

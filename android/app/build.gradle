@@ -29,7 +29,18 @@ android {
         versionCode = flutter.versionCode
         versionName = flutter.versionName
     }
+ signingConfigs {
+        release {
+            debug{
+            keyAlias 'mykeyalias'
+            keyPassword 'nawnaw'
+            storeFile file('test1.jks')
+            storePassword 'nawnaw'
+        }
+    }
+ }
 
+ 
     buildTypes {
         release {
             // TODO: Add your own signing config for the release build.

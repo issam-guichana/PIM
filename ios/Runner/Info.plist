@@ -48,5 +48,6 @@
 <string>Cette application a besoin d'accéder à vos données de santé.</string>
 <key>NSHealthUpdateUsageDescription</key>
 <string>Cette application utilise HealthKit pour accéder à vos données de santé.</string>
+
 </dict>
 </plist>

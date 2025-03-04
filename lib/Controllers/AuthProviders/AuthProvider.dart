@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
 import 'package:pim_project/Controllers/ProfileController.dart';
 import 'package:pim_project/Models/LoginModel.dart';
@@ -11,6 +12,7 @@ class AuthProvider extends ChangeNotifier {
   bool _isLoading = false;
   String? _error;
   String? _successMessage;
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
 
   User? get user => _user;
   bool get isLoading => _isLoading;
@@ -31,12 +33,11 @@ class AuthProvider extends ChangeNotifier {
       notifyListeners();
 
       final response = await http.post(
-        Uri.parse('http://192.168.1.162:3000/user/login'),
+        Uri.parse('http://192.168.137.27:3000/user/login'),
         headers: {'Content-Type': 'application/json'},
         body: json.encode({'email': email, 'password': password}),
       );
 
-      // Handle the response
       if (response.statusCode == 200 || response.statusCode == 201) {
         final data = json.decode(response.body);
 
@@ -47,19 +48,15 @@ class AuthProvider extends ChangeNotifier {
         }
 
         _user = User.fromJson(data['user']);
-        print("User role: ${_user?.role}");
 
-        // Fetch User Profile After Login
         WidgetsBinding.instance.addPostFrameCallback((_) {
           if (_user?.id != null) {
-            Provider.of<ProfileProvider>(context, listen: false)
-                .fetchUserProfile(_user!.id!);
+            Provider.of<ProfileProvider>(context, listen: false).fetchUserProfile(_user!.id!);
           }
 
           _successMessage = "✅ Login successful!";
           notifyListeners();
 
-          // Redirection vers la page Health après connexion
           Navigator.pushReplacementNamed(context, AppRoutes.health);
         });
 
@@ -79,6 +76,58 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
+  Future<bool> signInWithGoogle(BuildContext context) async {
+    try {
+      _isLoading = true;
+      notifyListeners();
+
+      final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+      if (googleUser == null) {
+        _error = 'Google sign-in aborted';
+        _isLoading = false;
+        notifyListeners();
+        return false;
+      }
+
+      final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+
+      final response = await http.post(
+        Uri.parse('http://192.168.137.27:3000/user/google-login'),
+        headers: {'Content-Type': 'application/json'},
+        body: json.encode({'token': googleAuth.idToken}),
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final data = json.decode(response.body);
+        _user = User.fromJson(data['user']);
+
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (_user?.id != null) {
+            Provider.of<ProfileProvider>(context, listen: false).fetchUserProfile(_user!.id!);
+          }
+
+          _successMessage = "✅ Google sign-in successful!";
+          notifyListeners();
+
+          Navigator.pushReplacementNamed(context, AppRoutes.health);
+        });
+
+        return true;
+      } else {
+        _error = 'Google sign-in failed';
+        notifyListeners();
+        return false;
+      }
+    } catch (e) {
+      _error = e.toString();
+      notifyListeners();
+      return false;
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
+
   void clearError() {
     _error = null;
     notifyListeners();
@@ -86,6 +135,7 @@ class AuthProvider extends ChangeNotifier {
 
   void logout() {
     _user = null;
+    _googleSignIn.signOut();
     notifyListeners();
   }
 }

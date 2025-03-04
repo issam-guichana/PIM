@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pim_project/Controllers/AuthProviders/AuthProvider.dart';
 import 'package:provider/provider.dart';
 import '../../routes/routes.dart';
@@ -114,6 +115,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                 style: const TextStyle(color: Colors.red, fontSize: 14),
                               ),
                             ),
+
+                          const SizedBox(height: 20),
+
+                          // Social Login
+                          _buildSocialLogin(),
                         ],
                       ),
                     ),
@@ -221,4 +227,36 @@ class _LoginScreenState extends State<LoginScreen> {
       },
     );
   }
-}
+
+  /// **🔹 Social Login (Google)**
+  Widget _buildSocialLogin() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        _buildSocialIcon(FontAwesomeIcons.google, _handleGoogleSignIn),
+      ],
+    );
+  }
+
+  Widget _buildSocialIcon(IconData icon, VoidCallback onTap) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.all(8),
+        decoration: BoxDecoration(
+          border: Border.all(color: const Color(0xFF723D92)),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: FaIcon(icon, color: const Color(0xFF723D92), size: 24),
+      ),
+    );
+  }
+
+  void _handleGoogleSignIn() async {
+  final authProvider = Provider.of<AuthProvider>(context, listen: false);
+  final user = await authProvider.signInWithGoogle(context); // Pass the context if needed.
+  if (user != null) {
+    Navigator.pushReplacementNamed(context, AppRoutes.health);
+  }
+}}
+
