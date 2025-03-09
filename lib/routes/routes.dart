@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pim_project/Views/HomePages/PatientHomePage.dart';
+import 'package:pim_project/Views/HomePages/health_history.dart';
 
 import 'package:pim_project/Views/HomePages/health_screen.dart';
 
@@ -26,6 +27,8 @@ class AppRoutes {
       homePatient: (context) => const HomePagePatient(),
       homeParent: (context) => const HomePageParent(),
       health: (context) => const HealthScreen(),
+      healthHistory: (context) => HealthHistoryScreen(),
+
     
     };
   }

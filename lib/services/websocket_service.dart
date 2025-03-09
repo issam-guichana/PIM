@@ -1,10 +1,11 @@
+// ignore: library_prefixes
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class SocketService {
   IO.Socket? socket;
 
   void connect() {
-    socket = IO.io('ws://192.168.137.27:3000', <String, dynamic>{  // ⚠️ Mets l'IP correcte ici
+    socket = IO.io('ws://192.168.1.9:3000', <String, dynamic>{  // ⚠️ Mets l'IP correcte ici
       'transports': ['websocket'],
       'autoConnect': true,
     });

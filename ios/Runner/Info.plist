@@ -26,6 +26,17 @@
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSBonjourServices</key>
+	<array>
+		<string>_dartobservatory._tcp</string>
+		<string>_flutter._tcp</string>
+	</array>
+	<key>NSHealthShareUsageDescription</key>
+	<string>Cette application a besoin d'accéder à vos données de santé.</string>
+	<key>NSHealthUpdateUsageDescription</key>
+	<string>Cette application utilise HealthKit pour accéder à vos données de santé.</string>
+	<key>NSLocalNetworkUsageDescription</key>
+	<string>Cette application nécessite l'accès au réseau local pour se connecter à d'autres appareils.</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>
@@ -44,10 +55,5 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>NSHealthShareUsageDescription</key>
-<string>Cette application a besoin d'accéder à vos données de santé.</string>
-<key>NSHealthUpdateUsageDescription</key>
-<string>Cette application utilise HealthKit pour accéder à vos données de santé.</string>
-
 </dict>
 </plist>

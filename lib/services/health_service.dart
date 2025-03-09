@@ -1,53 +1,49 @@
 import 'dart:convert';
-
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:pim_project/Models/health_data.dart';
 
 class HealthService {
   static const MethodChannel _channel = MethodChannel('healthkit_channel');
+  final String _baseUrl = 'http://192.168.1.9:3000/health';
 
-  // Fonction pour récupérer les données de santé
+  // Function to retrieve health data from HealthKit
   Future<Map<String, dynamic>> fetchHealthData() async {
     try {
-      // Appel au code natif pour récupérer les données HealthKit
+      // Call to native code to retrieve HealthKit data
       final data = await _channel.invokeMethod<Map<dynamic, dynamic>>('getHealthData');
-
-      // Retourner les données en map et s'assurer que toutes les clés et valeurs sont des strings
+      // Return the data as a map and ensure all keys and values are strings
       return data?.map((key, value) => MapEntry(key.toString(), value)) ?? {};
     } catch (e) {
-      // En cas d'erreur, on retourne un message d'erreur vide
-      print("Erreur récupération HealthKit: $e");
+      // In case of error, return an empty error message
+      print("Error fetching HealthKit data: $e");
       return {};
     }
   }
-  final String _baseUrl = 'http://192.168.43.73:3000/health';
 
-  /// Récupère l'historique des données de santé depuis le backend
-  Future<void> fetchHealthHistory(String userId, int days) async {
-  final String url = '$_baseUrl/history/$userId/$days';
+  /// Fetches health data history from the backend
+  Future<List<HealthData>> fetchHealthHistory(String userId, int days) async {
+    final String url = '$_baseUrl/history/$userId/$days';
+    try {
+      final response = await http.get(Uri.parse(url));
 
-  try {
-    final response = await http.get(Uri.parse(url));
+      if (response.statusCode == 200) {
+        final List<dynamic> data = jsonDecode(response.body);
+        // Log the response to check
+        print('✅ API Response: $data');
 
-    if (response.statusCode == 200) {
-      final data = jsonDecode(response.body);
-      print('✅ Réponse API : $data'); // 👀 Ajoute ce log pour voir la réponse
-
-      // Vérifie que les valeurs ne sont pas null avant la conversion
-      final steps = (data['steps'] ?? 0) as int;
-      final heartRate = (data['heartRate'] ?? 0.0) as double;
-      final caloriesBurned = (data['caloriesBurned'] ?? 0.0) as double;
-      final sleep = (data['sleep'] ?? 0.0) as double;
-
-      print('✅ Données formatées : $steps, $heartRate, $caloriesBurned, $sleep');
-
-    } else {
-      print('⚠️ Erreur lors de la récupération de l\'historique : ${response.statusCode}');
+        // Convert the JSON data to a list of HealthData objects
+        return data.map((item) => HealthData.fromJson(item)).toList();
+      } else {
+        // Handle non-200 responses
+        print('⚠️ Error retrieving history: ${response.statusCode}');
+        throw Exception('Failed to fetch health history');
+      }
+    } catch (e) {
+      // Handle errors related to the connection or JSON parsing
+      print('🔴 Connection or JSON parsing error: $e');
+      throw Exception('Error connecting to the server');
     }
-  } catch (e) {
-    print('🔴 Erreur de connexion ou parsing JSON : $e');
   }
-}
 }
 
