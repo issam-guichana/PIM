@@ -33,7 +33,7 @@ class AuthProvider extends ChangeNotifier {
       notifyListeners();
 
       final response = await http.post(
-        Uri.parse('http://192.168.1.9:3000/user/login'),
+        Uri.parse('http://192.168.1.133:3000/user/login'),
         headers: {'Content-Type': 'application/json'},
         body: json.encode({'email': email, 'password': password}),
       );
@@ -92,7 +92,7 @@ class AuthProvider extends ChangeNotifier {
       final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
 
       final response = await http.post(
-        Uri.parse('http://192.168.1.9:3000/user/google-login'),
+        Uri.parse('http://192.168.1.133:3000/user/google-login'),
         headers: {'Content-Type': 'application/json'},
         body: json.encode({'token': googleAuth.idToken}),
       );

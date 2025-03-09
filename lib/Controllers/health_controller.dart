@@ -22,6 +22,7 @@ class HealthController extends ChangeNotifier {
     loadDataFromPreferences();
   }
 
+  /// Charge les données depuis le stockage local (SharedPreferences)
   Future<void> loadDataFromPreferences() async {
     try {
       final prefs = await SharedPreferences.getInstance();
@@ -32,11 +33,13 @@ class HealthController extends ChangeNotifier {
         sleep: prefs.getDouble('sleep') ?? 0.0,
       );
       notifyListeners();
+      print("✅ Données chargées depuis SharedPreferences: $_healthData");
     } catch (e) {
-      print('Error loading data from SharedPreferences: $e');
+      print('🔴 Erreur chargement SharedPreferences: $e');
     }
   }
 
+  /// Sauvegarde les données dans SharedPreferences
   Future<void> saveDataToPreferences() async {
     try {
       final prefs = await SharedPreferences.getInstance();
@@ -44,20 +47,39 @@ class HealthController extends ChangeNotifier {
       await prefs.setDouble('heartRate', _healthData.heartRate);
       await prefs.setDouble('caloriesBurned', _healthData.caloriesBurned);
       await prefs.setDouble('sleep', _healthData.sleep);
+      print("✅ Données sauvegardées dans SharedPreferences");
     } catch (e) {
-      print('Error saving data to SharedPreferences: $e');
+      print('🔴 Erreur sauvegarde SharedPreferences: $e');
     }
   }
 
+  /// Récupère les données de HealthKit et les envoie via WebSocket
   Future<void> fetchAndSendHealthData() async {
     try {
       final newHealthData = await _healthService.fetchHealthData();
+
+      if (newHealthData.isEmpty) {
+        print("⚠️ Aucune nouvelle donnée reçue de HealthKit");
+        return;
+      }
+
       _healthData = HealthData.fromMap(newHealthData);
+      print("✅ Nouvelles données récupérées: $_healthData");
+
       _socketService.sendHealthData(_healthData.toJson());
-      saveDataToPreferences();
+      print("📡 Données envoyées via WebSocket");
+
+      await saveDataToPreferences();
       notifyListeners();
     } catch (e) {
-      print('Error fetching and sending health data: $e');
+      print('🔴 Erreur lors de la récupération et l’envoi des données: $e');
     }
+  }
+
+  /// Ferme proprement la connexion WebSocket
+  @override
+  void dispose() {
+    _socketService.disconnect();
+    super.dispose();
   }
 }

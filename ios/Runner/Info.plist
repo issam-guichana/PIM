@@ -55,5 +55,11 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+
+	<!-- Ajout pour SharedPreferences -->
+	<key>NSUserDefaults</key>
+	<dict/>
+	<key>NSUserDefaultsSuiteName</key>
+	<string>group.com.yourapp.bundle</string>
 </dict>
 </plist>

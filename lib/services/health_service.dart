@@ -5,44 +5,47 @@ import 'package:pim_project/Models/health_data.dart';
 
 class HealthService {
   static const MethodChannel _channel = MethodChannel('healthkit_channel');
-  final String _baseUrl = 'http://192.168.1.9:3000/health';
+  final String _baseUrl = 'http://192.168.1.133:3000/health';
 
-  // Function to retrieve health data from HealthKit
+  /// Récupère les données de santé depuis HealthKit (iOS)
   Future<Map<String, dynamic>> fetchHealthData() async {
     try {
-      // Call to native code to retrieve HealthKit data
       final data = await _channel.invokeMethod<Map<dynamic, dynamic>>('getHealthData');
-      // Return the data as a map and ensure all keys and values are strings
-      return data?.map((key, value) => MapEntry(key.toString(), value)) ?? {};
+
+      if (data == null) {
+        print("⚠️ Aucune donnée reçue de HealthKit");
+        return {};
+      }
+
+      // ✅ Conversion correcte en `Map<String, dynamic>`
+      final parsedData = data.map<String, dynamic>((key, value) => MapEntry(key.toString(), value));
+
+      print("✅ Données reçues de HealthKit: $parsedData");
+      return parsedData;
     } catch (e) {
-      // In case of error, return an empty error message
-      print("Error fetching HealthKit data: $e");
+      print("🔴 Erreur lors de la récupération des données HealthKit: $e");
       return {};
     }
   }
 
-  /// Fetches health data history from the backend
+  /// Récupère l'historique des données de santé depuis le backend
   Future<List<HealthData>> fetchHealthHistory(String userId, int days) async {
     final String url = '$_baseUrl/history/$userId/$days';
+
     try {
       final response = await http.get(Uri.parse(url));
 
       if (response.statusCode == 200) {
         final List<dynamic> data = jsonDecode(response.body);
-        // Log the response to check
         print('✅ API Response: $data');
-
-        // Convert the JSON data to a list of HealthData objects
         return data.map((item) => HealthData.fromJson(item)).toList();
       } else {
-        // Handle non-200 responses
-        print('⚠️ Error retrieving history: ${response.statusCode}');
-        throw Exception('Failed to fetch health history');
+        print('⚠️ Erreur récupération historique: ${response.statusCode}');
+        throw Exception('Échec de la récupération de l’historique');
       }
     } catch (e) {
-      // Handle errors related to the connection or JSON parsing
-      print('🔴 Connection or JSON parsing error: $e');
-      throw Exception('Error connecting to the server');
+      print('🔴 Erreur de connexion ou parsing JSON: $e');
+      throw Exception('Erreur de connexion au serveur');
     }
   }
 }

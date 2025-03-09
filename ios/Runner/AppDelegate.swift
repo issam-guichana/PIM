@@ -27,7 +27,7 @@ import HealthKit
     
     private func getHealthData(result: @escaping FlutterResult) {
         guard HKHealthStore.isHealthDataAvailable() else {
-            result(FlutterError(code: "HEALTHKIT_NOT_AVAILABLE", message: "HealthKit is not disponible sur cet appareil", details: nil))
+            result(FlutterError(code: "HEALTHKIT_NOT_AVAILABLE", message: "HealthKit non disponible", details: nil))
             return
         }
         
@@ -53,8 +53,8 @@ import HealthKit
     
     private func fetchHealthData(result: @escaping FlutterResult) {
         let now = Date()
-        let startOfDay = Calendar.current.startOfDay(for: now)
-        let predicate = HKQuery.predicateForSamples(withStart: startOfDay, end: now, options: .strictStartDate)
+        let startOfYesterday = Calendar.current.date(byAdding: .day, value: -1, to: Calendar.current.startOfDay(for: now))
+        let predicate = HKQuery.predicateForSamples(withStart: startOfYesterday, end: now, options: .strictStartDate)
         
         let group = DispatchGroup()
         var steps: Double = 0
@@ -67,63 +67,57 @@ import HealthKit
         let caloriesType = HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned)!
         let sleepType = HKCategoryType.categoryType(forIdentifier: .sleepAnalysis)!
         
-        // Récupération des PAS
+        // 🔹 Récupération des PAS
         group.enter()
         let stepsQuery = HKStatisticsQuery(quantityType: stepsType, quantitySamplePredicate: predicate, options: .cumulativeSum) { _, result, error in
             defer { group.leave() }
             if let quantity = result?.sumQuantity() {
                 steps = quantity.doubleValue(for: HKUnit.count())
-            } else {
-                print("Erreur récupération des pas: \(error?.localizedDescription ?? "Inconnu")")
             }
         }
         healthStore.execute(stepsQuery)
         
-        // Récupération de la FRÉQUENCE CARDIAQUE (dernier échantillon)
+        // 🔹 Récupération de la FRÉQUENCE CARDIAQUE (dernier échantillon)
         group.enter()
         let heartRateQuery = HKSampleQuery(sampleType: heartRateType, predicate: predicate, limit: 1, sortDescriptors: [NSSortDescriptor(key: HKSampleSortIdentifierStartDate, ascending: false)]) { _, samples, error in
             defer { group.leave() }
             if let sample = samples?.first as? HKQuantitySample {
                 heartRate = sample.quantity.doubleValue(for: HKUnit(from: "count/min"))
-            } else {
-                print("Erreur récupération de la fréquence cardiaque: \(error?.localizedDescription ?? "Inconnu")")
             }
         }
         healthStore.execute(heartRateQuery)
         
-        // Récupération des CALORIES BRÛLÉES
+        // 🔹 Récupération des CALORIES BRÛLÉES
         group.enter()
         let caloriesQuery = HKStatisticsQuery(quantityType: caloriesType, quantitySamplePredicate: predicate, options: .cumulativeSum) { _, result, error in
             defer { group.leave() }
             if let quantity = result?.sumQuantity() {
                 calories = quantity.doubleValue(for: HKUnit.kilocalorie())
-            } else {
-                print("Erreur récupération des calories: \(error?.localizedDescription ?? "Inconnu")")
             }
         }
         healthStore.execute(caloriesQuery)
         
-        // Récupération de la DERNIÈRE PÉRIODE DE SOMMEIL
+        // 🔹 Récupération de TOUTES les périodes de sommeil
         group.enter()
-        let sleepQuery = HKSampleQuery(sampleType: sleepType, predicate: predicate, limit: 1, sortDescriptors: [NSSortDescriptor(key: HKSampleSortIdentifierEndDate, ascending: false)]) { _, samples, error in
+        let sleepQuery = HKSampleQuery(sampleType: sleepType, predicate: predicate, limit: 0, sortDescriptors: nil) { _, samples, error in
             defer { group.leave() }
-            if let sample = samples?.first as? HKCategorySample {
-                if sample.value == HKCategoryValueSleepAnalysis.asleep.rawValue {
-                    let sleepDuration = sample.endDate.timeIntervalSince(sample.startDate) / 3600 // Convertir en heures
-                    sleep = sleepDuration
+            if let samples = samples as? [HKCategorySample] {
+                for sample in samples {
+                    if sample.value == HKCategoryValueSleepAnalysis.inBed.rawValue ||
+                        sample.value == HKCategoryValueSleepAnalysis.asleep.rawValue {
+                        sleep += sample.endDate.timeIntervalSince(sample.startDate) / 3600 // Convertir en heures
+                    }
                 }
-            } else {
-                print("Erreur récupération du sommeil: \(error?.localizedDescription ?? "Inconnu")")
             }
         }
         healthStore.execute(sleepQuery)
         
-        // Une fois toutes les requêtes terminées
+        // 🔹 Une fois toutes les requêtes terminées, on envoie les données à Flutter
         group.notify(queue: .main) {
             let data: [String: Any] = [
                 "steps": steps,
                 "heartRate": heartRate,
-                "caloriesBurned": calories,
+                "calories": calories,
                 "sleep": sleep
             ]
             result(data)

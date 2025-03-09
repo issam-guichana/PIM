@@ -32,7 +32,7 @@ class ProfileProvider extends ChangeNotifier {
 
       print("🔄 Fetching user profile for ID: $userId");
       final response = await http.get(
-        Uri.parse('http://192.168.1.9:3000/user/$userId'),
+        Uri.parse('http://192.168.1.133:3000/user/$userId'),
         headers: {'Content-Type': 'application/json'},
       );
 
@@ -64,7 +64,7 @@ class ProfileProvider extends ChangeNotifier {
     notifyListeners();
 
     final response = await http.patch( // ✅ Changer PUT -> PATCH
-      Uri.parse('http://192.168.1.9:3000/user/update'), // ✅ Enlever l'ID de l'URL
+      Uri.parse('http://192.168.1.133:3000/user/update'), // ✅ Enlever l'ID de l'URL
       headers: {'Content-Type': 'application/json'},
       body: json.encode({
         "id": userId, // ✅ Ajouter l'ID dans le body
@@ -99,7 +99,7 @@ Future<bool> verifyOtp(String email, String otp) async {
     notifyListeners();
 
     final response = await http.post(
-      Uri.parse('http://192.168.1.9:3000/user/verify-otp'),
+      Uri.parse('http://192.168.1.133:3000/user/verify-otp'),
       headers: {'Content-Type': 'application/json'},
       body: json.encode({"identifier": email, "otp": otp}),
     );
@@ -139,7 +139,7 @@ Future<bool> sendOtp(String email) async {
     notifyListeners();
 
     final response = await http.post(
-      Uri.parse('http://192.168.1.9:3000/user/send-otp'),
+      Uri.parse('http://192.168.1.133:3000/user/send-otp'),
       headers: {'Content-Type': 'application/json'},
       body: json.encode({"email": email}),
     );
@@ -177,7 +177,7 @@ Future<bool> sendOtp(String email) async {
       notifyListeners();
 
       final response = await http.post(
-        Uri.parse('http://192.168.1.9:3000/user/resend-otp'), // ✅ Correct API route
+        Uri.parse('http://192.168.1.133:3000/user/resend-otp'), // ✅ Correct API route
         headers: {'Content-Type': 'application/json'},
         body: json.encode({"email": email}),
       );
@@ -212,7 +212,7 @@ Future<bool> sendOtp(String email) async {
     notifyListeners();
 
     final response = await http.patch( // ✅ Change to PATCH
-      Uri.parse('http://192.168.1.9:3000/user/update-password'), 
+      Uri.parse('http://192.168.1.133:3000/user/update-password'), 
       headers: {'Content-Type': 'application/json'},
       body: json.encode({"id": userId, "password": newPassword}), 
     );
@@ -246,7 +246,7 @@ Future<bool> sendOtp(String email) async {
     notifyListeners();
 
     final response = await http.post(
-      Uri.parse('http://192.168.1.9:3000/user/forget-password'),
+      Uri.parse('http://192.168.1.133:3000/user/forget-password'),
       headers: {'Content-Type': 'application/json'},
       body: json.encode({"email": email, "newPassword": newPassword}),
     );
@@ -284,7 +284,7 @@ Future<bool> sendOtp(String email) async {
   Future<bool> _loginUser(BuildContext context, String email, String password) async {
     try {
       final response = await http.post(
-        Uri.parse('http://192.168.1.9:3000/user/login'),
+        Uri.parse('http://192.168.1.133:3000/user/login'),
         headers: {'Content-Type': 'application/json'},
         body: json.encode({"email": email, "password": password}),
       );
