@@ -4,6 +4,7 @@ import 'package:pim_project/Views/AuthPages/ForgotPwdScreen.dart';
 import 'package:pim_project/Views/AuthPages/SplashScreen.dart';
 import 'package:pim_project/Views/HomePages/PatientHomePage.dart';
 import 'package:pim_project/Views/ProfilePages/ProfilePage.dart';
+import 'package:pim_project/Views/VoiceRecordingPages/VoiceRecordingPage.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -28,7 +29,8 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home:HomePage(),
+       // home:HomePage(),
+      home:VoiceRecordingPage(),
 
       // home:  ForgotPasswordScreen() ,
 

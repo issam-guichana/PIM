@@ -11,6 +11,15 @@ class SpeechInteractionPage extends StatefulWidget {
   _SpeechInteractionPageState createState() => _SpeechInteractionPageState();
 }
 
+class Message {
+  final String text;
+  final bool isUser;
+  final DateTime timestamp;
+
+  Message({required this.text, required this.isUser})
+      : timestamp = DateTime.now();
+}
+
 class _SpeechInteractionPageState extends State<SpeechInteractionPage>
     with SingleTickerProviderStateMixin {
   bool isListening = false;
@@ -19,12 +28,16 @@ class _SpeechInteractionPageState extends State<SpeechInteractionPage>
   String aiResponse = '';
   bool _isSpeechInitialized = false;
 
+  // List to store the entire conversation history
+  List<Message> conversationHistory = [];
+
   final SpeechToText _speechToText = SpeechToText();
   late AnimationController _animationController;
+  final ScrollController _scrollController = ScrollController();
 
   // Gemini configuration
-  static const String _geminiApiUrl = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent';
-  static const String _geminiApiKey = 'AIzaSyB-lwjXMpc6O-pb7ZYSkXpNynowfQLwKKU'; // Replace with your actual API key
+  static const String _geminiApiUrl = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
+  static const String _geminiApiKey = 'AIzaSyB-lwjXMpc6O-pb7ZYSkXpNynowfQLwKKU';
 
   static const String _customInstruction = '''
    You are a friendly and patient vocal assistant designed to help Alzheimer's patients in Tunisian language(Darija).
@@ -91,6 +104,10 @@ class _SpeechInteractionPageState extends State<SpeechInteractionPage>
       });
     }
     if (userMessage.trim().isNotEmpty) {
+      // Add user message to conversation history
+      setState(() {
+        conversationHistory.add(Message(text: userMessage, isUser: true));
+      });
       await _handleAIResponse();
     }
   }
@@ -106,6 +123,20 @@ class _SpeechInteractionPageState extends State<SpeechInteractionPage>
     }
   }
 
+  // Create a formatted conversation history for context
+  String _getConversationContext() {
+    // Limit to the last 10 exchanges to avoid token limits
+    final relevantHistory = conversationHistory.length > 10
+        ? conversationHistory.sublist(conversationHistory.length - 10)
+        : conversationHistory;
+
+    String context = "Previous conversation:\n";
+    for (var message in relevantHistory) {
+      context += "${message.isUser ? 'User' : 'Assistant'}: ${message.text}\n";
+    }
+    return context;
+  }
+
   Future<void> _handleAIResponse() async {
     if (mounted) {
       setState(() {
@@ -113,6 +144,9 @@ class _SpeechInteractionPageState extends State<SpeechInteractionPage>
         _animationController.repeat();
       });
     }
+
+    // Get conversation context to provide to the AI
+    final conversationContext = _getConversationContext();
 
     try {
       final response = await http.post(
@@ -126,7 +160,7 @@ class _SpeechInteractionPageState extends State<SpeechInteractionPage>
             {
               'parts': [
                 {'text': _customInstruction},
-                {'text': userMessage}
+                {'text': 'Current conversation history:\n$conversationContext\nUser\'s latest message: $userMessage\nPlease respond to this latest message with the conversation context in mind:'}
               ]
             }
           ],
@@ -141,22 +175,41 @@ class _SpeechInteractionPageState extends State<SpeechInteractionPage>
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
+        final aiResponseText = data['candidates'][0]['content']['parts'][0]['text'] ?? 'ما فماش رد من الـ AI';
+
         if (mounted) {
           setState(() {
-            aiResponse = data['candidates'][0]['content']['parts'][0]['text'] ?? 'ما فماش رد من الـ AI';
+            aiResponse = aiResponseText;
+            // Add AI response to conversation history
+            conversationHistory.add(Message(text: aiResponseText, isUser: false));
+          });
+
+          // Scroll to bottom after adding new messages
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            if (_scrollController.hasClients) {
+              _scrollController.animateTo(
+                _scrollController.position.maxScrollExtent,
+                duration: const Duration(milliseconds: 300),
+                curve: Curves.easeOut,
+              );
+            }
           });
         }
       } else {
         if (mounted) {
           setState(() {
             aiResponse = 'خطأ: ${response.statusCode}';
+            conversationHistory.add(Message(text: aiResponse, isUser: false));
           });
+          print('Response status: ${response.statusCode}');
+          print('Response body: ${response.body}');
         }
       }
     } catch (e) {
       if (mounted) {
         setState(() {
           aiResponse = 'مشكلة: $e';
+          conversationHistory.add(Message(text: aiResponse, isUser: false));
         });
       }
     } finally {
@@ -173,6 +226,7 @@ class _SpeechInteractionPageState extends State<SpeechInteractionPage>
   void dispose() {
     _speechToText.stop();
     _animationController.dispose();
+    _scrollController.dispose();
     super.dispose();
   }
 
@@ -188,6 +242,20 @@ class _SpeechInteractionPageState extends State<SpeechInteractionPage>
           icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => Navigator.pop(context),
         ),
+        actions: [
+          // Add clear conversation button
+          IconButton(
+            icon: const Icon(Icons.delete_outline, color: Colors.white),
+            onPressed: () {
+              setState(() {
+                conversationHistory.clear();
+                userMessage = '';
+                aiResponse = '';
+              });
+            },
+            tooltip: 'مسح المحادثة',
+          ),
+        ],
       ),
       body: SafeArea(
         child: Column(
@@ -211,17 +279,35 @@ class _SpeechInteractionPageState extends State<SpeechInteractionPage>
               ),
             ),
             Expanded(
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                padding: const EdgeInsets.all(16),
+              child: conversationHistory.isEmpty
+                  ? Center(
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    if (userMessage.isNotEmpty)
-                      _buildMessageBubble(message: userMessage, isUser: true),
-                    if (aiResponse.isNotEmpty)
-                      _buildMessageBubble(message: aiResponse, isUser: false),
+                    Icon(Icons.chat_bubble_outline,
+                        size: 80,
+                        color: Colors.grey[300]),
+                    const SizedBox(height: 16),
+                    Text(
+                      'ابدأ المحادثة باش تتواصل معايا',
+                      style: TextStyle(
+                        color: Colors.grey[600],
+                        fontSize: 18,
+                      ),
+                    ),
                   ],
                 ),
+              )
+                  : ListView.builder(
+                controller: _scrollController,
+                physics: const BouncingScrollPhysics(),
+                padding: const EdgeInsets.all(16),
+                itemCount: conversationHistory.length,
+                itemBuilder: (context, index) {
+                  final message = conversationHistory[index];
+                  return _buildMessageBubble(
+                      message: message.text, isUser: message.isUser);
+                },
               ),
             ),
             AnimatedBuilder(
@@ -289,12 +375,17 @@ class _SpeechInteractionPageState extends State<SpeechInteractionPage>
           constraints: BoxConstraints(
             maxWidth: MediaQuery.of(context).size.width * 0.75,
           ),
-          child: Text(
-            message,
-            style: TextStyle(
-              color: isUser ? Colors.white : Colors.black87,
-              fontSize: 16,
-            ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                message,
+                style: TextStyle(
+                  color: isUser ? Colors.white : Colors.black87,
+                  fontSize: 16,
+                ),
+              ),
+            ],
           ),
         ),
       ),
