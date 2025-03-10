@@ -1,22 +1,22 @@
 class User {
-  final String? email;
-  final String? id;
-  final String? token;
-  final String? role;
+  final String id; // Ensure 'id' is present
+  final String username;
+  final String email;
+  final String role;
 
   User({
-    this.id,
-    this.email,
-    this.token,
-    this.role,
+    required this.id,
+    required this.username,
+    required this.email,
+    required this.role,
   });
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
-      id: json['_id'],  // Assuming '_id' is the key in the JSON response.
-      email: json['email'],
-      token: json['access_token'],  // Make sure the response key is 'access_token'.
-      role: json['role'],
+      id: json['id'] ?? '', // Fix missing id
+      username: json['username'] ?? '',
+      email: json['email'] ?? '',
+      role: json['role'] ?? '',
     );
   }
 }

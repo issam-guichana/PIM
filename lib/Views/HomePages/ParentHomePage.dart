@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pim_project/Controllers/AuthProviders/AuthProvider.dart';
 import 'package:pim_project/Views/HomePages/CustomBottomNavBarParent.dart';
-import 'package:provider/provider.dart';
 
 
 class HomePageParent extends StatefulWidget {
@@ -15,17 +13,19 @@ class _HomePageParentState extends State<HomePageParent> {
   int _selectedIndex = 0;
 
   void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-    // Ajoutez ici la logique de navigation si nécessaire
+    if (index == 2) {
+      // 🎯 Ouvrir l'écran de la caméra au lieu de mettre à jour _selectedIndex
+      
+    } else {
+      // Mettre à jour l'index normalement
+      setState(() {
+        _selectedIndex = index;
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    final authProvider = Provider.of<AuthProvider>(context);
-    final userId = authProvider.user?.id; // Récupérer l'ID de l'utilisateur
-
     return Scaffold(
       backgroundColor: Colors.white,
       body: Column(
@@ -104,38 +104,7 @@ class _HomePageParentState extends State<HomePageParent> {
       ),
       bottomNavigationBar: CustomBottomNavBarParent(
         selectedIndex: _selectedIndex,
-        onItemTapped: _onItemTapped,
-      ),
-    );
-  }
-
-  Widget _buildContactCard(BuildContext context,
-      {required String image, required String name}) {
-    return Container(
-      padding: const EdgeInsets.all(12.0),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border.all(color: const Color(0xFF723D92), width: 2),
-        borderRadius: BorderRadius.circular(25),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Image.asset(image),
-          const SizedBox(width: 8), // Changez height en width pour aligner horizontalement
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.center, // Alignement centré
-            children: [
-              Text(
-                name,
-                textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
-              ),
-              const Icon(Icons.phone_enabled_outlined,
-                  size: 25, color: Color(0xFF723D92)),
-            ],
-          ),
-        ],
+        onItemSelected: _onItemTapped,
       ),
     );
   }

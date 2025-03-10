@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:pim_project/Controllers/AuthProviders/AuthProvider.dart';
+import 'package:pim_project/Controllers/AuthProvider.dart';
+import 'package:pim_project/Views/Auth/%20ForgetPasswordScreen.dart';
 import 'package:provider/provider.dart';
 import '../../routes/routes.dart';
 
@@ -28,7 +29,6 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     final authProvider = Provider.of<AuthProvider>(context);
-
     return Scaffold(
       backgroundColor: Colors.white,
       body: Center(
@@ -39,7 +39,7 @@ class _LoginScreenState extends State<LoginScreen> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Image.asset(
-                  'Assets/SplashScreen/splash_image.png',
+                  'assets/splash_image.png',
                   width: 300,
                   height: 300,
                   errorBuilder: (context, error, stackTrace) {
@@ -63,13 +63,18 @@ class _LoginScreenState extends State<LoginScreen> {
                           const SizedBox(height: 15),
                           _buildPasswordField(),
                           const SizedBox(height: 10),
-
-                          // Forgot Password
+                          // Bouton "Forgot Password"
                           Align(
                             alignment: Alignment.centerRight,
                             child: GestureDetector(
                               onTap: () {
-                                _showForgotPasswordDialog(context);
+                                showDialog(
+                                  context: context,
+                                  barrierDismissible: false,
+                                  builder: (BuildContext context) {
+                                    return const ForgetPasswordDialog();
+                                  },
+                                );
                               },
                               child: const Text(
                                 "Forgot Password?",
@@ -81,10 +86,8 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                             ),
                           ),
-
                           const SizedBox(height: 20),
-
-                          // Login Button
+                          // Bouton de login classique
                           ElevatedButton(
                             onPressed: authProvider.isLoading ? null : _login,
                             style: ElevatedButton.styleFrom(
@@ -105,8 +108,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     ),
                                   ),
                           ),
-
-                          // Error Message Display
+                          // Affichage d'un éventuel message d'erreur
                           if (authProvider.error != null)
                             Padding(
                               padding: const EdgeInsets.all(8.0),
@@ -115,10 +117,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                 style: const TextStyle(color: Colors.red, fontSize: 14),
                               ),
                             ),
-
                           const SizedBox(height: 20),
-
-                          // Social Login
+                          // Bouton de connexion via Google
                           _buildSocialLogin(),
                         ],
                       ),
@@ -133,7 +133,7 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  /// **🔹 Email Input Field with Validation**
+  /// Champ email avec validation
   Widget _buildEmailField() {
     return TextFormField(
       controller: _emailController,
@@ -154,7 +154,7 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  /// **🔹 Password Input Field with Visibility Toggle**
+  /// Champ mot de passe avec option d'affichage/masquage
   Widget _buildPasswordField() {
     return TextFormField(
       controller: _passwordController,
@@ -179,7 +179,7 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  /// **🔹 Login Function with Validation**
+  /// Fonction de login classique
   Future<void> _login() async {
     if (_formKey.currentState?.validate() ?? false) {
       final authProvider = Provider.of<AuthProvider>(context, listen: false);
@@ -189,7 +189,12 @@ class _LoginScreenState extends State<LoginScreen> {
         context,
       );
 
-      if (!success) {
+      if (success) {
+        Navigator.pushReplacementNamed(
+          context,
+          authProvider.user?.role == 'user' ? AppRoutes.homePatient : AppRoutes.homeParent,
+        );
+      } else {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text("❌ Login failed. Please try again.")),
         );
@@ -197,38 +202,7 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
-  /// **🔹 Forgot Password Dialog**
-  void _showForgotPasswordDialog(BuildContext context) {
-    final TextEditingController emailController = TextEditingController();
-
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text("Forgot Password", style: TextStyle(color: Color(0xFF723D92))),
-          content: TextField(
-            controller: emailController,
-            decoration: const InputDecoration(hintText: "Enter email"),
-          ),
-          actions: [
-            TextButton(onPressed: () => Navigator.pop(context), child: const Text("Cancel")),
-            ElevatedButton(
-              onPressed: () async {
-                // **Implement forgot password logic**
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text("✅ Reset link sent to email.")),
-                );
-                Navigator.pop(context);
-              },
-              child: const Text("Send OTP"),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  /// **🔹 Social Login (Google)**
+  /// Construction du widget de connexion sociale (Google)
   Widget _buildSocialLogin() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -238,6 +212,7 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
+  /// Widget icône social
   Widget _buildSocialIcon(IconData icon, VoidCallback onTap) {
     return GestureDetector(
       onTap: onTap,
@@ -254,9 +229,12 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void _handleGoogleSignIn() async {
   final authProvider = Provider.of<AuthProvider>(context, listen: false);
-  final user = await authProvider.signInWithGoogle(context); // Pass the context if needed.
-  if (user != null) {
-    Navigator.pushReplacementNamed(context, AppRoutes.health);
+  bool success = await authProvider.signInWithGoogle(context);
+  if (success) {
+    Navigator.pushReplacementNamed(context, AppRoutes.homePatient);
+  } else {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text("❌ Google sign-in failed.")),
+    );
   }
 }}
-

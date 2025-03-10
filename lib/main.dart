@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:pim_project/Controllers/AuthProviders/AuthProvider.dart';
-// Importation du ProfileController
+import 'package:pim_project/Controllers/AuthProvider.dart';
+import 'package:pim_project/Controllers/ProfileController.dart';
 import 'package:pim_project/Views/Auth/SplashScreen.dart';
+import 'package:pim_project/routes/routes.dart';
 import 'package:provider/provider.dart';
-import 'routes/routes.dart';
 
 void main() {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => AuthProvider()), // Fournisseur pour l'authentification
+        ChangeNotifierProvider(create: (_) => AuthProvider()),
+                ChangeNotifierProvider(create: (context) => ProfileProvider()), 
       ],
       child: const MyApp(),
-    ),
+    )
   );
 }
+
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -22,15 +24,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false, // Supprime le badge de mode debug
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple), // Définir le thème avec une couleur de base
-        useMaterial3: true, // Utilisation du Material Design 3
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: true,
       ),
-      initialRoute: '/', // Route initiale
+      initialRoute: '/',
       routes: {
-        '/': (context) => const SplashScreen(), // Écran de démarrage
-        ...AppRoutes.getRoutes(), // Récupération de toutes les routes définies
+        '/': (context) => const SplashScreen(),
+        ...AppRoutes.getRoutes(), // Ajoutez toutes les routes définies
       },
     );
   }

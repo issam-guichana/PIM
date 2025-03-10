@@ -5,7 +5,7 @@ import 'package:pim_project/Models/health_data.dart';
 
 class HealthService {
   static const MethodChannel _channel = MethodChannel('healthkit_channel');
-  final String _baseUrl = 'http://192.168.1.133:3000/health';
+  final String _baseUrl = 'http://192.168.1.124:3000/health';
 
   /// Récupère les données de santé depuis HealthKit (iOS)
   Future<Map<String, dynamic>> fetchHealthData() async {

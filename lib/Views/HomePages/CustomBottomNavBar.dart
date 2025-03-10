@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:pim_project/Views/HomePages/PatientHomePage.dart';
+import 'package:pim_project/Views/HomePages/health_screen.dart';
+import 'package:pim_project/Views/Profile/ProfileScreen.dart';
+
 
 
 class CustomBottomNavBarPatient extends StatefulWidget {
@@ -6,104 +10,154 @@ class CustomBottomNavBarPatient extends StatefulWidget {
   final Function(int) onItemSelected;
 
   const CustomBottomNavBarPatient({
-    Key? key,
+    super.key,
     required this.selectedIndex,
-    required this.onItemSelected, required Null Function(int index) onItemTapped,
-  }) : super(key: key);
+    required this.onItemSelected,
+  });
 
   @override
-  _CustomBottomNavBarPatientState createState() => _CustomBottomNavBarPatientState();
+  _CustomBottomNavBarPatientState createState() =>
+      _CustomBottomNavBarPatientState();
 }
 
 class _CustomBottomNavBarPatientState extends State<CustomBottomNavBarPatient> {
+  int _currentIndex = 0;
+
   final List<IconData> _icons = [
-    Icons.home,
-    Icons.bar_chart,
-    Icons.camera_alt, // Camera in the center
-    Icons.calendar_today,
-    Icons.person, // Profile icon
+    Icons.home,          // Accueil
+    Icons.person,        // Avatar (nouveau bouton ajouté)
+    Icons.camera_alt,    // Caméra
+    Icons.health_and_safety,     
+    Icons.settings,      // Paramètres
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    _currentIndex = widget.selectedIndex;
+  }
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
+
+    if (index == 0)
+     {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const HomePagePatient(),
+        ),
+      ).then((_) {
+        setState(() {
+          _currentIndex = 0;
+        });
+      });
+    } 
+    else if (index == 1)
+     {
+      
+    } 
+    else if (index == 2) 
+    {
+      
+    } 
+    else if (index == 3) 
+    {
+       Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (context) => const HealthScreen(),
+    ),
+  ).then((_) {
+    setState(() {
+      _currentIndex = 1;
+    });
+  });
+    } 
+    else if (index == 4) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const ProfileScreen(),
+        ),
+      ).then((_) {
+        setState(() {
+          _currentIndex = 4;
+        });
+      });
+    } else {
+      widget.onItemSelected(index);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Container(
-        margin: const EdgeInsets.all(16),
-        height: 60,
+        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        height: 58,
         decoration: BoxDecoration(
-          color: const Color(0xFF723D92), // Purple background
+          color: const Color(0xFF723D92),
           borderRadius: BorderRadius.circular(30),
           boxShadow: [
             BoxShadow(
               color: Colors.black12.withOpacity(0.2),
               spreadRadius: 2,
-              blurRadius: 12,
-              offset: const Offset(0, 4),
+              blurRadius: 8,
+              offset: const Offset(0, 2),
             ),
           ],
         ),
-        child: Stack(
-          clipBehavior: Clip.none,
-          alignment: Alignment.center,
-          children: [
-            // Floating Camera Button in Center
-            Positioned(
-              top: -35,
-              child: GestureDetector(
-                onTap: () => widget.onItemSelected(2), // Camera index
-                child: Container(
-                  width: 70,
-                  height: 70,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    shape: BoxShape.circle,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.deepPurple.withOpacity(0.4),
-                        blurRadius: 15,
-                        spreadRadius: 3,
-                        offset: const Offset(0, 5),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: List.generate(_icons.length, (index) {
+            final isSelected = _currentIndex == index;
+
+            return GestureDetector(
+              onTap: () => _onItemTapped(index),
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 300),
+                curve: Curves.easeOut,
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                transform: Matrix4.translationValues(
+                  0,
+                  isSelected ? -8 : 0,
+                  0,
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(
+                      _icons[index],
+                      size: 30,
+                      color: isSelected
+                          ? Colors.white
+                          : Colors.white.withOpacity(0.6),
+                    ),
+                    if (isSelected)
+                      Container(
+                        margin: const EdgeInsets.only(top: 2),
+                        width: 6,
+                        height: 6,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          shape: BoxShape.circle,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.white.withOpacity(0.6),
+                              blurRadius: 6,
+                              spreadRadius: 1,
+                            ),
+                          ],
+                        ),
                       ),
-                    ],
-                  ),
-                  child: const Icon(
-                    Icons.camera_alt,
-                    color: Color(0xFF2F1E56),
-                    size: 50,
-                  ),
+                  ],
                 ),
               ),
-            ),
-
-            // Navigation Icons (excluding the camera in the center)
-            Positioned(
-              bottom: 12,
-              left: 0,
-              right: 0,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: List.generate(_icons.length, (index) {
-                  if (index == 2) return const SizedBox(width: 60); // Skip space for the camera
-
-                  return GestureDetector(
-                    onTap: () {
-                      if (index == 4) {
-                        // Navigate to Edit Profile when clicking on profile icon
-                        
-                      } else {
-                        widget.onItemSelected(index);
-                      }
-                    },
-                    child: Icon(
-                      _icons[index],
-                      size: 40,
-                      color: widget.selectedIndex == index ? Colors.white : Colors.white.withOpacity(0.6),
-                    ),
-                  );
-                }),
-              ),
-            ),
-          ],
+            );
+          }),
         ),
       ),
     );

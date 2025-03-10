@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:pim_project/Controllers/AuthProviders/AuthProvider.dart';
+import 'package:pim_project/Controllers/AuthProvider.dart';
 import 'package:pim_project/routes/routes.dart';
 import 'package:provider/provider.dart';
+
 import 'dart:convert';
 import '../Models/EditProfileModel.dart';
 
@@ -32,7 +33,7 @@ class ProfileProvider extends ChangeNotifier {
 
       print("🔄 Fetching user profile for ID: $userId");
       final response = await http.get(
-        Uri.parse('http://192.168.1.133:3000/user/$userId'),
+        Uri.parse('http://192.168.1.124:3000/user/$userId'),
         headers: {'Content-Type': 'application/json'},
       );
 
@@ -64,7 +65,7 @@ class ProfileProvider extends ChangeNotifier {
     notifyListeners();
 
     final response = await http.patch( // ✅ Changer PUT -> PATCH
-      Uri.parse('http://192.168.1.133:3000/user/update'), // ✅ Enlever l'ID de l'URL
+      Uri.parse('http://192.168.1.124:3000/user/update'), // ✅ Enlever l'ID de l'URL
       headers: {'Content-Type': 'application/json'},
       body: json.encode({
         "id": userId, // ✅ Ajouter l'ID dans le body
@@ -99,7 +100,7 @@ Future<bool> verifyOtp(String email, String otp) async {
     notifyListeners();
 
     final response = await http.post(
-      Uri.parse('http://192.168.1.133:3000/user/verify-otp'),
+      Uri.parse('http://192.168.1.124:3000/user/verify-otp'),
       headers: {'Content-Type': 'application/json'},
       body: json.encode({"identifier": email, "otp": otp}),
     );
@@ -108,11 +109,14 @@ Future<bool> verifyOtp(String email, String otp) async {
 
     final responseData = json.decode(response.body);
 
-    // ✅ Check if verification is successful
     if ((response.statusCode == 200 || response.statusCode == 201) &&
-        responseData["message"] == "OTP verified successfully") {
-      _successMessage = "✅ OTP verified successfully!";
+        responseData["message"].contains("OTP verified successfully")) {
+      _successMessage = "✅ OTP verified successfully! Temporary password sent to your email.";
       notifyListeners();
+
+      // ✅ Nouvelle étape : Demander explicitement l'envoi du mot de passe temporaire
+      await sendTemporaryPassword(email);
+
       return true;
     } else {
       _error = responseData["message"] ?? "❌ Incorrect OTP.";
@@ -129,33 +133,23 @@ Future<bool> verifyOtp(String email, String otp) async {
   }
 }
 
-
-  /// ✅ Send OTP Function (Forgot Password)
-  /// ✅ Send OTP Function (Forgot Password)
-Future<bool> sendOtp(String email) async {
+/// ✅ **Nouvelle méthode pour déclencher l'envoi du mot de passe temporaire**
+Future<bool> sendTemporaryPassword(String email) async {
   try {
-    _isLoading = true;
-    _error = null;
-    notifyListeners();
-
     final response = await http.post(
-      Uri.parse('http://192.168.1.133:3000/user/send-otp'),
+      Uri.parse('http://192.168.1.124:3000/user/forget-password'),
       headers: {'Content-Type': 'application/json'},
       body: json.encode({"email": email}),
     );
 
-    print("🔎 Send OTP Response: ${response.statusCode} - ${response.body}");
+    print("🔎 Temporary Password Email Response: ${response.statusCode} - ${response.body}");
 
-    final responseData = json.decode(response.body);
-
-    // ✅ Check for status code 201 instead of 200
-    if ((response.statusCode == 200 || response.statusCode == 201) &&
-        responseData["message"] == "OTP sent successfully") {
-      _successMessage = "✅ OTP sent successfully.";
+    if (response.statusCode == 200) {
+      _successMessage = "✅ Temporary password sent to your email.";
       notifyListeners();
       return true;
     } else {
-      _error = responseData["message"] ?? "❌ Failed to send OTP.";
+      _error = "❌ Failed to send temporary password.";
       notifyListeners();
       return false;
     }
@@ -163,47 +157,53 @@ Future<bool> sendOtp(String email) async {
     _error = "❌ Error: ${e.toString()}";
     notifyListeners();
     return false;
-  } finally {
-    _isLoading = false;
-    notifyListeners();
   }
 }
 
   /// ✅ Resend OTP Function
-  Future<bool> resendOtp(String email) async {
+  /// ✅ Resend OTP Function
+Future<bool> resendOtp(String email) async {
     try {
-      _isLoading = true;
-      _error = null;
-      notifyListeners();
-
-      final response = await http.post(
-        Uri.parse('http://192.168.1.133:3000/user/resend-otp'), // ✅ Correct API route
-        headers: {'Content-Type': 'application/json'},
-        body: json.encode({"email": email}),
-      );
-
-      print("🔄 Resend OTP Response: ${response.statusCode} - ${response.body}");
-
-      final responseData = json.decode(response.body);
-
-      if (response.statusCode == 200 && responseData["message"] == "OTP resent successfully") {
-        _successMessage = "✅ OTP resent successfully.";
+        _isLoading = true;
+        _error = null;
+        _successMessage = null; // Clear previous success messages
         notifyListeners();
-        return true;
-      } else {
-        _error = responseData["message"] ?? "❌ Failed to resend OTP.";
+
+        final response = await http.post(
+            Uri.parse('http://192.168.1.124:3000/user/resend-otp'), // ✅ Correct API route
+            headers: {'Content-Type': 'application/json'},
+            body: json.encode({"email": email}),
+        );
+
+        print("🔄 Resend OTP Response: ${response.statusCode} - ${response.body}");
+
+        final responseData = json.decode(response.body);
+
+        /// ✅ Accept both 200 and 201 as success status codes
+        if ((response.statusCode == 200 || response.statusCode == 201) &&
+            responseData["message"] == "OTP resent successfully") {
+                
+            _successMessage = "✅ OTP resent successfully.";
+            _error = null; // Clear any previous error messages
+            notifyListeners();
+            return true;
+        } else {
+            _error = responseData["message"] ?? "❌ Failed to resend OTP.";
+            _successMessage = null; // Clear any previous success messages
+            notifyListeners();
+            return false;
+        }
+    } catch (e) {
+        _error = "❌ Error: ${e.toString()}";
+        _successMessage = null; // Clear any previous success messages
         notifyListeners();
         return false;
-      }
-    } catch (e) {
-      _error = "❌ Error: ${e.toString()}";
-      notifyListeners();
-      return false;
     } finally {
-      _isLoading = false;
-      notifyListeners();
+        _isLoading = false;
+        notifyListeners();
     }
-  }
+}
+
   /// ✅ **Update Password**
   Future<bool> updatePassword(String userId, String newPassword) async {
   try {
@@ -212,9 +212,9 @@ Future<bool> sendOtp(String email) async {
     notifyListeners();
 
     final response = await http.patch( // ✅ Change to PATCH
-      Uri.parse('http://192.168.1.133:3000/user/update-password'), 
+      Uri.parse('http://192.168.1.124:3000/user/update-password'), // ✅ Ensure correct API endpoint
       headers: {'Content-Type': 'application/json'},
-      body: json.encode({"id": userId, "password": newPassword}), 
+      body: json.encode({"id": userId, "password": newPassword}), // ✅ Send ID instead of email
     );
 
     print("🔎 Reset Password Response: ${response.statusCode} - ${response.body}");
@@ -246,7 +246,7 @@ Future<bool> sendOtp(String email) async {
     notifyListeners();
 
     final response = await http.post(
-      Uri.parse('http://192.168.1.133:3000/user/forget-password'),
+      Uri.parse('http://192.168.1.124:3000/user/forget-password'),
       headers: {'Content-Type': 'application/json'},
       body: json.encode({"email": email, "newPassword": newPassword}),
     );
@@ -284,7 +284,7 @@ Future<bool> sendOtp(String email) async {
   Future<bool> _loginUser(BuildContext context, String email, String password) async {
     try {
       final response = await http.post(
-        Uri.parse('http://192.168.1.133:3000/user/login'),
+        Uri.parse('http://192.168.1.124:3000/user/login'),
         headers: {'Content-Type': 'application/json'},
         body: json.encode({"email": email, "password": password}),
       );
@@ -320,4 +320,46 @@ Future<bool> sendOtp(String email) async {
       return false;
     }
   }
+  
+  /// ✅ **Vérification du mot de passe temporaire**
+
+Future<bool> verifyTemporaryPassword(String email, String tempPassword) async {
+  try {
+    _isLoading = true;
+    _error = null;
+    notifyListeners();
+
+    final response = await http.post(
+      Uri.parse('http://192.168.1.124:3000/user/verify-temp-password'),
+      headers: {'Content-Type': 'application/json'},
+      body: json.encode({"email": email, "tempPassword": tempPassword}),
+    );
+
+    print("🔎 Temporary Password Verification Response: ${response.statusCode} - ${response.body}");
+
+    final responseData = json.decode(response.body);
+
+    if ((response.statusCode == 200 || response.statusCode == 201) &&
+        responseData["success"] == true) {
+      _successMessage = "✅ Temporary password is valid.";
+      _error = null; // Clear any previous errors
+      notifyListeners();
+      return true;
+    } else {
+      _successMessage = null; // Clear success message
+      notifyListeners();
+      return false;
+    }
+  } catch (e) {
+    _error = "❌ Error: ${e.toString()}";
+    _successMessage = null; // Clear success message
+    notifyListeners();
+    return false;
+  } finally {
+    _isLoading = false;
+    notifyListeners();
+  }
+}
+
+
 }

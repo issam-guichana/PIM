@@ -1,24 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:pim_project/Controllers/health_controller.dart';
-import 'package:pim_project/Models/health_data.dart';
+import 'package:pim_project/Views/HomePages/health_history.dart';
 import 'package:provider/provider.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'health_history.dart'; // Ajout de l'import pour l'écran HealthHistoryScreen
+
+enum Metric {
+  steps,
+  heartRate,
+  sleep,
+  calories,
+}
 
 class HealthScreen extends StatelessWidget {
-  const HealthScreen({super.key});
-
+  const HealthScreen({Key? key}) : super(key: key);
+  
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (_) => HealthController()..fetchAndSendHealthData(),
+      create: (_) => HealthController(),
       child: const HealthView(),
     );
   }
 }
 
-class HealthView extends StatelessWidget {
-  const HealthView({super.key});
+class HealthView extends StatefulWidget {
+  const HealthView({Key? key}) : super(key: key);
+  
+  @override
+  State<HealthView> createState() => _HealthViewState();
+}
+
+class _HealthViewState extends State<HealthView> {
+  Metric _selectedMetric = Metric.steps;
 
   @override
   Widget build(BuildContext context) {
@@ -27,15 +40,20 @@ class HealthView extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: Colors.grey[100],
-      appBar: _buildAppBar(healthCtrl, context), // Passage du contexte à _buildAppBar
+      appBar: _buildAppBar(healthCtrl, context),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 20),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             _buildHealthCard(data),
-            const SizedBox(height: 20),
-            _buildNormalizedBarChart(data),
-            const SizedBox(height: 20),
+            const SizedBox(height: 30),
+            _buildMetricButtons(),
+            const SizedBox(height: 30),
+            _buildChartTitle(),
+            const SizedBox(height: 10),
+            _buildBarChart(healthCtrl), // <-- Bar chart au lieu d'un line chart
+            const SizedBox(height: 30),
             _buildRefreshButton(healthCtrl),
           ],
         ),
@@ -43,7 +61,6 @@ class HealthView extends StatelessWidget {
     );
   }
 
-  // Ajout du contexte pour la navigation
   AppBar _buildAppBar(HealthController healthCtrl, BuildContext context) {
     return AppBar(
       title: const Text(
@@ -58,14 +75,12 @@ class HealthView extends StatelessWidget {
           icon: const Icon(Icons.refresh),
           onPressed: () => healthCtrl.fetchAndSendHealthData(),
         ),
-        // Bouton pour naviguer vers l'historique des données de santé
         IconButton(
           icon: const Icon(Icons.history),
           onPressed: () {
-            // Navigation vers l'écran d'historique
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => HealthHistoryScreen()),
+              MaterialPageRoute(builder: (context) =>  HealthHistoryScreen()),
             );
           },
         ),
@@ -73,48 +88,65 @@ class HealthView extends StatelessWidget {
     );
   }
 
-  /// Carte affichant les statistiques.
-  Widget _buildHealthCard(HealthData data) {
-    return Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-      elevation: 6,
-      color: Colors.white,
-      child: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Center(
-              child: Text(
+  /// Carte affichant les données de santé
+  Widget _buildHealthCard(dynamic data) {
+    return Center(
+      child: Card(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        elevation: 6,
+        color: Colors.white,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+          child: Column(
+            children: [
+              const Text(
                 'Statistiques de santé',
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
-            ),
-            const SizedBox(height: 15),
-            GridView(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              // Ajustez childAspectRatio pour éviter l'overflow
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              const SizedBox(height: 15),
+              // Grille des indicateurs
+              GridView.count(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
                 crossAxisCount: 2,
-                // Diminuez cette valeur pour donner plus de hauteur
                 childAspectRatio: 2.0,
                 crossAxisSpacing: 10,
                 mainAxisSpacing: 10,
+                children: [
+                  _buildMetricItem(
+                    Icons.directions_walk,
+                    'Pas',
+                    data.steps.toString(),
+                    Colors.purple,
+                  ),
+                  _buildMetricItem(
+                    Icons.favorite,
+                    'Fréquence',
+                    '${data.heartRate.toStringAsFixed(0)} bpm',
+                    Colors.red,
+                  ),
+                  _buildMetricItem(
+                    Icons.local_fire_department,
+                    'Calories',
+                    '${data.caloriesBurned.toStringAsFixed(0)} kcal',
+                    Colors.orange,
+                  ),
+                  _buildMetricItem(
+                    Icons.nightlight_round,
+                    'Sommeil',
+                    '${data.sleep.toStringAsFixed(1)} h',
+                    Colors.blue,
+                  ),
+                ],
               ),
-              children: [
-                _buildMetricItem(Icons.directions_walk, 'Pas', data.steps.toString(), Colors.purple),
-                _buildMetricItem(Icons.favorite, 'Fréquence', '${data.heartRate.toStringAsFixed(0)} bpm', Colors.red),
-                _buildMetricItem(Icons.local_fire_department, 'Calories', '${data.caloriesBurned.toStringAsFixed(0)} kcal', Colors.orange),
-                _buildMetricItem(Icons.nightlight_round, 'Sommeil', '${data.sleep.toStringAsFixed(1)} h', Colors.blue),
-              ],
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
   }
 
+  /// Widget pour un indicateur (icône, label, valeur)
   Widget _buildMetricItem(IconData icon, String label, String value, Color color) {
     return Container(
       padding: const EdgeInsets.all(10),
@@ -124,15 +156,20 @@ class HealthView extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Icon(icon, color: color, size: 30),
-          const SizedBox(width: 10),
+          Icon(icon, color: color, size: 28),
+          const SizedBox(width: 8),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Réduisez légèrement la taille de la police si besoin
-                Text(label, style: const TextStyle(fontSize: 14, color: Colors.grey)),
-                Text(value, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                Text(
+                  label,
+                  style: const TextStyle(fontSize: 14, color: Colors.grey),
+                ),
+                Text(
+                  value,
+                  style: const TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+                ),
               ],
             ),
           ),
@@ -141,12 +178,110 @@ class HealthView extends StatelessWidget {
     );
   }
 
-  /// Graphique en barres comparant les valeurs normalisées.
-  Widget _buildNormalizedBarChart(HealthData data) {
-    final normalizedData = _normalizeData(data);
+  /// Rangée de boutons pour sélectionner la métrique
+  Widget _buildMetricButtons() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        _buildMetricButton("Pas", Metric.steps, Colors.purple),
+        _buildMetricButton("Fréquence", Metric.heartRate, Colors.red),
+        _buildMetricButton("Sommeil", Metric.sleep, Colors.blue),
+        _buildMetricButton("Calories", Metric.calories, Colors.orange),
+      ],
+    );
+  }
+
+  Widget _buildMetricButton(String label, Metric metric, Color color) {
+    final bool isSelected = _selectedMetric == metric;
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: isSelected ? color : Colors.grey[400],
+        foregroundColor: isSelected ? Colors.white : Colors.black,
+        textStyle: const TextStyle(fontWeight: FontWeight.bold),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      ),
+      onPressed: () => setState(() => _selectedMetric = metric),
+      child: Text(label),
+    );
+  }
+
+  /// Titre dynamique du graphique
+  Widget _buildChartTitle() {
+    String title;
+    switch (_selectedMetric) {
+      case Metric.steps:
+        title = "Évolution des pas";
+        break;
+      case Metric.heartRate:
+        title = "Évolution de la fréquence cardiaque";
+        break;
+      case Metric.sleep:
+        title = "Évolution du sommeil";
+        break;
+      case Metric.calories:
+        title = "Évolution des calories brûlées";
+        break;
+    }
+    return Center(
+      child: Text(
+        title,
+        style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+      ),
+    );
+  }
+
+  /// Affiche un bar chart au lieu d'un line chart
+  Widget _buildBarChart(HealthController healthCtrl) {
+    final history = healthCtrl.healthHistory;
+    if (history.isEmpty) {
+      return Container(
+        height: 300,
+        alignment: Alignment.center,
+        child: const Text(
+          "Aucune donnée pour afficher le graphique",
+          style: TextStyle(fontSize: 16),
+        ),
+      );
+    }
+
+    // Préparation des BarChartGroupData
+    final List<BarChartGroupData> barGroups = [];
+    for (int i = 0; i < history.length; i++) {
+      double value;
+      switch (_selectedMetric) {
+        case Metric.steps:
+          value = history[i].steps.toDouble();
+          break;
+        case Metric.heartRate:
+          value = history[i].heartRate;
+          break;
+        case Metric.sleep:
+          value = history[i].sleep;
+          break;
+        case Metric.calories:
+          value = history[i].caloriesBurned;
+          break;
+      }
+
+      barGroups.add(
+        BarChartGroupData(
+          x: i,
+          barRods: [
+            BarChartRodData(
+              toY: value,
+              color: _getColorForMetric(_selectedMetric),
+              width: 18,
+              borderRadius: BorderRadius.circular(4),
+            ),
+          ],
+        ),
+      );
+    }
 
     return Container(
-      padding: const EdgeInsets.all(15),
+      height: 300,
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(15),
@@ -158,108 +293,63 @@ class HealthView extends StatelessWidget {
           ),
         ],
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text(
-            'Comparaison normalisée des données',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(height: 10),
-          SizedBox(
-            height: 250, // Augmenter la hauteur pour plus de lisibilité
-            child: BarChart(
-              BarChartData(
-                alignment: BarChartAlignment.center,
-                minY: 0,
-                maxY: 100,
-                gridData: FlGridData(
-                  show: true,
-                  drawVerticalLine: false,
-                  horizontalInterval: 20,
-                  getDrawingHorizontalLine: (value) {
-                    return FlLine(
-                      color: Colors.grey[300]!,
-                      strokeWidth: 1,
-                    );
-                  },
-                ),
-                titlesData: FlTitlesData(
-                  leftTitles: AxisTitles(
-                    sideTitles: SideTitles(
-                      showTitles: true,
-                      getTitlesWidget: (value, meta) {
-                        return Text(
-                          value.toStringAsFixed(0),
-                          style: const TextStyle(fontWeight: FontWeight.bold),
-                        );
-                      },
-                      interval: 20,
-                    ),
-                  ),
-                  bottomTitles: AxisTitles(
-                    sideTitles: SideTitles(
-                      showTitles: true,
-                      getTitlesWidget: (value, meta) => Text(
-                        _getLabel(value.toInt()),
-                        style: const TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      interval: 1, // Espacement entre les titres
-                    ),
-                  ),
-                ),
-                borderData: FlBorderData(
-                  show: true,
-                  border: Border.all(
-                    color: Colors.grey[300]!,
-                    width: 1,
-                  ),
-                ),
-                barGroups: _buildNormalizedBarGroups(normalizedData),
+      child: BarChart(
+        BarChartData(
+          minY: 0,
+          maxY: _getMaxY(),
+          barGroups: barGroups,
+          gridData: FlGridData(show: true),
+          borderData: FlBorderData(show: true),
+          titlesData: FlTitlesData(
+            leftTitles: AxisTitles(
+              sideTitles: SideTitles(
+                showTitles: true,
+                reservedSize: 40,
+              ),
+            ),
+            bottomTitles: AxisTitles(
+              sideTitles: SideTitles(
+                showTitles: true,
+                reservedSize: 30,
+                getTitlesWidget: (value, meta) => Text('J${value.toInt() + 1}'),
               ),
             ),
           ),
-        ],
+          barTouchData: BarTouchData(enabled: true),
+        ),
       ),
     );
   }
 
-  Map<String, double> _normalizeData(HealthData data) {
-    return {
-      'steps': (data.steps / 10000 * 100).clamp(0.0, 100),
-      'heartRate': (data.heartRate / 200 * 100).clamp(0.0, 100),
-      'calories': (data.caloriesBurned / 500 * 100).clamp(0.0, 100),
-      'sleep': (data.sleep / 24 * 100).clamp(0.0, 100),
-    };
+  /// Renvoie la couleur selon la métrique
+  Color _getColorForMetric(Metric metric) {
+    switch (metric) {
+      case Metric.steps:
+        return Colors.purple;
+      case Metric.heartRate:
+        return Colors.red;
+      case Metric.sleep:
+        return Colors.blue;
+      case Metric.calories:
+        return Colors.orange;
+    }
   }
 
-  List<BarChartGroupData> _buildNormalizedBarGroups(Map<String, double> normalizedData) {
-    final colors = [Colors.purple, Colors.red, Colors.orange, Colors.blue];
-
-    return List.generate(4, (index) {
-      return BarChartGroupData(
-        x: index,
-        barRods: [
-          BarChartRodData(
-            toY: normalizedData[_getDataKey(index)]!,
-            color: colors[index],
-            width: 25,
-            borderRadius: BorderRadius.circular(12),
-          ),
-        ],
-      );
-    });
+  /// Limite max de l'axe Y
+  double _getMaxY() {
+    switch (_selectedMetric) {
+      case Metric.steps:
+        return 10000;
+      case Metric.heartRate:
+        return 120;
+      case Metric.sleep:
+        return 10;
+      case Metric.calories:
+        return 250;
+    }
   }
 
-  String _getDataKey(int index) {
-    return ['steps', 'heartRate', 'calories', 'sleep'][index];
-  }
-
-  String _getLabel(int index) {
-    return ['Pas', 'FC', 'Calories', 'Sommeil'][index];
-  }
-
-  /// Bouton rafraîchir centré.
+  /// Bouton de rafraîchissement
   Widget _buildRefreshButton(HealthController healthCtrl) {
     return Center(
       child: ElevatedButton.icon(
@@ -272,12 +362,9 @@ class HealthView extends StatelessWidget {
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.purple,
           padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(24),
-          ),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
         ),
       ),
     );
   }
 }
-

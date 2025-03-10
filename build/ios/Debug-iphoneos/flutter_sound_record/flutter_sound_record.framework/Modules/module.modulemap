@@ -1,0 +1,11 @@
+framework module flutter_sound_record {
+  umbrella header "flutter_sound_record-umbrella.h"
+
+  export *
+  module * { export * }
+}
+
+module flutter_sound_record.Swift {
+  header "flutter_sound_record-Swift.h"
+  requires objc
+}

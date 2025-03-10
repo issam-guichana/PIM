@@ -8,7 +8,7 @@ class SocketService {
   final int maxReconnectAttempts = 5;
 
   void connect() {
-    socket = IO.io('ws://192.168.1.133:3000', <String, dynamic>{  // ⚠️ Mets l'IP correcte ici
+    socket = IO.io('ws://192.168.1.124:3000', <String, dynamic>{  // ⚠️ Mets l'IP correcte ici
       'transports': ['websocket'],
       'autoConnect': true,
     });

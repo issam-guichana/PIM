@@ -1,5 +1,6 @@
+// HomePagePatient.dart
 import 'package:flutter/material.dart';
-import 'package:pim_project/Views/HomePages/CustomBottomNavBar.dart' show CustomBottomNavBarPatient;
+import 'package:pim_project/Views/HomePages/CustomBottomNavBar.dart';
 
 class HomePagePatient extends StatefulWidget {
   const HomePagePatient({super.key});
@@ -15,13 +16,19 @@ class _HomePagePatientState extends State<HomePagePatient> {
     setState(() {
       _selectedIndex = index;
     });
-    // Add navigation logic here if necessary
+
+    // Naviguer vers AvatarScreen si l'utilisateur clique sur l'index 1
+    
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      appBar: AppBar(
+        title: const Text('Accueil Patient'),
+        backgroundColor: const Color(0xFF723D92),
+      ),
       body: Column(
         children: [
           const SizedBox(height: 15),
@@ -91,69 +98,23 @@ class _HomePagePatientState extends State<HomePagePatient> {
                         ),
                       ],
                     ),
+                    const SizedBox(height: 20),
+                    
+                     
+                     
+                    
                   ],
                 ),
               ),
             ),
           ),
-          const SizedBox(height: 20),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.pushNamed(context, '/healthScreen');
-            },
-            child: const Text('Go to Health Screen'),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFF723D92),
-              padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
-              textStyle: const TextStyle(fontSize: 16),
-            ),
-          ),
-          const Spacer(),
         ],
       ),
       bottomNavigationBar: CustomBottomNavBarPatient(
-        selectedIndex: _selectedIndex,
-        onItemSelected: (int index) {  
-          setState(() {
-            _selectedIndex = index;
-          });
-          // Add navigation logic if needed
-          print("Selected Index: $index");
-        },
-        onItemTapped: (int index) {  },
-      ),
-    );
-  }
+  selectedIndex: _selectedIndex,
+  onItemSelected: _onItemTapped,
+),
 
-  Widget _buildContactCard(BuildContext context,
-      {required String image, required String name}) {
-    return Container(
-      padding: const EdgeInsets.all(12.0),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border.all(color: const Color(0xFF723D92), width: 2),
-        borderRadius: BorderRadius.circular(25),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Image.asset(image, width: 50, height: 50, fit: BoxFit.cover),
-          const SizedBox(width: 10),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                name,
-                textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
-              ),
-              const SizedBox(height: 5),
-              const Icon(Icons.phone_enabled_outlined,
-                  size: 25, color: Color(0xFF723D92)),
-            ],
-          ),
-        ],
-      ),
     );
   }
 }

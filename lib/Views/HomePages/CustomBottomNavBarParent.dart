@@ -1,76 +1,154 @@
 import 'package:flutter/material.dart';
+import 'package:pim_project/Views/Profile/ProfileScreen.dart';
 
-class CustomBottomNavBarParent extends StatelessWidget {
+
+
+class CustomBottomNavBarParent extends StatefulWidget {
   final int selectedIndex;
-  final Function(int) onItemTapped;
+  final Function(int) onItemSelected;
 
   const CustomBottomNavBarParent({
     super.key,
     required this.selectedIndex,
-    required this.onItemTapped,
+    required this.onItemSelected,
   });
 
   @override
-  Widget build(BuildContext context) {
-    return Stack(
-      alignment: Alignment.bottomCenter,
-      children: [
-        Container
-        (
-          height: 80,
-          decoration: BoxDecoration(
-            color: const Color(0xFF723D92), // Couleur de la barre de navigation
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(30),
-              topRight: Radius.circular(30),
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.15),
-                blurRadius: 12,
-                offset: const Offset(0, -2),
-              ),
-            ],
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              _buildNavItem(Icons.home, 'Home', 0),
-              const SizedBox(width: 80), // Espace pour l'icône de caméra
-              _buildNavItem(Icons.person, 'Profile', 2),
-            ],
-          ),
-        ),
-        
+  _CustomBottomNavBarParentState createState() => _CustomBottomNavBarParentState();
+}
 
-         
-      ],
+class _CustomBottomNavBarParentState extends State<CustomBottomNavBarParent> {
+  final List<IconData> _icons = [
+    Icons.home,
+    Icons.bar_chart,
+    Icons.camera_alt, // Floating Camera in the center
+    Icons.calendar_today,
+    Icons.person,
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        height: 75,
+        decoration: BoxDecoration(
+          color: const Color(0xFF723D92),
+          borderRadius: BorderRadius.circular(30),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.2),
+              spreadRadius: 2,
+              blurRadius: 10,
+              offset: const Offset(0, 4),
+            ),
+          ],
+        ),
+        child: Stack(
+          clipBehavior: Clip.none,
+          alignment: Alignment.center,
+          children: [
+            // Floating Camera Button in Center
+            Positioned(
+              top: -35,
+              child: GestureDetector(
+                onTap: () {
+                  // 📸 Open CameraScreen when clicking the floating button
+                  
+                },
+                child: Container(
+                  width: 65,
+                  height: 65,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    shape: BoxShape.circle,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.deepPurple.withOpacity(0.3),
+                        blurRadius: 12,
+                        spreadRadius: 2,
+                        offset: const Offset(0, 5),
+                      ),
+                    ],
+                  ),
+                  child: const Icon(
+                    Icons.camera_alt,
+                    color: Color(0xFF2F1E56),
+                    size: 40,
+                  ),
+                ),
+              ),
+            ),
+
+            // Navigation Icons (excluding the camera in the center)
+            Positioned(
+              bottom: 10,
+              left: 0,
+              right: 0,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: List.generate(_icons.length, (index) {
+                  if (index == 2) return const SizedBox(width: 80); // Skip space for floating camera
+
+                  return GestureDetector(
+                    onTap: () {
+                      if (index == 4) {
+                        // 📌 Navigate to ProfileScreen on clicking Profile
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const ProfileScreen()),
+                        );
+                      } else {
+                        // ✅ Update selected index
+                        widget.onItemSelected(index);
+                      }
+                    },
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          _icons[index],
+                          size: 34,
+                          color: widget.selectedIndex == index
+                              ? Colors.white
+                              : Colors.white.withOpacity(0.6),
+                        ),
+                        const SizedBox(height: 4), // Space between icon and text
+                        Text(
+                          _getLabel(index),
+                          style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 12,
+                            color: widget.selectedIndex == index
+                                ? Colors.white
+                                : Colors.white.withOpacity(0.6),
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                }),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
-  Widget _buildNavItem(IconData icon, String label, int index) {
-    final isSelected = selectedIndex == index;
-    return GestureDetector(
-      onTap: () => onItemTapped(index),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(
-            icon,
-            color: isSelected ? Colors.white : Colors.white.withOpacity(0.6), // Changement de couleur
-            size: 40,
-          ),
-          const SizedBox(height: 4),
-          Text(
-            label,
-            style: TextStyle(
-              fontWeight: FontWeight.w600,
-              fontSize: 14,
-              color: isSelected ? Colors.white : Colors.white.withOpacity(0.6), // Changement de couleur
-            ),
-          ),
-        ],
-      ),
-    );
+  /// **Helper Function for Labels**
+  String _getLabel(int index) {
+    switch (index) {
+      case 0:
+        return "Home";
+      case 1:
+        return "Stats";
+      case 3:
+        return "Calendar";
+      case 4:
+        return "Profile";
+      default:
+        return "";
+    }
   }
 }
