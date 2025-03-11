@@ -33,7 +33,7 @@ class ProfileProvider extends ChangeNotifier {
 
       print("🔄 Fetching user profile for ID: $userId");
       final response = await http.get(
-        Uri.parse('http://192.168.1.124:3000/user/$userId'),
+        Uri.parse('http://172.20.10.5:3000/user/$userId'),
         headers: {'Content-Type': 'application/json'},
       );
 
@@ -65,7 +65,7 @@ class ProfileProvider extends ChangeNotifier {
     notifyListeners();
 
     final response = await http.patch( // ✅ Changer PUT -> PATCH
-      Uri.parse('http://192.168.1.124:3000/user/update'), // ✅ Enlever l'ID de l'URL
+      Uri.parse('http://172.20.10.5:3000/user/update'), // ✅ Enlever l'ID de l'URL
       headers: {'Content-Type': 'application/json'},
       body: json.encode({
         "id": userId, // ✅ Ajouter l'ID dans le body
@@ -100,7 +100,7 @@ Future<bool> verifyOtp(String email, String otp) async {
     notifyListeners();
 
     final response = await http.post(
-      Uri.parse('http://192.168.1.124:3000/user/verify-otp'),
+      Uri.parse('http://172.20.10.5:3000/user/verify-otp'),
       headers: {'Content-Type': 'application/json'},
       body: json.encode({"identifier": email, "otp": otp}),
     );
@@ -137,7 +137,7 @@ Future<bool> verifyOtp(String email, String otp) async {
 Future<bool> sendTemporaryPassword(String email) async {
   try {
     final response = await http.post(
-      Uri.parse('http://192.168.1.124:3000/user/forget-password'),
+      Uri.parse('http://172.20.10.5:3000/user/forget-password'),
       headers: {'Content-Type': 'application/json'},
       body: json.encode({"email": email}),
     );
@@ -170,7 +170,7 @@ Future<bool> resendOtp(String email) async {
         notifyListeners();
 
         final response = await http.post(
-            Uri.parse('http://192.168.1.124:3000/user/resend-otp'), // ✅ Correct API route
+            Uri.parse('http://172.20.10.5:3000/user/resend-otp'), // ✅ Correct API route
             headers: {'Content-Type': 'application/json'},
             body: json.encode({"email": email}),
         );
@@ -212,7 +212,7 @@ Future<bool> resendOtp(String email) async {
     notifyListeners();
 
     final response = await http.patch( // ✅ Change to PATCH
-      Uri.parse('http://192.168.1.124:3000/user/update-password'), // ✅ Ensure correct API endpoint
+      Uri.parse('http://172.20.10.5:3000/user/update-password'), // ✅ Ensure correct API endpoint
       headers: {'Content-Type': 'application/json'},
       body: json.encode({"id": userId, "password": newPassword}), // ✅ Send ID instead of email
     );
@@ -246,7 +246,7 @@ Future<bool> resendOtp(String email) async {
     notifyListeners();
 
     final response = await http.post(
-      Uri.parse('http://192.168.1.124:3000/user/forget-password'),
+      Uri.parse('http://172.20.10.5:3000/user/forget-password'),
       headers: {'Content-Type': 'application/json'},
       body: json.encode({"email": email, "newPassword": newPassword}),
     );
@@ -284,7 +284,7 @@ Future<bool> resendOtp(String email) async {
   Future<bool> _loginUser(BuildContext context, String email, String password) async {
     try {
       final response = await http.post(
-        Uri.parse('http://192.168.1.124:3000/user/login'),
+        Uri.parse('http://172.20.10.5:3000/user/login'),
         headers: {'Content-Type': 'application/json'},
         body: json.encode({"email": email, "password": password}),
       );
@@ -330,7 +330,7 @@ Future<bool> verifyTemporaryPassword(String email, String tempPassword) async {
     notifyListeners();
 
     final response = await http.post(
-      Uri.parse('http://192.168.1.124:3000/user/verify-temp-password'),
+      Uri.parse('http://172.20.10.5:3000/user/verify-temp-password'),
       headers: {'Content-Type': 'application/json'},
       body: json.encode({"email": email, "tempPassword": tempPassword}),
     );

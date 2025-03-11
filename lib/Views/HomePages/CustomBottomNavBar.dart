@@ -3,31 +3,29 @@ import 'package:pim_project/Views/HomePages/PatientHomePage.dart';
 import 'package:pim_project/Views/HomePages/health_screen.dart';
 import 'package:pim_project/Views/Profile/ProfileScreen.dart';
 
-
-
 class CustomBottomNavBarPatient extends StatefulWidget {
   final int selectedIndex;
   final Function(int) onItemSelected;
 
   const CustomBottomNavBarPatient({
-    super.key,
+    Key? key,
     required this.selectedIndex,
     required this.onItemSelected,
-  });
+  }) : super(key: key);
 
   @override
   _CustomBottomNavBarPatientState createState() =>
       _CustomBottomNavBarPatientState();
-}
+} 
 
 class _CustomBottomNavBarPatientState extends State<CustomBottomNavBarPatient> {
   int _currentIndex = 0;
 
   final List<IconData> _icons = [
     Icons.home,          // Accueil
-    Icons.person,        // Avatar (nouveau bouton ajouté)
+    Icons.person,        // Avatar (bouton profil)
     Icons.camera_alt,    // Caméra
-    Icons.health_and_safety,     
+    Icons.health_and_safety,
     Icons.settings,      // Paramètres
   ];
 
@@ -42,8 +40,7 @@ class _CustomBottomNavBarPatientState extends State<CustomBottomNavBarPatient> {
       _currentIndex = index;
     });
 
-    if (index == 0)
-     {
+    if (index == 0) {
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -54,29 +51,23 @@ class _CustomBottomNavBarPatientState extends State<CustomBottomNavBarPatient> {
           _currentIndex = 0;
         });
       });
-    } 
-    else if (index == 1)
-     {
+    } else if (index == 1) {
+      // Ajoutez ici le comportement pour l'avatar ou profil si nécessaire
+    } else if (index == 2) {
+      // Intégrer la fonctionnalité de la caméra ici
       
-    } 
-    else if (index == 2) 
-    {
-      
-    } 
-    else if (index == 3) 
-    {
-       Navigator.push(
-    context,
-    MaterialPageRoute(
-      builder: (context) => const HealthScreen(),
-    ),
-  ).then((_) {
-    setState(() {
-      _currentIndex = 1;
-    });
-  });
-    } 
-    else if (index == 4) {
+    } else if (index == 3) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const HealthScreen(),
+        ),
+      ).then((_) {
+        setState(() {
+          _currentIndex = 3;
+        });
+      });
+    } else if (index == 4) {
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -91,6 +82,8 @@ class _CustomBottomNavBarPatientState extends State<CustomBottomNavBarPatient> {
       widget.onItemSelected(index);
     }
   }
+
+  
 
   @override
   Widget build(BuildContext context) {
@@ -114,7 +107,6 @@ class _CustomBottomNavBarPatientState extends State<CustomBottomNavBarPatient> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: List.generate(_icons.length, (index) {
             final isSelected = _currentIndex == index;
-
             return GestureDetector(
               onTap: () => _onItemTapped(index),
               child: AnimatedContainer(

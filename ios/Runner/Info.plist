@@ -56,9 +56,10 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	
-
-	<key>NSMicrophoneUsageDescription</key>
-    <string>We need access to your microphone for speech recognition.</string>
+<key>NSMicrophoneUsageDescription</key>
+<string>This app requires access to the microphone for speech recognition.</string>
+<key>NSSpeechRecognitionUsageDescription</key>
+<string>This app uses speech recognition to convert speech to text.</string>
 
 	<!-- Ajout pour SharedPreferences -->
 	<key>NSUserDefaults</key>

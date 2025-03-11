@@ -39,7 +39,7 @@ class _LoginScreenState extends State<LoginScreen> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Image.asset(
-                  'assets/splash_image.png',
+                  'Assets/SplashScreen/splash_image.png',
                   width: 300,
                   height: 300,
                   errorBuilder: (context, error, stackTrace) {

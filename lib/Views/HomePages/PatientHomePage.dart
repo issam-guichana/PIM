@@ -1,5 +1,6 @@
-// HomePagePatient.dart
 import 'package:flutter/material.dart';
+import 'package:pim_project/Views/AssitantVocal/SpeechInteractionPage.dart';
+import 'package:pim_project/Views/HomePages/AvatarDefaultScreen.dart';
 import 'package:pim_project/Views/HomePages/CustomBottomNavBar.dart';
 
 class HomePagePatient extends StatefulWidget {
@@ -17,104 +18,98 @@ class _HomePagePatientState extends State<HomePagePatient> {
       _selectedIndex = index;
     });
 
-    // Naviguer vers AvatarScreen si l'utilisateur clique sur l'index 1
+    if (index == 1) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const AvatarDefaultScreen()),
+      );
+    }
+  }
+
+  void _startVoiceAssistance() {
     
+ Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const SpeechInteractionPage()),
+      );
+
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.grey[50],
       appBar: AppBar(
-        title: const Text('Accueil Patient'),
-        backgroundColor: const Color(0xFF723D92),
+        title: const Text(
+          'Accueil',
+          style: TextStyle(color: Colors.black),
+        ),
+        backgroundColor: const Color(0xFF9D50BB),
+        elevation: 1,
+        iconTheme: const IconThemeData(color: Colors.black),
       ),
-      body: Column(
-        children: [
-          const SizedBox(height: 15),
-          Stack(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 130, right: 25, left: 25),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: const Color(0xFF723D92),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  height: 200,
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              width: MediaQuery.of(context).size.width * 0.9,
+              height: 200,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                gradient: const LinearGradient(
+                  colors: [Color(0xFF723D92), Color(0xFF9D50BB)],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
                 ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.1),
+                    offset: const Offset(0, 4),
+                    blurRadius: 12,
+                  )
+                ],
               ),
-              Positioned(
-                top: 20,
-                right: 20,
-                child: IconButton(
-                  onPressed: () {
-                    print("Notifications pressed");
-                  },
-                  icon: const Icon(
-                    Icons.notifications,
-                    size: 40,
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 40),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Card(
-              color: Colors.white,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16),
-              ),
-              elevation: 10,
-              shadowColor: const Color(0xFF723D92),
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        const SizedBox(width: 16),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              'JEUX',
-                              style: TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.bold),
-                            ),
-                            const SizedBox(height: 8),
-                            Row(
-                              children: List.generate(
-                                5,
-                                (index) => const Icon(Icons.star,
-                                    color: Colors.yellow, size: 25),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
+              child: Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  Positioned(
+                    top: -40,
+                    left: 0,
+                    right: 0,
+                    child: GestureDetector(
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const AvatarDefaultScreen()),
+                      ),
+                      child: const CircleAvatar(
+                        radius: 80,
+                        backgroundImage:
+                            AssetImage('Assets/HomePatientAssets/avatar.png'),
+                        backgroundColor: Colors.white,
+                      ),
                     ),
-                    const SizedBox(height: 20),
-                    
-                     
-                     
-                    
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
+      floatingActionButton: FloatingActionButton.large(
+        onPressed: _startVoiceAssistance,
+        backgroundColor: const Color(0xFF9D50BB),
+        shape: const CircleBorder(), // Forme parfaitement circulaire
+        child: const Icon(Icons.mic, color: Colors.white, size: 30),
+        elevation: 8, // Ombre plus prononcée
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       bottomNavigationBar: CustomBottomNavBarPatient(
-  selectedIndex: _selectedIndex,
-  onItemSelected: _onItemTapped,
-),
-
+        selectedIndex: _selectedIndex,
+        onItemSelected: _onItemTapped,
+      ),
     );
   }
 }

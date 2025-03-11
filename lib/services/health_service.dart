@@ -5,7 +5,7 @@ import 'package:pim_project/Models/health_data.dart';
 
 class HealthService {
   static const MethodChannel _channel = MethodChannel('healthkit_channel');
-  final String _baseUrl = 'http://192.168.1.124:3000/health';
+  final String _baseUrl = 'http://172.20.10.5:3000/health';
 
   /// Récupère les données de santé depuis HealthKit (iOS)
   Future<Map<String, dynamic>> fetchHealthData() async {
@@ -30,7 +30,7 @@ class HealthService {
 
   /// Récupère l'historique des données de santé depuis le backend
   Future<List<HealthData>> fetchHealthHistory(String userId, int days) async {
-    final String url = '$_baseUrl/history/$userId/$days';
+    final String url = 'http://172.20.10.5:3000/history/$userId/$days';
 
     try {
       final response = await http.get(Uri.parse(url));
