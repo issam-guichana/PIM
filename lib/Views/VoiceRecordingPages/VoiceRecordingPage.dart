@@ -18,9 +18,9 @@ class _VoiceRecordingPageState extends State<VoiceRecordingPage> {
   int _playPosition = 0; // Playback position in milliseconds
   int _playDuration = 0; // Playback duration in milliseconds
   final List<String> _textsToRead = [
-    "The quick brown fox jumps over the lazy dog.",
-    "A journey of a thousand miles begins with a single step.",
-    "To be or not to be, that is the question."
+    "سامحني خويا، ممكن تعاوني؟ نحب نمشي للمدينة العتيقة، أما ما نعرفش الطريق. تعرف وين نجم نلقى طاكسي ولا حافلة؟ ربي يفضلك!",
+    "مساء الخير! نحب ناكل مقرونة بالهريسة ومعاها عصير برتقال. بالله زيد شوية جبن على المقرونة. نخير نقعد على الطاولة اللي قدام البحر. شكراً!",
+    "اليوم مشيت للسوق. شريت تمر وزيت زيتون. عجبتني برشا القفاطين التقليدية. السوق عامر بالناس، والريحة متاع البهارات تعبي الجو."
   ];
   int _currentTextIndex = 0;
   late FlutterSoundRecord _recorder;
@@ -512,7 +512,6 @@ class _VoiceRecordingPageState extends State<VoiceRecordingPage> {
   }
 }
 
-// Class to store recording information
 class RecordingItem {
   final String path;
   final String name;

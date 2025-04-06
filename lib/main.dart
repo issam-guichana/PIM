@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pim_project/Controllers/AuthProviders/AuthProvider.dart';
+import 'package:pim_project/Views/AssistantVocalScreens/SpeechInteractionPage.dart';
 import 'package:pim_project/Views/AuthPages/ForgotPwdScreen.dart';
 import 'package:pim_project/Views/AuthPages/SplashScreen.dart';
 import 'package:pim_project/Views/HomePages/PatientHomePage.dart';
@@ -29,10 +30,8 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-       // home:HomePage(),
-      home:VoiceRecordingPage(),
-
-      // home:  ForgotPasswordScreen() ,
+       home:SpeechInteractionPage(),
+      // home:VoiceRecordingPage(),
 
     );
   }
