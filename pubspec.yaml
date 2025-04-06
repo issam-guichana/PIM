@@ -44,9 +44,9 @@ dependencies:
   flutter_sound: ^9.23.1
   flutter_sound_record: ^3.3.2
   intl: ^0.20.2
+  audioplayers: ^6.4.0
   #  vosk_flutter: ^0.3.48
   #  record: ^4.4.0
-  #  audioplayers: ^6.2.0
 
 dev_dependencies:
   flutter_test:

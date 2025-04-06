@@ -4,9 +4,11 @@ import 'package:speech_to_text/speech_recognition_result.dart';
 import 'dart:math' as math;
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:audioplayers/audioplayers.dart';
 
 class SpeechInteractionPage extends StatefulWidget {
   const SpeechInteractionPage({super.key});
+
   @override
   _SpeechInteractionPageState createState() => _SpeechInteractionPageState();
 }
@@ -36,17 +38,31 @@ class _SpeechInteractionPageState extends State<SpeechInteractionPage>
   final ScrollController _scrollController = ScrollController();
 
   // Gemini configuration
-  static const String _geminiApiUrl = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
+  static const String _geminiApiUrl =
+      'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
   static const String _geminiApiKey = 'AIzaSyB-lwjXMpc6O-pb7ZYSkXpNynowfQLwKKU';
 
   static const String _customInstruction = '''
-   You are a friendly and patient vocal assistant designed to help Alzheimer's patients in Tunisian language(Darija).
-   Your responses should be short (5-7 words), clear, and simple to understand.
-   Speak in a warm and reassuring tone, avoiding complex words. If the user is confused, respond calmly and supportively.
-   Provide gentle reminders for daily tasks (e.g., medication, eating) and assist with orientation (e.g., reminding them where they are or who their family members are).
-   If a user repeats a question, answer without frustration, varying the response slightly.
-   Ask simple engaging questions to keep them talking. Keep the conversation slow, friendly, and positive.
-  ''';
+You are a friendly and patient vocal assistant designed to help Alzheimer's patients in Tunisian dialect (Derja) only.
+
+⚠️ Do NOT use Modern Standard Arabic or English under any circumstance.
+
+✅ Always respond in spoken Tunisian (Derja), using natural words and expressions as Tunisians use in everyday conversations. Avoid formal Arabic and foreign translations.
+
+Your responses should be:
+- Short (5–7 words)
+- Clear and simple to understand
+- Friendly, warm, and reassuring
+
+You can:
+- Gently remind about daily tasks (e.g., medication, eating)
+- Help with orientation (e.g., place, family)
+- Ask simple, engaging questions
+
+If a question is repeated, answer patiently with a slightly varied reply.
+
+Keep the conversation slow, kind, and positive at all times.
+''';
 
   @override
   void initState() {
@@ -160,7 +176,10 @@ class _SpeechInteractionPageState extends State<SpeechInteractionPage>
             {
               'parts': [
                 {'text': _customInstruction},
-                {'text': 'Current conversation history:\n$conversationContext\nUser\'s latest message: $userMessage\nPlease respond to this latest message with the conversation context in mind:'}
+                {
+                  'text':
+                      'Current conversation history:\n$conversationContext\nUser\'s latest message: $userMessage\nPlease respond to this latest message with the conversation context in mind:'
+                }
               ]
             }
           ],
@@ -175,15 +194,19 @@ class _SpeechInteractionPageState extends State<SpeechInteractionPage>
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
-        final aiResponseText = data['candidates'][0]['content']['parts'][0]['text'] ?? 'ما فماش رد من الـ AI';
+        final aiResponseText = data['candidates'][0]['content']['parts'][0]
+                ['text'] ??
+            'ما فماش رد من الـ AI';
 
         if (mounted) {
           setState(() {
             aiResponse = aiResponseText;
             // Add AI response to conversation history
-            conversationHistory.add(Message(text: aiResponseText, isUser: false));
+            conversationHistory
+                .add(Message(text: aiResponseText, isUser: false));
           });
-
+          await _speakWithElevenLabs(
+              aiResponseText); // 🔊 Speak the AI response
           // Scroll to bottom after adding new messages
           WidgetsBinding.instance.addPostFrameCallback((_) {
             if (_scrollController.hasClients) {
@@ -237,7 +260,8 @@ class _SpeechInteractionPageState extends State<SpeechInteractionPage>
       appBar: AppBar(
         backgroundColor: const Color(0xFF723D92),
         elevation: 0,
-        title: const Text('AI Assistant', style: TextStyle(color: Colors.white)),
+        title:
+            const Text('AI Assistant', style: TextStyle(color: Colors.white)),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => Navigator.pop(context),
@@ -264,7 +288,8 @@ class _SpeechInteractionPageState extends State<SpeechInteractionPage>
               height: 100,
               decoration: const BoxDecoration(
                 color: Color(0xFF723D92),
-                borderRadius: BorderRadius.vertical(bottom: Radius.circular(30)),
+                borderRadius:
+                    BorderRadius.vertical(bottom: Radius.circular(30)),
               ),
               child: Center(
                 child: Text(
@@ -281,34 +306,33 @@ class _SpeechInteractionPageState extends State<SpeechInteractionPage>
             Expanded(
               child: conversationHistory.isEmpty
                   ? Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(Icons.chat_bubble_outline,
-                        size: 80,
-                        color: Colors.grey[300]),
-                    const SizedBox(height: 16),
-                    Text(
-                      'ابدأ المحادثة باش تتواصل معايا',
-                      style: TextStyle(
-                        color: Colors.grey[600],
-                        fontSize: 18,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.chat_bubble_outline,
+                              size: 80, color: Colors.grey[300]),
+                          const SizedBox(height: 16),
+                          Text(
+                            'ابدأ المحادثة باش تتواصل معايا',
+                            style: TextStyle(
+                              color: Colors.grey[600],
+                              fontSize: 18,
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                  ],
-                ),
-              )
+                    )
                   : ListView.builder(
-                controller: _scrollController,
-                physics: const BouncingScrollPhysics(),
-                padding: const EdgeInsets.all(16),
-                itemCount: conversationHistory.length,
-                itemBuilder: (context, index) {
-                  final message = conversationHistory[index];
-                  return _buildMessageBubble(
-                      message: message.text, isUser: message.isUser);
-                },
-              ),
+                      controller: _scrollController,
+                      physics: const BouncingScrollPhysics(),
+                      padding: const EdgeInsets.all(16),
+                      itemCount: conversationHistory.length,
+                      itemBuilder: (context, index) {
+                        final message = conversationHistory[index];
+                        return _buildMessageBubble(
+                            message: message.text, isUser: message.isUser);
+                      },
+                    ),
             ),
             AnimatedBuilder(
               animation: _animationController,
@@ -330,7 +354,8 @@ class _SpeechInteractionPageState extends State<SpeechInteractionPage>
             Padding(
               padding: const EdgeInsets.all(16),
               child: FloatingActionButton(
-                backgroundColor: isListening ? Colors.red : const Color(0xFF723D92),
+                backgroundColor:
+                    isListening ? Colors.red : const Color(0xFF723D92),
                 onPressed: _isSpeechInitialized
                     ? (isListening ? _stopListening : _startListening)
                     : null,
@@ -433,5 +458,38 @@ class WaveformPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(WaveformPainter oldDelegate) =>
-      isActive != oldDelegate.isActive || animation.value != oldDelegate.animation.value;
+      isActive != oldDelegate.isActive ||
+      animation.value != oldDelegate.animation.value;
+}
+
+Future<void> _speakWithElevenLabs(String text) async {
+  const String apiKey = 'sk_a9b868d4d99db9cadc79955a945a63cbda8b725f79be2001';
+  const String voiceId =
+      'EXAVITQu4vr4xnSDxMaL'; // You can change to another voice if you want
+
+  final url = Uri.parse('https://api.elevenlabs.io/v1/text-to-speech/$voiceId');
+
+  try {
+    final response = await http.post(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'xi-api-key': apiKey,
+      },
+      body: jsonEncode({
+        'text': text,
+        'model_id': 'eleven_multilingual_v1',
+        'voice_settings': {'stability': 0.5, 'similarity_boost': 0.75}
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      final player = AudioPlayer();
+      await player.play(BytesSource(response.bodyBytes));
+    } else {
+      debugPrint('TTS Error ${response.statusCode}: ${response.body}');
+    }
+  } catch (e) {
+    debugPrint('TTS Exception: $e');
+  }
 }
