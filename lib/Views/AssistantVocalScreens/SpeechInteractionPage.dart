@@ -5,6 +5,7 @@ import 'dart:math' as math;
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SpeechInteractionPage extends StatefulWidget {
   const SpeechInteractionPage({super.key});
@@ -131,13 +132,31 @@ Keep the conversation slow, kind, and positive at all times.
   void _onSpeechResult(SpeechRecognitionResult result) {
     if (mounted) {
       setState(() {
-        userMessage = result.recognizedWords;
+        userMessage = result.recognizedWords.toLowerCase();
       });
     }
+
+    // Check for "call issam" (in Arabic or Tunisian if needed)
+    if (userMessage.contains("call issam") || userMessage.contains("كلم عصام")
+        || userMessage.contains("كلم لي ولدي") || userMessage.contains("كلم ولدي")
+        || userMessage.contains("تكلم عصام")) {
+      _stopListening(); // Stop listening before placing the call
+      _makePhoneCall("+21625786329"); // Replace with Issam's real number
+      return;
+    }
+
+    if (userMessage.contains("ذكرني ناخو الدوا") || userMessage.contains("فكرني ناخو الدوا")
+        || userMessage.contains("فكرني ناخذ الدواء") || userMessage.contains("فكرني ناخذ الدوا")) {
+      // Parse reminder from userMessage
+      _scheduleReminder("خوذ الدوا", DateTime.now().add(Duration(seconds : 10)));
+    }
+
+
     if (result.finalResult) {
       _stopListening();
     }
   }
+
 
   // Create a formatted conversation history for context
   String _getConversationContext() {
@@ -252,6 +271,19 @@ Keep the conversation slow, kind, and positive at all times.
     _scrollController.dispose();
     super.dispose();
   }
+// reminder
+  Future<void> _scheduleReminder(String message, DateTime time) async {
+    final delay = time.difference(DateTime.now());
+    if (delay.isNegative) return;
+
+    Future.delayed(delay, () async {
+      await _speakWithElevenLabs(message); // Uses ElevenLabs voice
+      setState(() {
+        conversationHistory.add(Message(text: "🔔 $message", isUser: false));
+      });
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -493,3 +525,13 @@ Future<void> _speakWithElevenLabs(String text) async {
     debugPrint('TTS Exception: $e');
   }
 }
+
+Future<void> _makePhoneCall(String phoneNumber) async {
+  final Uri url = Uri(scheme: 'tel', path: phoneNumber);
+  if (await canLaunchUrl(url)) {
+    await launchUrl(url);
+  } else {
+    throw 'Could not launch $url';
+  }
+}
+
