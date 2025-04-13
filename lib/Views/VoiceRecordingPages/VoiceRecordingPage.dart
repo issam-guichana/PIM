@@ -4,7 +4,6 @@ import 'package:flutter_sound/flutter_sound.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:async';
 import 'dart:io';
-import 'package:intl/intl.dart';
 
 class VoiceRecordingPage extends StatefulWidget {
   @override
@@ -14,24 +13,22 @@ class VoiceRecordingPage extends StatefulWidget {
 class _VoiceRecordingPageState extends State<VoiceRecordingPage> {
   bool _isRecording = false;
   bool _isPlaying = false;
+  bool _hasRecording = false;
   int _recordDuration = 0; // Duration in seconds
   int _playPosition = 0; // Playback position in milliseconds
   int _playDuration = 0; // Playback duration in milliseconds
-  final List<String> _textsToRead = [
-    "سامحني خويا، ممكن تعاوني؟ نحب نمشي للمدينة العتيقة، أما ما نعرفش الطريق. تعرف وين نجم نلقى طاكسي ولا حافلة؟ ربي يفضلك!",
-    "مساء الخير! نحب ناكل مقرونة بالهريسة ومعاها عصير برتقال. بالله زيد شوية جبن على المقرونة. نخير نقعد على الطاولة اللي قدام البحر. شكراً!",
-    "اليوم مشيت للسوق. شريت تمر وزيت زيتون. عجبتني برشا القفاطين التقليدية. السوق عامر بالناس، والريحة متاع البهارات تعبي الجو."
-  ];
-  int _currentTextIndex = 0;
+
+  // Single text to read
+  final String _textToRead = "الصباح كي نفيق، أول حاجة نعملها نحل الشباك و نخلي الشمس تدخل. نحسها تعطيني طاقة إيجابية لنهاري. نحضّر فطور خفيف، و نشرب قهوتي على رواقي. نحب نبدأ نهاري بالهدوء، بعيد على الستراس. بعد نلبس و نخرج، كل يوم فيه مغامرة جديدة، و ديما نقول: المهم تبقى ديما تضحك و تمشي لقدّام.";
+
   late FlutterSoundRecord _recorder;
   late FlutterSoundPlayer _player;
-  String? _filePath;
-  String? _currentPlayingPath;
+  String? _recordingPath;
   Timer? _timer;
   Timer? _playTimer;
   Amplitude? _amplitude;
   Timer? _ampTimer;
-  List<RecordingItem> _recordings = []; // List to store recording information
+  DateTime? _recordingDate;
 
   @override
   void initState() {
@@ -39,38 +36,27 @@ class _VoiceRecordingPageState extends State<VoiceRecordingPage> {
     _recorder = FlutterSoundRecord();
     _player = FlutterSoundPlayer();
     _initPlayer();
-    _loadExistingRecordings();
+    _checkExistingRecording();
   }
 
-  // Load any existing recordings
-  Future<void> _loadExistingRecordings() async {
+  // Check if a recording already exists
+  Future<void> _checkExistingRecording() async {
     final directory = await getApplicationDocumentsDirectory();
-    final dir = Directory(directory.path);
-    List<FileSystemEntity> files = dir.listSync();
+    final filePath = '${directory.path}/voice_sample.m4a';
+    final file = File(filePath);
 
-    List<RecordingItem> recordings = [];
-    for (var file in files) {
-      if (file.path.endsWith('.m4a') && file.path.contains('voice_sample_')) {
-        final fileName = file.path.split('/').last;
-        final timestamp =
-            int.tryParse(fileName.split('_').last.split('.').first);
-        if (timestamp != null) {
-          final date = DateTime.fromMillisecondsSinceEpoch(timestamp);
-          recordings.add(RecordingItem(
-            path: file.path,
-            name: 'Recording ${recordings.length + 1}',
-            date: date,
-          ));
-        }
-      }
+    if (await file.exists()) {
+      setState(() {
+        _hasRecording = true;
+        _recordingPath = filePath;
+        // Get the file's last modified date as recording date
+        file.lastModified().then((value) {
+          setState(() {
+            _recordingDate = value;
+          });
+        });
+      });
     }
-
-    // Sort recordings by date (newest first)
-    recordings.sort((a, b) => b.date.compareTo(a.date));
-
-    setState(() {
-      _recordings = recordings;
-    });
   }
 
   // Initialize the audio player
@@ -83,10 +69,15 @@ class _VoiceRecordingPageState extends State<VoiceRecordingPage> {
   Future<void> _startRecording() async {
     if (await _recorder.hasPermission()) {
       final directory = await getApplicationDocumentsDirectory();
-      _filePath =
-          '${directory.path}/voice_sample_${DateTime.now().millisecondsSinceEpoch}.m4a';
+      _recordingPath = '${directory.path}/voice_sample.m4a';
 
-      await _recorder.start(path: _filePath);
+      // Delete previous recording if exists
+      final file = File(_recordingPath!);
+      if (await file.exists()) {
+        await file.delete();
+      }
+
+      await _recorder.start(path: _recordingPath);
       bool isRecording = await _recorder.isRecording();
       setState(() {
         _isRecording = isRecording;
@@ -108,64 +99,45 @@ class _VoiceRecordingPageState extends State<VoiceRecordingPage> {
     _ampTimer?.cancel();
     final String? path = await _recorder.stop();
 
-    if (path != null) {
-      final timestamp = DateTime.now().millisecondsSinceEpoch;
-      final newRecording = RecordingItem(
-        path: path,
-        name: 'Recording ${_recordings.length + 1}',
-        date: DateTime.now(),
-      );
-
-      setState(() {
-        _recordings.insert(
-            0, newRecording); // Add at the beginning (newest first)
-      });
-    }
-
     setState(() {
       _isRecording = false;
-      if (_currentTextIndex < _textsToRead.length - 1) {
-        _currentTextIndex++;
-      } else {
-        _currentTextIndex = 0; // Loop back to start
-      }
+      _hasRecording = path != null;
+      _recordingDate = DateTime.now();
     });
     print("Recording saved at: $path");
   }
 
   // Play recorded audio
-  Future<void> _playRecording(String filePath) async {
+  Future<void> _playRecording() async {
     if (_isPlaying) {
       await _stopPlayback();
-      if (_currentPlayingPath == filePath) {
-        return; // If tapping the same recording that's playing, just stop
-      }
+      return;
     }
 
-    await _player.startPlayer(
-      fromURI: filePath,
-      whenFinished: () {
+    if (_recordingPath != null) {
+      await _player.startPlayer(
+        fromURI: _recordingPath!,
+        whenFinished: () {
+          setState(() {
+            _isPlaying = false;
+          });
+          _playTimer?.cancel();
+        },
+      );
+
+      _player.onProgress!.listen((event) {
         setState(() {
-          _isPlaying = false;
-          _currentPlayingPath = null;
+          _playPosition = event.position.inMilliseconds;
+          _playDuration = event.duration.inMilliseconds;
         });
-        _playTimer?.cancel();
-      },
-    );
-
-    _player.onProgress!.listen((event) {
-      setState(() {
-        _playPosition = event.position.inMilliseconds;
-        _playDuration = event.duration.inMilliseconds;
       });
-    });
 
-    setState(() {
-      _isPlaying = true;
-      _currentPlayingPath = filePath;
-    });
+      setState(() {
+        _isPlaying = true;
+      });
 
-    _startPlayTimer();
+      _startPlayTimer();
+    }
   }
 
   // Stop playback
@@ -174,8 +146,27 @@ class _VoiceRecordingPageState extends State<VoiceRecordingPage> {
     _playTimer?.cancel();
     setState(() {
       _isPlaying = false;
-      _currentPlayingPath = null;
     });
+  }
+
+  // Delete the recording
+  Future<void> _deleteRecording() async {
+    if (_isPlaying) {
+      await _stopPlayback();
+    }
+
+    if (_recordingPath != null) {
+      final file = File(_recordingPath!);
+      if (await file.exists()) {
+        await file.delete();
+      }
+
+      setState(() {
+        _hasRecording = false;
+        _recordingPath = null;
+        _recordingDate = null;
+      });
+    }
   }
 
   // Start the timer and amplitude updates
@@ -189,9 +180,9 @@ class _VoiceRecordingPageState extends State<VoiceRecordingPage> {
 
     _ampTimer =
         Timer.periodic(const Duration(milliseconds: 200), (Timer t) async {
-      _amplitude = await _recorder.getAmplitude();
-      setState(() {});
-    });
+          _amplitude = await _recorder.getAmplitude();
+          setState(() {});
+        });
   }
 
   // Start playback timer
@@ -221,52 +212,6 @@ class _VoiceRecordingPageState extends State<VoiceRecordingPage> {
     return _formatTimer(seconds);
   }
 
-  // Format date for display
-  String _formatDate(DateTime date) {
-    return DateFormat('MMM d, yyyy • h:mm a').format(date);
-  }
-
-  // Delete a recording
-  void _deleteRecording(int index) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Delete Recording'),
-          content:
-              const Text('Are you sure you want to delete this recording?'),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('Cancel'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            TextButton(
-              child: const Text('Delete', style: TextStyle(color: Colors.red)),
-              onPressed: () {
-                // If currently playing this recording, stop playback
-                if (_currentPlayingPath == _recordings[index].path) {
-                  _stopPlayback();
-                }
-
-                // Delete the file
-                File(_recordings[index].path).deleteSync();
-
-                // Remove from list
-                setState(() {
-                  _recordings.removeAt(index);
-                });
-
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
   @override
   void dispose() {
     _timer?.cancel();
@@ -281,245 +226,252 @@ class _VoiceRecordingPageState extends State<VoiceRecordingPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Column(
-        children: [
-          const SizedBox(height: 50),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Card(
-              color: Colors.white,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16),
-              ),
-              elevation: 10,
-              shadowColor: const Color(0xFF723D92),
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const Text(
-                      'Read Aloud',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xFF723D92),
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    Text(
-                      _textsToRead[_currentTextIndex],
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        fontSize: 16,
-                        height: 1.5,
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    Text(
-                      _isRecording
-                          ? 'Recording... (${_formatTimer(_recordDuration)})'
-                          : _isPlaying
-                              ? 'Playing... (${_formatPlaybackTime(_playPosition)} / ${_formatPlaybackTime(_playDuration)})'
-                              : 'Press to Record',
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: _isRecording
-                            ? Colors.red
-                            : _isPlaying
-                                ? Colors.blue
-                                : Colors.grey,
-                      ),
-                    ),
-                    if (_amplitude != null && _isRecording) ...[
-                      const SizedBox(height: 8),
-                      Text(
-                        'Amplitude: ${_amplitude!.current.toStringAsFixed(1)} dB',
-                        style:
-                            const TextStyle(fontSize: 12, color: Colors.grey),
-                      ),
-                    ],
-                    if (_isPlaying) ...[
-                      const SizedBox(height: 12),
-                      LinearProgressIndicator(
-                        value: _playDuration > 0
-                            ? _playPosition / _playDuration
-                            : 0.0,
-                        backgroundColor: Colors.grey[300],
-                        valueColor:
-                            AlwaysStoppedAnimation<Color>(Color(0xFF723D92)),
-                      ),
-                    ],
-                  ],
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(height: 16),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Card(
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: [
+              const SizedBox(height: 24),
+              Card(
                 color: Colors.white,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16),
                 ),
-                elevation: 5,
+                elevation: 10,
                 shadowColor: const Color(0xFF723D92),
                 child: Padding(
-                  padding: const EdgeInsets.all(16.0),
+                  padding: const EdgeInsets.all(20.0),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       const Text(
-                        'Your Recordings',
+                        'Read Aloud',
                         style: TextStyle(
-                          fontSize: 18,
+                          fontSize: 20,
                           fontWeight: FontWeight.bold,
                           color: Color(0xFF723D92),
                         ),
                       ),
-                      const SizedBox(height: 16),
-                      _recordings.isEmpty
-                          ? Center(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(
-                                    Icons.mic_none,
-                                    size: 48,
-                                    color: Colors.grey[400],
-                                  ),
-                                  const SizedBox(height: 16),
-                                  Text(
-                                    'No recordings yet',
-                                    style: TextStyle(
-                                      color: Colors.grey[600],
-                                      fontSize: 16,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 8),
-                                  Text(
-                                    'Press the microphone button to start recording',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      color: Colors.grey[500],
-                                      fontSize: 14,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            )
-                          : Expanded(
-                              child: ListView.separated(
-                                itemCount: _recordings.length,
-                                separatorBuilder: (context, index) => Divider(
-                                  color: Colors.grey[300],
-                                  height: 1,
-                                ),
-                                itemBuilder: (context, index) {
-                                  final recording = _recordings[index];
-                                  final isCurrentlyPlaying = _isPlaying &&
-                                      _currentPlayingPath == recording.path;
-
-                                  return ListTile(
-                                    contentPadding: EdgeInsets.zero,
-                                    leading: GestureDetector(
-                                      onTap: () {
-                                        _playRecording(recording.path);
-                                      },
-                                      child: Container(
-                                        width: 50,
-                                        height: 50,
-                                        decoration: BoxDecoration(
-                                          color: const Color(0xFF723D92)
-                                              .withOpacity(0.1),
-                                          borderRadius:
-                                              BorderRadius.circular(25),
-                                        ),
-                                        child: Icon(
-                                          isCurrentlyPlaying
-                                              ? Icons.pause
-                                              : Icons.play_arrow,
-                                          color: const Color(0xFF723D92),
-                                          size: 30,
-                                        ),
-                                      ),
-                                    ),
-                                    title: Text(
-                                      recording.name,
-                                      style: const TextStyle(
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                    subtitle: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          _formatDate(recording.date),
-                                          style: TextStyle(
-                                            fontSize: 12,
-                                            color: Colors.grey[600],
-                                          ),
-                                        ),
-                                        if (isCurrentlyPlaying) ...[
-                                          const SizedBox(height: 8),
-                                          LinearProgressIndicator(
-                                            value: _playDuration > 0
-                                                ? _playPosition / _playDuration
-                                                : 0.0,
-                                            backgroundColor: Colors.grey[300],
-                                            valueColor:
-                                                const AlwaysStoppedAnimation<
-                                                    Color>(Color(0xFF723D92)),
-                                            minHeight: 3,
-                                          ),
-                                        ],
-                                      ],
-                                    ),
-                                    trailing: IconButton(
-                                      icon: const Icon(Icons.delete_outline,
-                                          color: Colors.red),
-                                      onPressed: () => _deleteRecording(index),
-                                    ),
-                                  );
-                                },
-                              ),
-                            ),
+                      const SizedBox(height: 20),
+                      Text(
+                        _textToRead,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          fontSize: 18,
+                          height: 1.5,
+                        ),
+                      ),
                     ],
                   ),
                 ),
               ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: FloatingActionButton(
-              onPressed: _isRecording ? _stopRecording : _startRecording,
-              backgroundColor: const Color(0xFF723D92),
-              child: Icon(
-                _isRecording ? Icons.stop : Icons.mic,
-                color: Colors.white,
-                size: 30,
+              const SizedBox(height: 40),
+              Expanded(
+                child: Card(
+                  color: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  elevation: 5,
+                  shadowColor: const Color(0xFF723D92),
+                  child: Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        if (_isRecording) ...[
+                          const Icon(
+                            Icons.mic,
+                            color: Colors.red,
+                            size: 80,
+                          ),
+                          const SizedBox(height: 20),
+                          Text(
+                            'Recording... ${_formatTimer(_recordDuration)}',
+                            style: const TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.red
+                            ),
+                          ),
+                          if (_amplitude != null) ...[
+                            const SizedBox(height: 12),
+                            Container(
+                              height: 60,
+                              child: Center(
+                                child: _VoiceWaveWidget(
+                                  amplitude: _amplitude!.current,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ] else if (_hasRecording) ...[
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              GestureDetector(
+                                onTap: _playRecording,
+                                child: Container(
+                                  width: 70,
+                                  height: 70,
+                                  decoration: BoxDecoration(
+                                    color: const Color(0xFF723D92).withOpacity(0.1),
+                                    borderRadius: BorderRadius.circular(35),
+                                  ),
+                                  child: Icon(
+                                    _isPlaying ? Icons.pause : Icons.play_arrow,
+                                    color: const Color(0xFF723D92),
+                                    size: 40,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(width: 30),
+                              GestureDetector(
+                                onTap: _deleteRecording,
+                                child: Container(
+                                  width: 70,
+                                  height: 70,
+                                  decoration: BoxDecoration(
+                                    color: Colors.red.withOpacity(0.1),
+                                    borderRadius: BorderRadius.circular(35),
+                                  ),
+                                  child: const Icon(
+                                    Icons.delete_outline,
+                                    color: Colors.red,
+                                    size: 40,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 20),
+                          if (_isPlaying) ...[
+                            Text(
+                              'Playing... ${_formatPlaybackTime(_playPosition)} / ${_formatPlaybackTime(_playDuration)}',
+                              style: const TextStyle(
+                                fontSize: 16,
+                                color: Color(0xFF723D92),
+                              ),
+                            ),
+                            const SizedBox(height: 12),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                              child: LinearProgressIndicator(
+                                value: _playDuration > 0
+                                    ? _playPosition / _playDuration
+                                    : 0.0,
+                                backgroundColor: Colors.grey[300],
+                                valueColor: const AlwaysStoppedAnimation<Color>(
+                                    Color(0xFF723D92)),
+                                minHeight: 4,
+                              ),
+                            ),
+                          ] else ...[
+                            const Text(
+                              'Recording complete',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.green,
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              'Press play to listen or record again',
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.grey[600],
+                              ),
+                            ),
+                          ],
+                        ] else ...[
+                          Icon(
+                            Icons.mic_none,
+                            size: 80,
+                            color: Colors.grey[400],
+                          ),
+                          const SizedBox(height: 20),
+                          Text(
+                            'No recording yet',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.grey[600],
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          Text(
+                            'Press the button below to start recording',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.grey[500],
+                              fontSize: 14,
+                            ),
+                          ),
+                        ],
+                      ],
+                    ),
+                  ),
+                ),
               ),
-            ),
+              const SizedBox(height: 24),
+              if (!_hasRecording || _isRecording)
+                FloatingActionButton.extended(
+                  onPressed: _isRecording ? _stopRecording : _startRecording,
+                  backgroundColor: _isRecording ? Colors.red : const Color(0xFF723D92),
+                  icon: Icon(
+                    _isRecording ? Icons.stop : Icons.mic,
+                    color: Colors.white,
+                  ),
+                  label: Text(
+                    _isRecording ? 'Stop' : (_hasRecording ? 'Re-record' : 'Start Recording'),
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                    ),
+                  ),
+                ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
 }
 
-class RecordingItem {
-  final String path;
-  final String name;
-  final DateTime date;
+// Custom widget to show voice amplitude visualization
+class _VoiceWaveWidget extends StatelessWidget {
+  final double amplitude;
 
-  RecordingItem({
-    required this.path,
-    required this.name,
-    required this.date,
-  });
+  const _VoiceWaveWidget({required this.amplitude});
+
+  @override
+  Widget build(BuildContext context) {
+    // Normalize amplitude for visualization (typically -160 to 0 dB)
+    double normalizedAmplitude = (amplitude + 160) / 160;
+    if (normalizedAmplitude < 0) normalizedAmplitude = 0;
+    if (normalizedAmplitude > 1) normalizedAmplitude = 1;
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: List.generate(9, (index) {
+        // Create different heights for each bar to simulate a waveform
+        double height = 10 + normalizedAmplitude * 40;
+        if (index % 2 == 0) height *= 0.6;
+        if (index % 3 == 0) height *= 1.3;
+
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 3.0),
+          child: Container(
+            width: 5,
+            height: height,
+            decoration: BoxDecoration(
+              color: const Color(0xFF723D92),
+              borderRadius: BorderRadius.circular(5),
+            ),
+          ),
+        );
+      }),
+    );
+  }
 }
