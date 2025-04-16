@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sound_record/flutter_sound_record.dart';
 import 'package:flutter_sound/flutter_sound.dart';
+import 'package:http_parser/http_parser.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:async';
 import 'dart:io';
+import 'dart:convert';
 
 class VoiceRecordingPage extends StatefulWidget {
+  const VoiceRecordingPage({super.key});
+
   @override
   _VoiceRecordingPageState createState() => _VoiceRecordingPageState();
 }
@@ -14,12 +20,12 @@ class _VoiceRecordingPageState extends State<VoiceRecordingPage> {
   bool _isRecording = false;
   bool _isPlaying = false;
   bool _hasRecording = false;
-  int _recordDuration = 0; // Duration in seconds
-  int _playPosition = 0; // Playback position in milliseconds
-  int _playDuration = 0; // Playback duration in milliseconds
+  bool _isUploading = false;
+  int _recordDuration = 0;
+  int _playPosition = 0;
+  int _playDuration = 0;
 
-  // Single text to read
-  final String _textToRead = "الصباح كي نفيق، أول حاجة نعملها نحل الشباك و نخلي الشمس تدخل. نحسها تعطيني طاقة إيجابية لنهاري. نحضّر فطور خفيف، و نشرب قهوتي على رواقي. نحب نبدأ نهاري بالهدوء، بعيد على الستراس. بعد نلبس و نخرج، كل يوم فيه مغامرة جديدة، و ديما نقول: المهم تبقى ديما تضحك و تمشي لقدّام.";
+  final String _textToRead = "أنا نحب نطيّب برشا، خاصّة كي نكون مرتاح في الدار. البارح قررت نعمل مقرونة بالكفتة. مشيت للسوق، شريت شوية خضرة ولحم مفروم. رجعت للدار، حضرت كل شي، وطاب العشاء على رواحو. العايلة الكل عجبتهم الماكلة، وقالولي لازم نعاودها. ما فماش كيف ماكلة الدار كي تعملها بقلبك.";
 
   late FlutterSoundRecord _recorder;
   late FlutterSoundPlayer _player;
@@ -39,7 +45,6 @@ class _VoiceRecordingPageState extends State<VoiceRecordingPage> {
     _checkExistingRecording();
   }
 
-  // Check if a recording already exists
   Future<void> _checkExistingRecording() async {
     final directory = await getApplicationDocumentsDirectory();
     final filePath = '${directory.path}/voice_sample.m4a';
@@ -49,29 +54,23 @@ class _VoiceRecordingPageState extends State<VoiceRecordingPage> {
       setState(() {
         _hasRecording = true;
         _recordingPath = filePath;
-        // Get the file's last modified date as recording date
         file.lastModified().then((value) {
-          setState(() {
-            _recordingDate = value;
-          });
+          setState(() => _recordingDate = value);
         });
       });
     }
   }
 
-  // Initialize the audio player
   Future<void> _initPlayer() async {
     await _player.openPlayer();
     _player.setSubscriptionDuration(const Duration(milliseconds: 200));
   }
 
-  // Start recording
   Future<void> _startRecording() async {
     if (await _recorder.hasPermission()) {
       final directory = await getApplicationDocumentsDirectory();
       _recordingPath = '${directory.path}/voice_sample.m4a';
 
-      // Delete previous recording if exists
       final file = File(_recordingPath!);
       if (await file.exists()) {
         await file.delete();
@@ -89,12 +88,25 @@ class _VoiceRecordingPageState extends State<VoiceRecordingPage> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("Please grant microphone permission")),
       );
-      print("Microphone permission denied.");
     }
   }
 
-  // Stop recording
   Future<void> _stopRecording() async {
+    if (_recordDuration < 30) {
+      _timer?.cancel();
+      _ampTimer?.cancel();
+      await _recorder.stop();
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Record at least 30 seconds for cloning")),
+      );
+      setState(() {
+        _isRecording = false;
+        _hasRecording = false;
+        _recordingPath = null;
+      });
+      return;
+    }
+
     _timer?.cancel();
     _ampTimer?.cancel();
     final String? path = await _recorder.stop();
@@ -105,9 +117,130 @@ class _VoiceRecordingPageState extends State<VoiceRecordingPage> {
       _recordingDate = DateTime.now();
     });
     print("Recording saved at: $path");
+
+    if (path != null) {
+      await _uploadToResemble(path);
+    }
   }
 
-  // Play recorded audio
+  Future<void> _uploadToPlayHT(String audioPath) async {
+    setState(() => _isUploading = true);
+    const String apiKey = 'ak-0a793beda67745669bf4aca1c2f98a53'; // Replace with your PlayHT API key
+    const String userId = 'SY9YsgOpgvV6m8dT6URlDqup3Gf2'; // Replace with your PlayHT user ID
+    const String cloneUrl = 'https://api.play.ht/api/v2/cloned-voices/instant';
+
+    try {
+      final audioFile = File(audioPath);
+      if (!await audioFile.exists()) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Audio file not found")),
+        );
+        return;
+      }
+
+      final request = http.MultipartRequest('POST', Uri.parse(cloneUrl))
+        ..headers['Authorization'] = 'Bearer $apiKey'
+        ..headers['X-User-Id'] = userId
+        ..headers['Accept'] = 'application/json'
+        ..fields['voice_name'] = 'UserVoice_${DateTime.now().millisecondsSinceEpoch}'
+        ..fields['sample_file_name'] = 'voice_sample.m4a'
+        ..files.add(http.MultipartFile(
+          'sample_file',
+          audioFile.readAsBytes().asStream(),
+          audioFile.lengthSync(),
+          filename: 'voice_sample.m4a',
+          contentType: MediaType('audio', 'x-m4a'), // Explicitly set Content-Type
+        ));
+
+      final response = await request.send();
+      final responseBody = await response.stream.bytesToString();
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final responseData = jsonDecode(responseBody);
+        final voiceId = responseData['id']?.toString();
+        if (voiceId != null) {
+          final prefs = await SharedPreferences.getInstance();
+          await prefs.setString('playht_voice_id', voiceId);
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text("Voice cloned successfully!")),
+          );
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text("Failed to retrieve voice ID")),
+          );
+          debugPrint('Response data: $responseData');
+        }
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Error cloning voice: $responseBody")),
+        );
+        debugPrint('Clone Error ${response.statusCode}: $responseBody');
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Upload failed: $e")),
+      );
+      debugPrint('Clone Exception: $e');
+    } finally {
+      setState(() => _isUploading = false);
+    }
+  }
+
+  Future<void> _uploadToResemble(String audioPath) async {
+    print('Starting upload to Resemble with audioPath: $audioPath');
+    setState(() => _isUploading = true);
+    const String apiKey = '8rUT4H6CB9oAwXIxSDrkagtt'; // From resemble.ai
+
+    try {
+      final audioFile = File(audioPath);
+      print('Audio file exists: ${await audioFile.exists()}');
+
+      final request = http.MultipartRequest(
+        'POST',
+        Uri.parse('https://app.resemble.ai/api/v2/voices'),
+      )
+        ..headers['Authorization'] = 'Bearer $apiKey'
+        ..fields['name'] = 'UserVoice_${DateTime.now().millisecondsSinceEpoch}';
+
+      print('Adding audio file to request...');
+      final fileToSend = await http.MultipartFile.fromPath('voice_file', audioPath);
+      request.files.add(fileToSend);
+
+      print('Sending request to Resemble...');
+      final response = await request.send();
+      final responseBody = await response.stream.bytesToString();
+
+      print('Response status code: ${response.statusCode}');
+      print('Response body: $responseBody');
+
+      if (response.statusCode == 201) {
+        final voiceId = jsonDecode(responseBody)['uuid'];
+        print('Voice cloned successfully. Voice ID: $voiceId');
+
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setString('resemble_voice_id', voiceId);
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Voice cloned successfully!")),
+        );
+      } else {
+        print('Error cloning voice. Status code: ${response.statusCode}');
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Error cloning voice: $responseBody")),
+        );
+      }
+    } catch (e) {
+      print('Exception occurred during upload: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Upload failed: $e")),
+      );
+    } finally {
+      print('Upload process finished.');
+      setState(() => _isUploading = false);
+    }
+  }
+
+
   Future<void> _playRecording() async {
     if (_isPlaying) {
       await _stopPlayback();
@@ -118,9 +251,7 @@ class _VoiceRecordingPageState extends State<VoiceRecordingPage> {
       await _player.startPlayer(
         fromURI: _recordingPath!,
         whenFinished: () {
-          setState(() {
-            _isPlaying = false;
-          });
+          setState(() => _isPlaying = false);
           _playTimer?.cancel();
         },
       );
@@ -132,24 +263,17 @@ class _VoiceRecordingPageState extends State<VoiceRecordingPage> {
         });
       });
 
-      setState(() {
-        _isPlaying = true;
-      });
-
+      setState(() => _isPlaying = true);
       _startPlayTimer();
     }
   }
 
-  // Stop playback
   Future<void> _stopPlayback() async {
     await _player.stopPlayer();
     _playTimer?.cancel();
-    setState(() {
-      _isPlaying = false;
-    });
+    setState(() => _isPlaying = false);
   }
 
-  // Delete the recording
   Future<void> _deleteRecording() async {
     if (_isPlaying) {
       await _stopPlayback();
@@ -161,6 +285,9 @@ class _VoiceRecordingPageState extends State<VoiceRecordingPage> {
         await file.delete();
       }
 
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.remove('playht_voice_id');
+
       setState(() {
         _hasRecording = false;
         _recordingPath = null;
@@ -169,7 +296,6 @@ class _VoiceRecordingPageState extends State<VoiceRecordingPage> {
     }
   }
 
-  // Start the timer and amplitude updates
   void _startTimer() {
     _timer?.cancel();
     _ampTimer?.cancel();
@@ -178,14 +304,12 @@ class _VoiceRecordingPageState extends State<VoiceRecordingPage> {
       setState(() => _recordDuration++);
     });
 
-    _ampTimer =
-        Timer.periodic(const Duration(milliseconds: 200), (Timer t) async {
-          _amplitude = await _recorder.getAmplitude();
-          setState(() {});
-        });
+    _ampTimer = Timer.periodic(const Duration(milliseconds: 200), (Timer t) async {
+      _amplitude = await _recorder.getAmplitude();
+      setState(() {});
+    });
   }
 
-  // Start playback timer
   void _startPlayTimer() {
     _playTimer?.cancel();
     _playTimer = Timer.periodic(const Duration(milliseconds: 200), (Timer t) {
@@ -195,7 +319,6 @@ class _VoiceRecordingPageState extends State<VoiceRecordingPage> {
     });
   }
 
-  // Format timer display
   String _formatTimer(int seconds) {
     final minutes = _formatNumber(seconds ~/ 60);
     final secs = _formatNumber(seconds % 60);
@@ -206,7 +329,6 @@ class _VoiceRecordingPageState extends State<VoiceRecordingPage> {
     return number < 10 ? '0$number' : number.toString();
   }
 
-  // Format milliseconds for playback display
   String _formatPlaybackTime(int milliseconds) {
     int seconds = (milliseconds / 1000).floor();
     return _formatTimer(seconds);
@@ -289,9 +411,9 @@ class _VoiceRecordingPageState extends State<VoiceRecordingPage> {
                           Text(
                             'Recording... ${_formatTimer(_recordDuration)}',
                             style: const TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.red
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.red,
                             ),
                           ),
                           if (_amplitude != null) ...[
@@ -310,7 +432,7 @@ class _VoiceRecordingPageState extends State<VoiceRecordingPage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               GestureDetector(
-                                onTap: _playRecording,
+                                onTap: _isUploading ? null : _playRecording,
                                 child: Container(
                                   width: 70,
                                   height: 70,
@@ -327,7 +449,7 @@ class _VoiceRecordingPageState extends State<VoiceRecordingPage> {
                               ),
                               const SizedBox(width: 30),
                               GestureDetector(
-                                onTap: _deleteRecording,
+                                onTap: _isUploading ? null : _deleteRecording,
                                 child: Container(
                                   width: 70,
                                   height: 70,
@@ -345,7 +467,16 @@ class _VoiceRecordingPageState extends State<VoiceRecordingPage> {
                             ],
                           ),
                           const SizedBox(height: 20),
-                          if (_isPlaying) ...[
+                          if (_isUploading) ...[
+                            const CircularProgressIndicator(
+                              valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF723D92)),
+                            ),
+                            const SizedBox(height: 12),
+                            const Text(
+                              'Uploading to clone voice...',
+                              style: TextStyle(fontSize: 16, color: Color(0xFF723D92)),
+                            ),
+                          ] else if (_isPlaying) ...[
                             Text(
                               'Playing... ${_formatPlaybackTime(_playPosition)} / ${_formatPlaybackTime(_playDuration)}',
                               style: const TextStyle(
@@ -357,12 +488,9 @@ class _VoiceRecordingPageState extends State<VoiceRecordingPage> {
                             Padding(
                               padding: const EdgeInsets.symmetric(horizontal: 20.0),
                               child: LinearProgressIndicator(
-                                value: _playDuration > 0
-                                    ? _playPosition / _playDuration
-                                    : 0.0,
+                                value: _playDuration > 0 ? _playPosition / _playDuration : 0.0,
                                 backgroundColor: Colors.grey[300],
-                                valueColor: const AlwaysStoppedAnimation<Color>(
-                                    Color(0xFF723D92)),
+                                valueColor: const AlwaysStoppedAnimation<Color>(Color(0xFF723D92)),
                                 minHeight: 4,
                               ),
                             ),
@@ -417,7 +545,7 @@ class _VoiceRecordingPageState extends State<VoiceRecordingPage> {
               const SizedBox(height: 24),
               if (!_hasRecording || _isRecording)
                 FloatingActionButton.extended(
-                  onPressed: _isRecording ? _stopRecording : _startRecording,
+                  onPressed: _isUploading ? null : (_isRecording ? _stopRecording : _startRecording),
                   backgroundColor: _isRecording ? Colors.red : const Color(0xFF723D92),
                   icon: Icon(
                     _isRecording ? Icons.stop : Icons.mic,
@@ -439,7 +567,6 @@ class _VoiceRecordingPageState extends State<VoiceRecordingPage> {
   }
 }
 
-// Custom widget to show voice amplitude visualization
 class _VoiceWaveWidget extends StatelessWidget {
   final double amplitude;
 
@@ -447,7 +574,6 @@ class _VoiceWaveWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Normalize amplitude for visualization (typically -160 to 0 dB)
     double normalizedAmplitude = (amplitude + 160) / 160;
     if (normalizedAmplitude < 0) normalizedAmplitude = 0;
     if (normalizedAmplitude > 1) normalizedAmplitude = 1;
@@ -455,7 +581,6 @@ class _VoiceWaveWidget extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: List.generate(9, (index) {
-        // Create different heights for each bar to simulate a waveform
         double height = 10 + normalizedAmplitude * 40;
         if (index % 2 == 0) height *= 0.6;
         if (index % 3 == 0) height *= 1.3;

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pim_project/Views/VoiceRecordingPages/VoiceRecordingPage.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
 import 'dart:math' as math;
@@ -6,6 +7,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SpeechInteractionPage extends StatefulWidget {
   const SpeechInteractionPage({super.key});
@@ -19,26 +21,20 @@ class Message {
   final bool isUser;
   final DateTime timestamp;
 
-  Message({required this.text, required this.isUser})
-      : timestamp = DateTime.now();
+  Message({required this.text, required this.isUser}) : timestamp = DateTime.now();
 }
 
-class _SpeechInteractionPageState extends State<SpeechInteractionPage>
-    with SingleTickerProviderStateMixin {
+class _SpeechInteractionPageState extends State<SpeechInteractionPage> with SingleTickerProviderStateMixin {
   bool isListening = false;
   bool isAIResponding = false;
   String userMessage = '';
   String aiResponse = '';
   bool _isSpeechInitialized = false;
-
-  // List to store the entire conversation history
   List<Message> conversationHistory = [];
-
   final SpeechToText _speechToText = SpeechToText();
   late AnimationController _animationController;
   final ScrollController _scrollController = ScrollController();
 
-  // Gemini configuration
   static const String _geminiApiUrl =
       'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
   static const String _geminiApiKey = 'AIzaSyB-lwjXMpc6O-pb7ZYSkXpNynowfQLwKKU';
@@ -92,6 +88,7 @@ Keep the conversation slow, kind, and positive at all times.
     }
   }
 
+
   void _startListening() async {
     if (!_isSpeechInitialized) return;
 
@@ -121,7 +118,6 @@ Keep the conversation slow, kind, and positive at all times.
       });
     }
     if (userMessage.trim().isNotEmpty) {
-      // Add user message to conversation history
       setState(() {
         conversationHistory.add(Message(text: userMessage, isUser: true));
       });
@@ -136,31 +132,29 @@ Keep the conversation slow, kind, and positive at all times.
       });
     }
 
-    // Check for "call issam" (in Arabic or Tunisian if needed)
-    if (userMessage.contains("call issam") || userMessage.contains("كلم عصام")
-        || userMessage.contains("كلم لي ولدي") || userMessage.contains("كلم ولدي")
-        || userMessage.contains("تكلم عصام")) {
-      _stopListening(); // Stop listening before placing the call
-      _makePhoneCall("+21625786329"); // Replace with Issam's real number
+    if (userMessage.contains("call issam") ||
+        userMessage.contains("كلم عصام") ||
+        userMessage.contains("كلم لي ولدي") ||
+        userMessage.contains("كلم ولدي") ||
+        userMessage.contains("تكلم عصام")) {
+      _stopListening();
+      _makePhoneCall("+21625786329");
       return;
     }
 
-    if (userMessage.contains("ذكرني ناخو الدوا") || userMessage.contains("فكرني ناخو الدوا")
-        || userMessage.contains("فكرني ناخذ الدواء") || userMessage.contains("فكرني ناخذ الدوا")) {
-      // Parse reminder from userMessage
-      _scheduleReminder("خوذ الدوا", DateTime.now().add(Duration(seconds : 10)));
+    if (userMessage.contains("ذكرني ناخو الدوا") ||
+        userMessage.contains("فكرني ناخو الدوا") ||
+        userMessage.contains("فكرني ناخذ الدواء") ||
+        userMessage.contains("فكرني ناخذ الدوا")) {
+      _scheduleReminder("خوذ الدوا", DateTime.now().add(const Duration(seconds: 10)));
     }
-
 
     if (result.finalResult) {
       _stopListening();
     }
   }
 
-
-  // Create a formatted conversation history for context
   String _getConversationContext() {
-    // Limit to the last 10 exchanges to avoid token limits
     final relevantHistory = conversationHistory.length > 10
         ? conversationHistory.sublist(conversationHistory.length - 10)
         : conversationHistory;
@@ -180,7 +174,6 @@ Keep the conversation slow, kind, and positive at all times.
       });
     }
 
-    // Get conversation context to provide to the AI
     final conversationContext = _getConversationContext();
 
     try {
@@ -196,8 +189,7 @@ Keep the conversation slow, kind, and positive at all times.
               'parts': [
                 {'text': _customInstruction},
                 {
-                  'text':
-                      'Current conversation history:\n$conversationContext\nUser\'s latest message: $userMessage\nPlease respond to this latest message with the conversation context in mind:'
+                  'text': 'Current conversation history:\n$conversationContext\nUser\'s latest message: $userMessage\nPlease respond to this latest message with the conversation context in mind:'
                 }
               ]
             }
@@ -213,20 +205,14 @@ Keep the conversation slow, kind, and positive at all times.
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
-        final aiResponseText = data['candidates'][0]['content']['parts'][0]
-                ['text'] ??
-            'ما فماش رد من الـ AI';
+        final aiResponseText = data['candidates'][0]['content']['parts'][0]['text'] ?? 'ما فماش رد من الـ AI';
 
         if (mounted) {
           setState(() {
             aiResponse = aiResponseText;
-            // Add AI response to conversation history
-            conversationHistory
-                .add(Message(text: aiResponseText, isUser: false));
+            conversationHistory.add(Message(text: aiResponseText, isUser: false));
           });
-          await _speakWithElevenLabs(
-              aiResponseText); // 🔊 Speak the AI response
-          // Scroll to bottom after adding new messages
+          await _speakWithResemble(aiResponseText);
           WidgetsBinding.instance.addPostFrameCallback((_) {
             if (_scrollController.hasClients) {
               _scrollController.animateTo(
@@ -264,6 +250,106 @@ Keep the conversation slow, kind, and positive at all times.
     }
   }
 
+  Future<void> _speakWithPlayHT(String text) async {
+    if (text.trim().isEmpty) return;
+    const String apiKey = 'ak-0a793beda67745669bf4aca1c2f98a53'; // Replace with your PlayHT API key
+    const String userId = 'SY9YsgOpgvV6m8dT6URlDqup3Gf2'; // Replace with your PlayHT user ID
+    final prefs = await SharedPreferences.getInstance();
+    final voiceId = prefs.getString('playht_voice_id') ?? 's3://voice-cloning-zero-shot/d9ff78ba-d016-47f6-b0cd-dd8d6928566d/original/manifest.json'; // Fallback to Arabella
+
+    try {
+      final response = await http.post(
+        Uri.parse('https://api.play.ht/api/v2/tts'),
+        headers: {
+          'Authorization': 'Bearer $apiKey',
+          'X-User-Id': userId,
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: jsonEncode({
+          'text': text,
+          'voice': voiceId,
+          'voice_engine': 'PlayHT2.0',
+          'sample_rate': 24000,
+          'format': 'mp3',
+          'speed': 1.0,
+        }),
+      );
+
+      if (response.statusCode == 201) {
+        final data = jsonDecode(response.body);
+        final audioUrl = data['audioUrl'];
+        if (audioUrl != null) {
+          final player = AudioPlayer();
+          await player.play(UrlSource(audioUrl));
+        } else {
+          debugPrint('No audio URL in response: $data');
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text("Failed to retrieve audio")),
+          );
+        }
+      } else {
+        debugPrint('TTS Error ${response.statusCode}: ${response.body}');
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("TTS error: ${response.body}")),
+        );
+      }
+    } catch (e) {
+      debugPrint('TTS Exception: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("TTS failed: $e")),
+      );
+    }
+  }
+
+  Future<void> _speakWithResemble(String text) async {
+    if (text.trim().isEmpty) return;
+    const String apiKey = '8rUT4H6CB9oAwXIxSDrkagtt';
+    final prefs = await SharedPreferences.getInstance();
+    final voiceId = prefs.getString('resemble_voice_id') ?? 'default-voice';
+    try {
+      final response = await http.post(
+        Uri.parse('https://app.resemble.ai/api/v2/projects/dummy/clips'),
+        headers: {
+          'Authorization': 'Bearer $apiKey',
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode({
+          'voice_uuid': voiceId,
+          'body': text,
+          'format': 'mp3',
+        }),
+      );
+      if (response.statusCode == 200) {
+        final audioUrl = jsonDecode(response.body)['audio_url'];
+        final player = AudioPlayer();
+        await player.play(UrlSource(audioUrl));
+      } else {
+        debugPrint('TTS Error ${response.statusCode}: ${response.body}');
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("TTS error: ${response.body}")),
+        );
+      }
+    } catch (e) {
+      debugPrint('TTS Exception: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("TTS failed: $e")),
+      );
+    }
+  }
+
+  Future<void> _scheduleReminder(String message, DateTime time) async {
+    final delay = time.difference(DateTime.now());
+    if (delay.isNegative) return;
+
+    Future.delayed(delay, () async {
+      await _speakWithResemble(message);
+      setState(() {
+        conversationHistory.add(Message(text: "🔔 $message", isUser: false));
+      });
+    });
+  }
+
   @override
   void dispose() {
     _speechToText.stop();
@@ -271,19 +357,6 @@ Keep the conversation slow, kind, and positive at all times.
     _scrollController.dispose();
     super.dispose();
   }
-// reminder
-  Future<void> _scheduleReminder(String message, DateTime time) async {
-    final delay = time.difference(DateTime.now());
-    if (delay.isNegative) return;
-
-    Future.delayed(delay, () async {
-      await _speakWithElevenLabs(message); // Uses ElevenLabs voice
-      setState(() {
-        conversationHistory.add(Message(text: "🔔 $message", isUser: false));
-      });
-    });
-  }
-
 
   @override
   Widget build(BuildContext context) {
@@ -292,14 +365,22 @@ Keep the conversation slow, kind, and positive at all times.
       appBar: AppBar(
         backgroundColor: const Color(0xFF723D92),
         elevation: 0,
-        title:
-            const Text('AI Assistant', style: TextStyle(color: Colors.white)),
+        title: const Text('AI Assistant', style: TextStyle(color: Colors.white)),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => Navigator.pop(context),
         ),
         actions: [
-          // Add clear conversation button
+          IconButton(
+            icon: const Icon(Icons.mic_external_on, color: Colors.white),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const VoiceRecordingPage()),
+              );
+            },
+            tooltip: 'Record Voice',
+          ),
           IconButton(
             icon: const Icon(Icons.delete_outline, color: Colors.white),
             onPressed: () {
@@ -320,8 +401,7 @@ Keep the conversation slow, kind, and positive at all times.
               height: 100,
               decoration: const BoxDecoration(
                 color: Color(0xFF723D92),
-                borderRadius:
-                    BorderRadius.vertical(bottom: Radius.circular(30)),
+                borderRadius: BorderRadius.vertical(bottom: Radius.circular(30)),
               ),
               child: Center(
                 child: Text(
@@ -338,33 +418,31 @@ Keep the conversation slow, kind, and positive at all times.
             Expanded(
               child: conversationHistory.isEmpty
                   ? Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.chat_bubble_outline,
-                              size: 80, color: Colors.grey[300]),
-                          const SizedBox(height: 16),
-                          Text(
-                            'ابدأ المحادثة باش تتواصل معايا',
-                            style: TextStyle(
-                              color: Colors.grey[600],
-                              fontSize: 18,
-                            ),
-                          ),
-                        ],
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.chat_bubble_outline, size: 80, color: Colors.grey[300]),
+                    const SizedBox(height: 16),
+                    Text(
+                      'ابدأ المحادثة باش تتواصل معايا',
+                      style: TextStyle(
+                        color: Colors.grey[600],
+                        fontSize: 18,
                       ),
-                    )
-                  : ListView.builder(
-                      controller: _scrollController,
-                      physics: const BouncingScrollPhysics(),
-                      padding: const EdgeInsets.all(16),
-                      itemCount: conversationHistory.length,
-                      itemBuilder: (context, index) {
-                        final message = conversationHistory[index];
-                        return _buildMessageBubble(
-                            message: message.text, isUser: message.isUser);
-                      },
                     ),
+                  ],
+                ),
+              )
+                  : ListView.builder(
+                controller: _scrollController,
+                physics: const BouncingScrollPhysics(),
+                padding: const EdgeInsets.all(16),
+                itemCount: conversationHistory.length,
+                itemBuilder: (context, index) {
+                  final message = conversationHistory[index];
+                  return _buildMessageBubble(message: message.text, isUser: message.isUser);
+                },
+              ),
             ),
             AnimatedBuilder(
               animation: _animationController,
@@ -386,11 +464,8 @@ Keep the conversation slow, kind, and positive at all times.
             Padding(
               padding: const EdgeInsets.all(16),
               child: FloatingActionButton(
-                backgroundColor:
-                    isListening ? Colors.red : const Color(0xFF723D92),
-                onPressed: _isSpeechInitialized
-                    ? (isListening ? _stopListening : _startListening)
-                    : null,
+                backgroundColor: isListening ? Colors.red : const Color(0xFF723D92),
+                onPressed: _isSpeechInitialized ? (isListening ? _stopListening : _startListening) : null,
                 child: Icon(
                   isListening ? Icons.stop : Icons.mic,
                   color: Colors.white,
@@ -455,11 +530,7 @@ class WaveformPainter extends CustomPainter {
   final bool isActive;
   final Color color;
 
-  WaveformPainter({
-    required this.animation,
-    required this.isActive,
-    required this.color,
-  });
+  WaveformPainter({required this.animation, required this.isActive, required this.color});
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -490,40 +561,7 @@ class WaveformPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(WaveformPainter oldDelegate) =>
-      isActive != oldDelegate.isActive ||
-      animation.value != oldDelegate.animation.value;
-}
-
-Future<void> _speakWithElevenLabs(String text) async {
-  const String apiKey = 'sk_a9b868d4d99db9cadc79955a945a63cbda8b725f79be2001';
-  const String voiceId =
-      'EXAVITQu4vr4xnSDxMaL'; // You can change to another voice if you want
-
-  final url = Uri.parse('https://api.elevenlabs.io/v1/text-to-speech/$voiceId');
-
-  try {
-    final response = await http.post(
-      url,
-      headers: {
-        'Content-Type': 'application/json',
-        'xi-api-key': apiKey,
-      },
-      body: jsonEncode({
-        'text': text,
-        'model_id': 'eleven_multilingual_v1',
-        'voice_settings': {'stability': 0.5, 'similarity_boost': 0.75}
-      }),
-    );
-
-    if (response.statusCode == 200) {
-      final player = AudioPlayer();
-      await player.play(BytesSource(response.bodyBytes));
-    } else {
-      debugPrint('TTS Error ${response.statusCode}: ${response.body}');
-    }
-  } catch (e) {
-    debugPrint('TTS Exception: $e');
-  }
+      isActive != oldDelegate.isActive || animation.value != oldDelegate.animation.value;
 }
 
 Future<void> _makePhoneCall(String phoneNumber) async {
@@ -534,4 +572,3 @@ Future<void> _makePhoneCall(String phoneNumber) async {
     throw 'Could not launch $url';
   }
 }
-

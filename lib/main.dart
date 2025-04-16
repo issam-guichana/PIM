@@ -30,8 +30,8 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-       // home:SpeechInteractionPage(),
-      home:VoiceRecordingPage(),
+       home:SpeechInteractionPage(),
+      // home:VoiceRecordingPage(),
 
     );
   }
