@@ -1,0 +1,2 @@
+C:/Users/HP/Desktop/PIM-nawel33/android/app/.cxx/RelWithDebInfo/5c1w1m1v/armeabi-v7a/CMakeFiles/edit_cache.dir
+C:/Users/HP/Desktop/PIM-nawel33/android/app/.cxx/RelWithDebInfo/5c1w1m1v/armeabi-v7a/CMakeFiles/rebuild_cache.dir

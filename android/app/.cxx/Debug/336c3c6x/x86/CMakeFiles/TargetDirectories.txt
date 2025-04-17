@@ -1,0 +1,2 @@
+C:/Users/HP/Desktop/PIM-nawel33/android/app/.cxx/Debug/336c3c6x/x86/CMakeFiles/edit_cache.dir
+C:/Users/HP/Desktop/PIM-nawel33/android/app/.cxx/Debug/336c3c6x/x86/CMakeFiles/rebuild_cache.dir

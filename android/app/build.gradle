@@ -1,0 +1,59 @@
+plugins {
+    id "com.android.application"
+    id "kotlin-android"
+    id "dev.flutter.flutter-gradle-plugin"
+}
+
+android {
+   namespace "com.nawel.pimproject1"
+
+    compileSdk = flutter.compileSdkVersion
+    ndkVersion = "25.1.8937393"
+  
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8
+    }
+
+    defaultConfig {
+        applicationId "com.nawel.pimproject1"
+        minSdk = flutter.minSdkVersion
+        targetSdk = flutter.targetSdkVersion
+        versionCode = flutter.versionCode
+        versionName = flutter.versionName
+        minSdkVersion 26
+    }
+ 
+    signingConfigs {
+        debug {
+            keyAlias 'fitness'
+            keyPassword 'espritesprit'
+            storeFile file('fitness.jks')
+            storePassword 'espritesprit'
+        }
+    }
+    buildTypes {
+        release {
+            signingConfig = signingConfigs.debug
+        }
+    }
+}
+
+    // Autres dépendances (si tu en as)...
+
+   dependencies {
+    implementation("com.google.android.gms:play-services-fitness:21.2.0")
+    implementation("com.google.android.gms:play-services-auth:21.3.0")
+}
+
+
+flutter {
+    source = "../.."
+}
+
+// Applique le plugin Google Services ici
+apply plugin: 'com.google.gms.google-services'
