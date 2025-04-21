@@ -1,20 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:pim_project/Views/AssistantVocalScreens/AssistantService.dart';
+import 'package:pim_project/Views/PatientInfoForAssistant/PatientInformations.dart';
 import 'package:pim_project/Views/VoiceRecordingPages/VoiceRecordingPage.dart';
-import 'package:speech_to_text/speech_to_text.dart';
-import 'package:speech_to_text/speech_recognition_result.dart';
 import 'dart:math' as math;
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-import 'package:audioplayers/audioplayers.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-class SpeechInteractionPage extends StatefulWidget {
-  const SpeechInteractionPage({super.key});
-
-  @override
-  _SpeechInteractionPageState createState() => _SpeechInteractionPageState();
-}
 
 class Message {
   final String text;
@@ -24,42 +12,22 @@ class Message {
   Message({required this.text, required this.isUser}) : timestamp = DateTime.now();
 }
 
+class SpeechInteractionPage extends StatefulWidget {
+  const SpeechInteractionPage({super.key});
+
+  @override
+  _SpeechInteractionPageState createState() => _SpeechInteractionPageState();
+}
+
 class _SpeechInteractionPageState extends State<SpeechInteractionPage> with SingleTickerProviderStateMixin {
+  final SpeechService _speechService = SpeechService();
+  late AnimationController _animationController;
+  final ScrollController _scrollController = ScrollController();
+  List<Message> conversationHistory = [];
   bool isListening = false;
   bool isAIResponding = false;
   String userMessage = '';
   String aiResponse = '';
-  bool _isSpeechInitialized = false;
-  List<Message> conversationHistory = [];
-  final SpeechToText _speechToText = SpeechToText();
-  late AnimationController _animationController;
-  final ScrollController _scrollController = ScrollController();
-
-  static const String _geminiApiUrl =
-      'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
-  static const String _geminiApiKey = 'AIzaSyB-lwjXMpc6O-pb7ZYSkXpNynowfQLwKKU';
-
-  static const String _customInstruction = '''
-You are a friendly and patient vocal assistant designed to help Alzheimer's patients in Tunisian dialect (Derja) only.
-
-⚠️ Do NOT use Modern Standard Arabic or English under any circumstance.
-
-✅ Always respond in spoken Tunisian (Derja), using natural words and expressions as Tunisians use in everyday conversations. Avoid formal Arabic and foreign translations.
-
-Your responses should be:
-- Short (5–7 words)
-- Clear and simple to understand
-- Friendly, warm, and reassuring
-
-You can:
-- Gently remind about daily tasks (e.g., medication, eating)
-- Help with orientation (e.g., place, family)
-- Ask simple, engaging questions
-
-If a question is repeated, answer patiently with a slightly varied reply.
-
-Keep the conversation slow, kind, and positive at all times.
-''';
 
   @override
   void initState() {
@@ -68,291 +36,64 @@ Keep the conversation slow, kind, and positive at all times.
       vsync: this,
       duration: const Duration(milliseconds: 1500),
     );
-    _initSpeech();
-  }
-
-  Future<void> _initSpeech() async {
-    try {
-      final enabled = await _speechToText.initialize(
-        onStatus: (status) => debugPrint('Speech status: $status'),
-        onError: (error) => debugPrint('Speech error: $error'),
-      );
-      if (mounted) {
-        setState(() => _isSpeechInitialized = enabled);
-      }
-    } catch (e) {
-      debugPrint('Speech initialization error: $e');
-      if (mounted) {
-        setState(() => _isSpeechInitialized = false);
-      }
-    }
-  }
-
-
-  void _startListening() async {
-    if (!_isSpeechInitialized) return;
-
-    setState(() {
-      isListening = true;
-      userMessage = '';
-      _animationController.repeat();
-    });
-
-    await _speechToText.listen(
-      onResult: _onSpeechResult,
-      listenFor: const Duration(seconds: 30),
-      pauseFor: const Duration(seconds: 3),
-      partialResults: true,
-      cancelOnError: true,
-      listenMode: ListenMode.confirmation,
-      localeId: 'ar-TN',
+    _speechService.initSpeech(
+      onSpeechResult: _onSpeechResult,
+      onStatusChange: (listening, responding, userMsg, aiResp, history) {
+        setState(() {
+          isListening = listening;
+          isAIResponding = responding;
+          userMessage = userMsg;
+          aiResponse = aiResp;
+          conversationHistory = history;
+          if (isListening || isAIResponding) {
+            _animationController.repeat();
+          } else {
+            _animationController.stop();
+          }
+        });
+        if (history.isNotEmpty && _scrollController.hasClients) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            _scrollController.animateTo(
+              _scrollController.position.maxScrollExtent,
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.easeOut,
+            );
+          });
+        }
+      },
     );
   }
 
-  void _stopListening() async {
-    await _speechToText.stop();
-    if (mounted) {
-      setState(() {
-        isListening = false;
-        _animationController.stop();
-      });
-    }
-    if (userMessage.trim().isNotEmpty) {
-      setState(() {
-        conversationHistory.add(Message(text: userMessage, isUser: true));
-      });
-      await _handleAIResponse();
-    }
-  }
+  void _onSpeechResult(String recognizedWords, bool isFinal) {
+    setState(() {
+      userMessage = recognizedWords.toLowerCase();
+    });
 
-  void _onSpeechResult(SpeechRecognitionResult result) {
-    if (mounted) {
-      setState(() {
-        userMessage = result.recognizedWords.toLowerCase();
-      });
-    }
-
-    if (userMessage.contains("call issam") ||
-        userMessage.contains("كلم عصام") ||
-        userMessage.contains("كلم لي ولدي") ||
-        userMessage.contains("كلم ولدي") ||
-        userMessage.contains("تكلم عصام")) {
-      _stopListening();
-      _makePhoneCall("+21625786329");
+    if (recognizedWords.contains("call issam") ||
+        recognizedWords.contains("كلم عصام") ||
+        recognizedWords.contains("كلم لي ولدي") ||
+        recognizedWords.contains("كلم ولدي") ||
+        recognizedWords.contains("تكلم عصام")) {
+      _speechService.stopListening();
+      _speechService.makePhoneCall("+21625786329");
       return;
     }
 
-    if (userMessage.contains("ذكرني ناخو الدوا") ||
-        userMessage.contains("فكرني ناخو الدوا") ||
-        userMessage.contains("فكرني ناخذ الدواء") ||
-        userMessage.contains("فكرني ناخذ الدوا")) {
-      _scheduleReminder("خوذ الدوا", DateTime.now().add(const Duration(seconds: 10)));
+    if (recognizedWords.contains("ذكرني ناخو الدوا") ||
+        recognizedWords.contains("فكرني ناخو الدوا") ||
+        recognizedWords.contains("فكرني ناخذ الدواء") ||
+        recognizedWords.contains("فكرني ناخذ الدوا")) {
+      _speechService.scheduleReminder("خوذ الدوا", DateTime.now().add(const Duration(seconds: 10)));
     }
 
-    if (result.finalResult) {
-      _stopListening();
+    if (isFinal) {
+      _speechService.stopListening();
     }
-  }
-
-  String _getConversationContext() {
-    final relevantHistory = conversationHistory.length > 10
-        ? conversationHistory.sublist(conversationHistory.length - 10)
-        : conversationHistory;
-
-    String context = "Previous conversation:\n";
-    for (var message in relevantHistory) {
-      context += "${message.isUser ? 'User' : 'Assistant'}: ${message.text}\n";
-    }
-    return context;
-  }
-
-  Future<void> _handleAIResponse() async {
-    if (mounted) {
-      setState(() {
-        isAIResponding = true;
-        _animationController.repeat();
-      });
-    }
-
-    final conversationContext = _getConversationContext();
-
-    try {
-      final response = await http.post(
-        Uri.parse(_geminiApiUrl),
-        headers: {
-          'Content-Type': 'application/json',
-          'x-goog-api-key': _geminiApiKey,
-        },
-        body: jsonEncode({
-          'contents': [
-            {
-              'parts': [
-                {'text': _customInstruction},
-                {
-                  'text': 'Current conversation history:\n$conversationContext\nUser\'s latest message: $userMessage\nPlease respond to this latest message with the conversation context in mind:'
-                }
-              ]
-            }
-          ],
-          'generationConfig': {
-            'temperature': 0.7,
-            'topK': 40,
-            'topP': 0.95,
-            'maxOutputTokens': 1024,
-          }
-        }),
-      );
-
-      if (response.statusCode == 200) {
-        final data = jsonDecode(response.body);
-        final aiResponseText = data['candidates'][0]['content']['parts'][0]['text'] ?? 'ما فماش رد من الـ AI';
-
-        if (mounted) {
-          setState(() {
-            aiResponse = aiResponseText;
-            conversationHistory.add(Message(text: aiResponseText, isUser: false));
-          });
-          await _speakWithResemble(aiResponseText);
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            if (_scrollController.hasClients) {
-              _scrollController.animateTo(
-                _scrollController.position.maxScrollExtent,
-                duration: const Duration(milliseconds: 300),
-                curve: Curves.easeOut,
-              );
-            }
-          });
-        }
-      } else {
-        if (mounted) {
-          setState(() {
-            aiResponse = 'خطأ: ${response.statusCode}';
-            conversationHistory.add(Message(text: aiResponse, isUser: false));
-          });
-          print('Response status: ${response.statusCode}');
-          print('Response body: ${response.body}');
-        }
-      }
-    } catch (e) {
-      if (mounted) {
-        setState(() {
-          aiResponse = 'مشكلة: $e';
-          conversationHistory.add(Message(text: aiResponse, isUser: false));
-        });
-      }
-    } finally {
-      if (mounted) {
-        setState(() {
-          isAIResponding = false;
-          _animationController.stop();
-        });
-      }
-    }
-  }
-
-  Future<void> _speakWithPlayHT(String text) async {
-    if (text.trim().isEmpty) return;
-    const String apiKey = 'ak-0a793beda67745669bf4aca1c2f98a53'; // Replace with your PlayHT API key
-    const String userId = 'SY9YsgOpgvV6m8dT6URlDqup3Gf2'; // Replace with your PlayHT user ID
-    final prefs = await SharedPreferences.getInstance();
-    final voiceId = prefs.getString('playht_voice_id') ?? 's3://voice-cloning-zero-shot/d9ff78ba-d016-47f6-b0cd-dd8d6928566d/original/manifest.json'; // Fallback to Arabella
-
-    try {
-      final response = await http.post(
-        Uri.parse('https://api.play.ht/api/v2/tts'),
-        headers: {
-          'Authorization': 'Bearer $apiKey',
-          'X-User-Id': userId,
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-        },
-        body: jsonEncode({
-          'text': text,
-          'voice': voiceId,
-          'voice_engine': 'PlayHT2.0',
-          'sample_rate': 24000,
-          'format': 'mp3',
-          'speed': 1.0,
-        }),
-      );
-
-      if (response.statusCode == 201) {
-        final data = jsonDecode(response.body);
-        final audioUrl = data['audioUrl'];
-        if (audioUrl != null) {
-          final player = AudioPlayer();
-          await player.play(UrlSource(audioUrl));
-        } else {
-          debugPrint('No audio URL in response: $data');
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text("Failed to retrieve audio")),
-          );
-        }
-      } else {
-        debugPrint('TTS Error ${response.statusCode}: ${response.body}');
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("TTS error: ${response.body}")),
-        );
-      }
-    } catch (e) {
-      debugPrint('TTS Exception: $e');
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("TTS failed: $e")),
-      );
-    }
-  }
-
-  Future<void> _speakWithResemble(String text) async {
-    if (text.trim().isEmpty) return;
-    const String apiKey = '8rUT4H6CB9oAwXIxSDrkagtt';
-    final prefs = await SharedPreferences.getInstance();
-    final voiceId = prefs.getString('resemble_voice_id') ?? 'default-voice';
-    try {
-      final response = await http.post(
-        Uri.parse('https://app.resemble.ai/api/v2/projects/dummy/clips'),
-        headers: {
-          'Authorization': 'Bearer $apiKey',
-          'Content-Type': 'application/json',
-        },
-        body: jsonEncode({
-          'voice_uuid': voiceId,
-          'body': text,
-          'format': 'mp3',
-        }),
-      );
-      if (response.statusCode == 200) {
-        final audioUrl = jsonDecode(response.body)['audio_url'];
-        final player = AudioPlayer();
-        await player.play(UrlSource(audioUrl));
-      } else {
-        debugPrint('TTS Error ${response.statusCode}: ${response.body}');
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("TTS error: ${response.body}")),
-        );
-      }
-    } catch (e) {
-      debugPrint('TTS Exception: $e');
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("TTS failed: $e")),
-      );
-    }
-  }
-
-  Future<void> _scheduleReminder(String message, DateTime time) async {
-    final delay = time.difference(DateTime.now());
-    if (delay.isNegative) return;
-
-    Future.delayed(delay, () async {
-      await _speakWithResemble(message);
-      setState(() {
-        conversationHistory.add(Message(text: "🔔 $message", isUser: false));
-      });
-    });
   }
 
   @override
   void dispose() {
-    _speechToText.stop();
+    _speechService.dispose();
     _animationController.dispose();
     _scrollController.dispose();
     super.dispose();
@@ -361,16 +102,33 @@ Keep the conversation slow, kind, and positive at all times.
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.grey[100],
       appBar: AppBar(
         backgroundColor: const Color(0xFF723D92),
         elevation: 0,
-        title: const Text('AI Assistant', style: TextStyle(color: Colors.white)),
+        title: const Text(
+          'Voice Assistant',
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
+          ),
+        ),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => Navigator.pop(context),
         ),
         actions: [
+          IconButton(
+            icon: const Icon(Icons.person_add, color: Colors.white),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const PatientInfoPage()),
+              );
+            },
+            tooltip: 'Enter Patient Information',
+          ),
           IconButton(
             icon: const Icon(Icons.mic_external_on, color: Colors.white),
             onPressed: () {
@@ -389,8 +147,9 @@ Keep the conversation slow, kind, and positive at all times.
                 userMessage = '';
                 aiResponse = '';
               });
+              _speechService.clearConversation();
             },
-            tooltip: 'مسح المحادثة',
+            tooltip: 'Clear Conversation',
           ),
         ],
       ),
@@ -402,10 +161,18 @@ Keep the conversation slow, kind, and positive at all times.
               decoration: const BoxDecoration(
                 color: Color(0xFF723D92),
                 borderRadius: BorderRadius.vertical(bottom: Radius.circular(30)),
+                gradient: LinearGradient(
+                  colors: [
+                    Color(0xFF723D92),
+                    Color(0xFF9B59B6),
+                  ],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
               ),
               child: Center(
                 child: Text(
-                  _getStatusText(),
+                  _speechService.getStatusText(),
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 18,
@@ -418,19 +185,28 @@ Keep the conversation slow, kind, and positive at all times.
             Expanded(
               child: conversationHistory.isEmpty
                   ? Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(Icons.chat_bubble_outline, size: 80, color: Colors.grey[300]),
-                    const SizedBox(height: 16),
-                    Text(
-                      'ابدأ المحادثة باش تتواصل معايا',
-                      style: TextStyle(
-                        color: Colors.grey[600],
-                        fontSize: 18,
-                      ),
+                child: Card(
+                  elevation: 4,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                  child: Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(Icons.chat_bubble_outline, size: 80, color: Colors.grey[300]),
+                        const SizedBox(height: 16),
+                        Text(
+                          'Start the conversation to interact with me',
+                          style: TextStyle(
+                            color: Colors.grey[600],
+                            fontSize: 18,
+                            fontWeight: FontWeight.w500,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
               )
                   : ListView.builder(
@@ -450,6 +226,16 @@ Keep the conversation slow, kind, and positive at all times.
                 return Container(
                   height: 80,
                   padding: const EdgeInsets.symmetric(horizontal: 20),
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black12,
+                        blurRadius: 8,
+                        offset: Offset(0, -2),
+                      ),
+                    ],
+                  ),
                   child: CustomPaint(
                     size: const Size(double.infinity, 80),
                     painter: WaveformPainter(
@@ -465,12 +251,16 @@ Keep the conversation slow, kind, and positive at all times.
               padding: const EdgeInsets.all(16),
               child: FloatingActionButton(
                 backgroundColor: isListening ? Colors.red : const Color(0xFF723D92),
-                onPressed: _isSpeechInitialized ? (isListening ? _stopListening : _startListening) : null,
+                onPressed: _speechService.isSpeechInitialized
+                    ? (isListening ? _speechService.stopListening : _speechService.startListening)
+                    : null,
                 child: Icon(
                   isListening ? Icons.stop : Icons.mic,
                   color: Colors.white,
                   size: 30,
                 ),
+                elevation: 4,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
               ),
             ),
           ],
@@ -479,45 +269,24 @@ Keep the conversation slow, kind, and positive at all times.
     );
   }
 
-  String _getStatusText() {
-    if (!_isSpeechInitialized) return 'الصوت غير متوفر';
-    if (isListening) return 'نسمع فيك...';
-    if (isAIResponding) return 'الـ AI يجاوبك...';
-    return 'اضغط على الميكرو باش تبدا';
-  }
-
   Widget _buildMessageBubble({required String message, required bool isUser}) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: Align(
         alignment: isUser ? Alignment.centerRight : Alignment.centerLeft,
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-          decoration: BoxDecoration(
-            color: isUser ? const Color(0xFF723D92) : Colors.grey[200],
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.1),
-                blurRadius: 4,
-                offset: const Offset(0, 2),
+        child: Card(
+          elevation: 2,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          color: isUser ? const Color(0xFF723D92) : Colors.grey[200],
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            child: Text(
+              message,
+              style: TextStyle(
+                color: isUser ? Colors.white : Colors.black87,
+                fontSize: 16,
               ),
-            ],
-          ),
-          constraints: BoxConstraints(
-            maxWidth: MediaQuery.of(context).size.width * 0.75,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                message,
-                style: TextStyle(
-                  color: isUser ? Colors.white : Colors.black87,
-                  fontSize: 16,
-                ),
-              ),
-            ],
+            ),
           ),
         ),
       ),
@@ -562,13 +331,4 @@ class WaveformPainter extends CustomPainter {
   @override
   bool shouldRepaint(WaveformPainter oldDelegate) =>
       isActive != oldDelegate.isActive || animation.value != oldDelegate.animation.value;
-}
-
-Future<void> _makePhoneCall(String phoneNumber) async {
-  final Uri url = Uri(scheme: 'tel', path: phoneNumber);
-  if (await canLaunchUrl(url)) {
-    await launchUrl(url);
-  } else {
-    throw 'Could not launch $url';
-  }
 }

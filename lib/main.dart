@@ -4,6 +4,7 @@ import 'package:pim_project/Views/AssistantVocalScreens/SpeechInteractionPage.da
 import 'package:pim_project/Views/AuthPages/ForgotPwdScreen.dart';
 import 'package:pim_project/Views/AuthPages/SplashScreen.dart';
 import 'package:pim_project/Views/HomePages/PatientHomePage.dart';
+import 'package:pim_project/Views/PatientInfoForAssistant/PatientInformations.dart';
 import 'package:pim_project/Views/ProfilePages/ProfilePage.dart';
 import 'package:pim_project/Views/VoiceRecordingPages/VoiceRecordingPage.dart';
 import 'package:provider/provider.dart';
@@ -32,6 +33,7 @@ class MyApp extends StatelessWidget {
       ),
        home:SpeechInteractionPage(),
       // home:VoiceRecordingPage(),
+      // home:PatientInfoPage(),
 
     );
   }
