@@ -1,0 +1,216 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.example.version1"
+4    android:versionCode="1"
+5    android:versionName="1.0.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="24"
+9        android:targetSdkVersion="35" />
+10    <!--
+11         The INTERNET permission is required for development. Specifically,
+12         the Flutter tool needs it to communicate with the running application
+13         to allow setting breakpoints, to provide hot reload, etc.
+14    -->
+15    <uses-permission android:name="android.permission.INTERNET" />
+15-->C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\android\app\src\main\AndroidManifest.xml:3:5-66
+15-->C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\android\app\src\main\AndroidManifest.xml:3:22-64
+16    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+16-->C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\android\app\src\main\AndroidManifest.xml:2:1-66
+16-->C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\android\app\src\main\AndroidManifest.xml:2:18-64
+17    <uses-permission android:name="android.permission.BLUETOOTH" />
+17-->C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\android\app\src\main\AndroidManifest.xml:4:5-67
+17-->C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\android\app\src\main\AndroidManifest.xml:4:22-65
+18    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+18-->C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\android\app\src\main\AndroidManifest.xml:5:5-73
+18-->C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\android\app\src\main\AndroidManifest.xml:5:22-71
+19    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+19-->C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\android\app\src\main\AndroidManifest.xml:6:5-75
+19-->C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\android\app\src\main\AndroidManifest.xml:6:22-73
+20    <!--
+21 Required to query activities that can process text, see:
+22         https://developer.android.com/training/package-visibility and
+23         https://developer.android.com/reference/android/content/Intent#ACTION_PROCESS_TEXT.
+24
+25         In particular, this is used by the Flutter engine in io.flutter.plugin.text.ProcessTextPlugin.
+26    -->
+27    <queries>
+27-->C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\android\app\src\main\AndroidManifest.xml:48:5-53:15
+28        <intent>
+28-->C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\android\app\src\main\AndroidManifest.xml:49:9-52:18
+29            <action android:name="android.intent.action.PROCESS_TEXT" />
+29-->C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\android\app\src\main\AndroidManifest.xml:50:13-72
+29-->C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\android\app\src\main\AndroidManifest.xml:50:21-70
+30
+31            <data android:mimeType="text/plain" />
+31-->C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\android\app\src\main\AndroidManifest.xml:51:13-50
+31-->C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\android\app\src\main\AndroidManifest.xml:51:19-48
+32        </intent>
+33        <intent>
+33-->[androidx.media:media:1.4.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\a23f218d8c1a66560b9510ac66ee24f0\transformed\media-1.4.1\AndroidManifest.xml:25:9-27:18
+34            <action android:name="android.media.browse.MediaBrowserService" />
+34-->[androidx.media:media:1.4.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\a23f218d8c1a66560b9510ac66ee24f0\transformed\media-1.4.1\AndroidManifest.xml:26:13-79
+34-->[androidx.media:media:1.4.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\a23f218d8c1a66560b9510ac66ee24f0\transformed\media-1.4.1\AndroidManifest.xml:26:21-76
+35        </intent>
+36    </queries>
+37
+38    <uses-permission
+38-->[:photo_manager] C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\build\photo_manager\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:7:5-9:38
+39        android:name="android.permission.READ_EXTERNAL_STORAGE"
+39-->[:photo_manager] C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\build\photo_manager\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:8:9-64
+40        android:maxSdkVersion="32" />
+40-->[:photo_manager] C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\build\photo_manager\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:9:9-35
+41    <uses-permission android:name="android.permission.USE_BIOMETRIC" />
+41-->[:local_auth_android] C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\build\local_auth_android\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:7:5-72
+41-->[:local_auth_android] C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\build\local_auth_android\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:7:22-69
+42    <uses-permission android:name="android.permission.WAKE_LOCK" />
+42-->[com.github.canardoux:flutter_sound_core:9.28.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\4e7eec031afac7fa6f73d9d1db648c47\transformed\jetified-flutter_sound_core-9.28.0\AndroidManifest.xml:8:5-68
+42-->[com.github.canardoux:flutter_sound_core:9.28.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\4e7eec031afac7fa6f73d9d1db648c47\transformed\jetified-flutter_sound_core-9.28.0\AndroidManifest.xml:8:22-65
+43    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+43-->[com.github.canardoux:flutter_sound_core:9.28.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\4e7eec031afac7fa6f73d9d1db648c47\transformed\jetified-flutter_sound_core-9.28.0\AndroidManifest.xml:9:5-80
+43-->[com.github.canardoux:flutter_sound_core:9.28.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\4e7eec031afac7fa6f73d9d1db648c47\transformed\jetified-flutter_sound_core-9.28.0\AndroidManifest.xml:9:22-77
+44    <uses-permission android:name="Manifest.permission.CAPTURE_AUDIO_OUTPUT" /> <!-- suppress DeprecatedClassUsageInspection -->
+44-->[com.github.canardoux:flutter_sound_core:9.28.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\4e7eec031afac7fa6f73d9d1db648c47\transformed\jetified-flutter_sound_core-9.28.0\AndroidManifest.xml:11:5-80
+44-->[com.github.canardoux:flutter_sound_core:9.28.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\4e7eec031afac7fa6f73d9d1db648c47\transformed\jetified-flutter_sound_core-9.28.0\AndroidManifest.xml:11:22-77
+45    <uses-permission android:name="android.permission.USE_FINGERPRINT" />
+45-->[androidx.biometric:biometric:1.1.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\a40190fa707300487d9df3608d8b3497\transformed\biometric-1.1.0\AndroidManifest.xml:27:5-74
+45-->[androidx.biometric:biometric:1.1.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\a40190fa707300487d9df3608d8b3497\transformed\biometric-1.1.0\AndroidManifest.xml:27:22-71
+46
+47    <permission
+47-->[androidx.core:core:1.13.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\3b28488a3281a0df41b8d0bb0e162ebf\transformed\core-1.13.1\AndroidManifest.xml:22:5-24:47
+48        android:name="com.example.version1.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+48-->[androidx.core:core:1.13.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\3b28488a3281a0df41b8d0bb0e162ebf\transformed\core-1.13.1\AndroidManifest.xml:23:9-81
+49        android:protectionLevel="signature" />
+49-->[androidx.core:core:1.13.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\3b28488a3281a0df41b8d0bb0e162ebf\transformed\core-1.13.1\AndroidManifest.xml:24:9-44
+50
+51    <uses-permission android:name="com.example.version1.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+51-->[androidx.core:core:1.13.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\3b28488a3281a0df41b8d0bb0e162ebf\transformed\core-1.13.1\AndroidManifest.xml:26:5-97
+51-->[androidx.core:core:1.13.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\3b28488a3281a0df41b8d0bb0e162ebf\transformed\core-1.13.1\AndroidManifest.xml:26:22-94
+52
+53    <application
+54        android:name="android.app.Application"
+55        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+55-->[androidx.core:core:1.13.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\3b28488a3281a0df41b8d0bb0e162ebf\transformed\core-1.13.1\AndroidManifest.xml:28:18-86
+56        android:debuggable="true"
+57        android:extractNativeLibs="false"
+58        android:icon="@mipmap/ic_launcher"
+59        android:label="version1"
+60        android:requestLegacyExternalStorage="true" >
+61        <activity
+62            android:name="com.example.version1.MainActivity"
+63            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+64            android:exported="true"
+65            android:hardwareAccelerated="true"
+66            android:launchMode="singleTop"
+67            android:taskAffinity=""
+68            android:theme="@style/LaunchTheme"
+69            android:windowSoftInputMode="adjustResize" >
+70
+71            <!--
+72                 Specifies an Android theme to apply to this Activity as soon as
+73                 the Android process has started. This theme is visible to the user
+74                 while the Flutter UI initializes. After that, this theme continues
+75                 to determine the Window background behind the Flutter UI.
+76            -->
+77            <meta-data
+78                android:name="io.flutter.embedding.android.NormalTheme"
+79                android:resource="@style/NormalTheme" />
+80
+81            <intent-filter>
+82                <action android:name="android.intent.action.MAIN" />
+83
+84                <category android:name="android.intent.category.LAUNCHER" />
+85            </intent-filter>
+86        </activity>
+87        <!--
+88             Don't delete the meta-data below.
+89             This is used by the Flutter tool to generate GeneratedPluginRegistrant.java
+90        -->
+91        <meta-data
+92            android:name="flutterEmbedding"
+93            android:value="2" />
+94
+95        <activity
+95-->[:url_launcher_android] C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\build\url_launcher_android\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:8:9-11:74
+96            android:name="io.flutter.plugins.urllauncher.WebViewActivity"
+96-->[:url_launcher_android] C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\build\url_launcher_android\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:9:13-74
+97            android:exported="false"
+97-->[:url_launcher_android] C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\build\url_launcher_android\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:10:13-37
+98            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+98-->[:url_launcher_android] C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\build\url_launcher_android\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:11:13-71
+99
+100        <uses-library
+100-->[androidx.window:window:1.2.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\f3e3e73872d40b1188f0a49a56ebe707\transformed\jetified-window-1.2.0\AndroidManifest.xml:23:9-25:40
+101            android:name="androidx.window.extensions"
+101-->[androidx.window:window:1.2.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\f3e3e73872d40b1188f0a49a56ebe707\transformed\jetified-window-1.2.0\AndroidManifest.xml:24:13-54
+102            android:required="false" />
+102-->[androidx.window:window:1.2.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\f3e3e73872d40b1188f0a49a56ebe707\transformed\jetified-window-1.2.0\AndroidManifest.xml:25:13-37
+103        <uses-library
+103-->[androidx.window:window:1.2.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\f3e3e73872d40b1188f0a49a56ebe707\transformed\jetified-window-1.2.0\AndroidManifest.xml:26:9-28:40
+104            android:name="androidx.window.sidecar"
+104-->[androidx.window:window:1.2.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\f3e3e73872d40b1188f0a49a56ebe707\transformed\jetified-window-1.2.0\AndroidManifest.xml:27:13-51
+105            android:required="false" />
+105-->[androidx.window:window:1.2.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\f3e3e73872d40b1188f0a49a56ebe707\transformed\jetified-window-1.2.0\AndroidManifest.xml:28:13-37
+106
+107        <provider
+107-->[androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\2a60dba74ed9e93b92c7deb368d49c5b\transformed\jetified-lifecycle-process-2.7.0\AndroidManifest.xml:24:9-32:20
+108            android:name="androidx.startup.InitializationProvider"
+108-->[androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\2a60dba74ed9e93b92c7deb368d49c5b\transformed\jetified-lifecycle-process-2.7.0\AndroidManifest.xml:25:13-67
+109            android:authorities="com.example.version1.androidx-startup"
+109-->[androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\2a60dba74ed9e93b92c7deb368d49c5b\transformed\jetified-lifecycle-process-2.7.0\AndroidManifest.xml:26:13-68
+110            android:exported="false" >
+110-->[androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\2a60dba74ed9e93b92c7deb368d49c5b\transformed\jetified-lifecycle-process-2.7.0\AndroidManifest.xml:27:13-37
+111            <meta-data
+111-->[androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\2a60dba74ed9e93b92c7deb368d49c5b\transformed\jetified-lifecycle-process-2.7.0\AndroidManifest.xml:29:13-31:52
+112                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+112-->[androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\2a60dba74ed9e93b92c7deb368d49c5b\transformed\jetified-lifecycle-process-2.7.0\AndroidManifest.xml:30:17-78
+113                android:value="androidx.startup" />
+113-->[androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\2a60dba74ed9e93b92c7deb368d49c5b\transformed\jetified-lifecycle-process-2.7.0\AndroidManifest.xml:31:17-49
+114            <meta-data
+114-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\f250861fb9fe1d2ddb96462bed043a0f\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:29:13-31:52
+115                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+115-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\f250861fb9fe1d2ddb96462bed043a0f\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:30:17-85
+116                android:value="androidx.startup" />
+116-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\f250861fb9fe1d2ddb96462bed043a0f\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:31:17-49
+117        </provider>
+118
+119        <receiver
+119-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\f250861fb9fe1d2ddb96462bed043a0f\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:34:9-52:20
+120            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+120-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\f250861fb9fe1d2ddb96462bed043a0f\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:35:13-76
+121            android:directBootAware="false"
+121-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\f250861fb9fe1d2ddb96462bed043a0f\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:36:13-44
+122            android:enabled="true"
+122-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\f250861fb9fe1d2ddb96462bed043a0f\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:37:13-35
+123            android:exported="true"
+123-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\f250861fb9fe1d2ddb96462bed043a0f\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:38:13-36
+124            android:permission="android.permission.DUMP" >
+124-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\f250861fb9fe1d2ddb96462bed043a0f\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:39:13-57
+125            <intent-filter>
+125-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\f250861fb9fe1d2ddb96462bed043a0f\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:40:13-42:29
+126                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+126-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\f250861fb9fe1d2ddb96462bed043a0f\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:41:17-91
+126-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\f250861fb9fe1d2ddb96462bed043a0f\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:41:25-88
+127            </intent-filter>
+128            <intent-filter>
+128-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\f250861fb9fe1d2ddb96462bed043a0f\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:43:13-45:29
+129                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+129-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\f250861fb9fe1d2ddb96462bed043a0f\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:44:17-85
+129-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\f250861fb9fe1d2ddb96462bed043a0f\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:44:25-82
+130            </intent-filter>
+131            <intent-filter>
+131-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\f250861fb9fe1d2ddb96462bed043a0f\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:46:13-48:29
+132                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+132-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\f250861fb9fe1d2ddb96462bed043a0f\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:47:17-88
+132-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\f250861fb9fe1d2ddb96462bed043a0f\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:47:25-85
+133            </intent-filter>
+134            <intent-filter>
+134-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\f250861fb9fe1d2ddb96462bed043a0f\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:49:13-51:29
+135                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+135-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\f250861fb9fe1d2ddb96462bed043a0f\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:50:17-95
+135-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\f250861fb9fe1d2ddb96462bed043a0f\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:50:25-92
+136            </intent-filter>
+137        </receiver>
+138    </application>
+139
+140</manifest>

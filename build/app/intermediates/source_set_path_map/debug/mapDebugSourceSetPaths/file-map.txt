@@ -1,0 +1,62 @@
+com.example.version1.app-jetified-activity-ktx-1.8.1-0 C:\Users\Motaz\.gradle\caches\8.10.2\transforms\08a5c1286d28cb512acd1fbbf28acba2\transformed\jetified-activity-ktx-1.8.1\res
+com.example.version1.app-jetified-lifecycle-viewmodel-savedstate-2.7.0-1 C:\Users\Motaz\.gradle\caches\8.10.2\transforms\0b15962206ca8985c2205f494ed78992\transformed\jetified-lifecycle-viewmodel-savedstate-2.7.0\res
+com.example.version1.app-jetified-lifecycle-livedata-core-ktx-2.7.0-2 C:\Users\Motaz\.gradle\caches\8.10.2\transforms\0ee6cf3bca417697593679904e297726\transformed\jetified-lifecycle-livedata-core-ktx-2.7.0\res
+com.example.version1.app-jetified-annotation-experimental-1.4.1-3 C:\Users\Motaz\.gradle\caches\8.10.2\transforms\20422a67963b82369fab602a299add25\transformed\jetified-annotation-experimental-1.4.1\res
+com.example.version1.app-lifecycle-livedata-core-2.7.0-4 C:\Users\Motaz\.gradle\caches\8.10.2\transforms\21dfd42f8b686659d411fde64512e0fd\transformed\lifecycle-livedata-core-2.7.0\res
+com.example.version1.app-jetified-core-ktx-1.13.1-5 C:\Users\Motaz\.gradle\caches\8.10.2\transforms\25d231b6208f4b9ae7ce0581c6402beb\transformed\jetified-core-ktx-1.13.1\res
+com.example.version1.app-jetified-lifecycle-process-2.7.0-6 C:\Users\Motaz\.gradle\caches\8.10.2\transforms\2a60dba74ed9e93b92c7deb368d49c5b\transformed\jetified-lifecycle-process-2.7.0\res
+com.example.version1.app-jetified-window-java-1.2.0-7 C:\Users\Motaz\.gradle\caches\8.10.2\transforms\2af6814eb1d121b95b12f139a1e823b8\transformed\jetified-window-java-1.2.0\res
+com.example.version1.app-browser-1.8.0-8 C:\Users\Motaz\.gradle\caches\8.10.2\transforms\37e90539b72b10a88732df90d8f05c86\transformed\browser-1.8.0\res
+com.example.version1.app-core-1.13.1-9 C:\Users\Motaz\.gradle\caches\8.10.2\transforms\3b28488a3281a0df41b8d0bb0e162ebf\transformed\core-1.13.1\res
+com.example.version1.app-jetified-fragment-ktx-1.7.1-10 C:\Users\Motaz\.gradle\caches\8.10.2\transforms\46fcd50cc7cdbd5ccb3a13f8fb79d589\transformed\jetified-fragment-ktx-1.7.1\res
+com.example.version1.app-jetified-flutter_sound_core-9.28.0-11 C:\Users\Motaz\.gradle\caches\8.10.2\transforms\4e7eec031afac7fa6f73d9d1db648c47\transformed\jetified-flutter_sound_core-9.28.0\res
+com.example.version1.app-jetified-tracing-1.2.0-12 C:\Users\Motaz\.gradle\caches\8.10.2\transforms\50ea1ff074ccfeb875ec60d70bac7c62\transformed\jetified-tracing-1.2.0\res
+com.example.version1.app-jetified-appcompat-resources-1.2.0-13 C:\Users\Motaz\.gradle\caches\8.10.2\transforms\51736e93bbdb458e6f6cfaa14489ddd0\transformed\jetified-appcompat-resources-1.2.0\res
+com.example.version1.app-fragment-1.7.1-14 C:\Users\Motaz\.gradle\caches\8.10.2\transforms\51ebe07b7ea019a83be5baeecd87a0ed\transformed\fragment-1.7.1\res
+com.example.version1.app-appcompat-1.2.0-15 C:\Users\Motaz\.gradle\caches\8.10.2\transforms\53b5dba3a42cea32a0702cf8a50647ae\transformed\appcompat-1.2.0\res
+com.example.version1.app-jetified-lifecycle-viewmodel-ktx-2.7.0-16 C:\Users\Motaz\.gradle\caches\8.10.2\transforms\56c3d94ec6a31b08c10b89c48558443a\transformed\jetified-lifecycle-viewmodel-ktx-2.7.0\res
+com.example.version1.app-jetified-savedstate-ktx-1.2.1-17 C:\Users\Motaz\.gradle\caches\8.10.2\transforms\5748796b13c3d3968bd9b598264cef87\transformed\jetified-savedstate-ktx-1.2.1\res
+com.example.version1.app-coordinatorlayout-1.0.0-18 C:\Users\Motaz\.gradle\caches\8.10.2\transforms\5af8da75587c328e0d70c0320643adb6\transformed\coordinatorlayout-1.0.0\res
+com.example.version1.app-jetified-datastore-core-release-19 C:\Users\Motaz\.gradle\caches\8.10.2\transforms\5d4995fd15f05089c161585978ad0143\transformed\jetified-datastore-core-release\res
+com.example.version1.app-jetified-savedstate-1.2.1-20 C:\Users\Motaz\.gradle\caches\8.10.2\transforms\5ffbe21d446512de02963789fc582093\transformed\jetified-savedstate-1.2.1\res
+com.example.version1.app-core-runtime-2.2.0-21 C:\Users\Motaz\.gradle\caches\8.10.2\transforms\6524e008401e452273bda414a0fd9f6e\transformed\core-runtime-2.2.0\res
+com.example.version1.app-jetified-glide-4.15.1-22 C:\Users\Motaz\.gradle\caches\8.10.2\transforms\658c618b84e4feb2bce9c40a41446998\transformed\jetified-glide-4.15.1\res
+com.example.version1.app-lifecycle-livedata-2.7.0-23 C:\Users\Motaz\.gradle\caches\8.10.2\transforms\750090ac935bf265b9b0687afc8cedae\transformed\lifecycle-livedata-2.7.0\res
+com.example.version1.app-transition-1.4.1-24 C:\Users\Motaz\.gradle\caches\8.10.2\transforms\885029b5366c0acf38e05d7b761e4250\transformed\transition-1.4.1\res
+com.example.version1.app-jetified-activity-1.8.1-25 C:\Users\Motaz\.gradle\caches\8.10.2\transforms\8c259ad4380244830493d291d4fb15fa\transformed\jetified-activity-1.8.1\res
+com.example.version1.app-webkit-1.12.1-26 C:\Users\Motaz\.gradle\caches\8.10.2\transforms\961cfbc2f81fa924f01493e623514de8\transformed\webkit-1.12.1\res
+com.example.version1.app-media-1.4.1-27 C:\Users\Motaz\.gradle\caches\8.10.2\transforms\a23f218d8c1a66560b9510ac66ee24f0\transformed\media-1.4.1\res
+com.example.version1.app-biometric-1.1.0-28 C:\Users\Motaz\.gradle\caches\8.10.2\transforms\a40190fa707300487d9df3608d8b3497\transformed\biometric-1.1.0\res
+com.example.version1.app-jetified-core-1.0.0-29 C:\Users\Motaz\.gradle\caches\8.10.2\transforms\a48fe73e340d5d4be17f9fc9521852ef\transformed\jetified-core-1.0.0\res
+com.example.version1.app-lifecycle-viewmodel-2.7.0-30 C:\Users\Motaz\.gradle\caches\8.10.2\transforms\a787caf52a06b951ce14a09be774113a\transformed\lifecycle-viewmodel-2.7.0\res
+com.example.version1.app-preference-1.2.1-31 C:\Users\Motaz\.gradle\caches\8.10.2\transforms\b330ff48ceab69a4680d2b36cec3dd8d\transformed\preference-1.2.1\res
+com.example.version1.app-jetified-datastore-preferences-release-32 C:\Users\Motaz\.gradle\caches\8.10.2\transforms\bc7258e4a1a1945f114a0203eb29ae94\transformed\jetified-datastore-preferences-release\res
+com.example.version1.app-jetified-lifecycle-runtime-ktx-2.7.0-33 C:\Users\Motaz\.gradle\caches\8.10.2\transforms\bcc0a8065cd427e15cdd0e4e38b133f3\transformed\jetified-lifecycle-runtime-ktx-2.7.0\res
+com.example.version1.app-slidingpanelayout-1.2.0-34 C:\Users\Motaz\.gradle\caches\8.10.2\transforms\c4ef3d4b351d9d792990965420685553\transformed\slidingpanelayout-1.2.0\res
+com.example.version1.app-jetified-startup-runtime-1.1.1-35 C:\Users\Motaz\.gradle\caches\8.10.2\transforms\dd5cda8951473259fc4f642c2236afe6\transformed\jetified-startup-runtime-1.1.1\res
+com.example.version1.app-recyclerview-1.0.0-36 C:\Users\Motaz\.gradle\caches\8.10.2\transforms\e5c2ee568f6592c3d89f8798564c7886\transformed\recyclerview-1.0.0\res
+com.example.version1.app-jetified-profileinstaller-1.3.1-37 C:\Users\Motaz\.gradle\caches\8.10.2\transforms\f250861fb9fe1d2ddb96462bed043a0f\transformed\jetified-profileinstaller-1.3.1\res
+com.example.version1.app-jetified-window-1.2.0-38 C:\Users\Motaz\.gradle\caches\8.10.2\transforms\f3e3e73872d40b1188f0a49a56ebe707\transformed\jetified-window-1.2.0\res
+com.example.version1.app-jetified-datastore-release-39 C:\Users\Motaz\.gradle\caches\8.10.2\transforms\fb81cf95fbd8042922f32d178c289e6d\transformed\jetified-datastore-release\res
+com.example.version1.app-lifecycle-runtime-2.7.0-40 C:\Users\Motaz\.gradle\caches\8.10.2\transforms\ffd05f69b759a36ca6ad95d52e1298af\transformed\lifecycle-runtime-2.7.0\res
+com.example.version1.app-debug-41 C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\android\app\src\debug\res
+com.example.version1.app-main-42 C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\android\app\src\main\res
+com.example.version1.app-pngs-43 C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\build\app\generated\res\pngs\debug
+com.example.version1.app-resValues-44 C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\build\app\generated\res\resValues\debug
+com.example.version1.app-packageDebugResources-45 C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\build\app\intermediates\incremental\debug\packageDebugResources\merged.dir
+com.example.version1.app-packageDebugResources-46 C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\build\app\intermediates\incremental\debug\packageDebugResources\stripped.dir
+com.example.version1.app-debug-47 C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\build\app\intermediates\merged_res\debug\mergeDebugResources
+com.example.version1.app-debug-48 C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\build\audioplayers_android\intermediates\packaged_res\debug\packageDebugResources
+com.example.version1.app-debug-49 C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\build\flutter_plugin_android_lifecycle\intermediates\packaged_res\debug\packageDebugResources
+com.example.version1.app-debug-50 C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\build\flutter_sound\intermediates\packaged_res\debug\packageDebugResources
+com.example.version1.app-debug-51 C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\build\flutter_sound_record\intermediates\packaged_res\debug\packageDebugResources
+com.example.version1.app-debug-52 C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\build\flutter_tts\intermediates\packaged_res\debug\packageDebugResources
+com.example.version1.app-debug-53 C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\build\local_auth_android\intermediates\packaged_res\debug\packageDebugResources
+com.example.version1.app-debug-54 C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\build\path_provider_android\intermediates\packaged_res\debug\packageDebugResources
+com.example.version1.app-debug-55 C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\build\permission_handler_android\intermediates\packaged_res\debug\packageDebugResources
+com.example.version1.app-debug-56 C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\build\photo_manager\intermediates\packaged_res\debug\packageDebugResources
+com.example.version1.app-debug-57 C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\build\record_android\intermediates\packaged_res\debug\packageDebugResources
+com.example.version1.app-debug-58 C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\build\shared_preferences_android\intermediates\packaged_res\debug\packageDebugResources
+com.example.version1.app-debug-59 C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\build\speech_to_text\intermediates\packaged_res\debug\packageDebugResources
+com.example.version1.app-debug-60 C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\build\url_launcher_android\intermediates\packaged_res\debug\packageDebugResources
+com.example.version1.app-debug-61 C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\build\webview_flutter_android\intermediates\packaged_res\debug\packageDebugResources

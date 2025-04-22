@@ -1,0 +1,452 @@
+-- Merging decision tree log ---
+application
+INJECTED from C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\android\app\src\main\AndroidManifest.xml:8:5-42:19
+INJECTED from C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\android\app\src\debug\AndroidManifest.xml
+MERGED from [:url_launcher_android] C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\build\url_launcher_android\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:7:5-12:19
+MERGED from [:url_launcher_android] C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\build\url_launcher_android\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:7:5-12:19
+MERGED from [com.github.canardoux:flutter_sound_core:9.28.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\4e7eec031afac7fa6f73d9d1db648c47\transformed\jetified-flutter_sound_core-9.28.0\AndroidManifest.xml:13:5-14:19
+MERGED from [com.github.canardoux:flutter_sound_core:9.28.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\4e7eec031afac7fa6f73d9d1db648c47\transformed\jetified-flutter_sound_core-9.28.0\AndroidManifest.xml:13:5-14:19
+MERGED from [androidx.window:window:1.2.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\f3e3e73872d40b1188f0a49a56ebe707\transformed\jetified-window-1.2.0\AndroidManifest.xml:22:5-29:19
+MERGED from [androidx.window:window:1.2.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\f3e3e73872d40b1188f0a49a56ebe707\transformed\jetified-window-1.2.0\AndroidManifest.xml:22:5-29:19
+MERGED from [com.github.bumptech.glide:glide:4.15.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\658c618b84e4feb2bce9c40a41446998\transformed\jetified-glide-4.15.1\AndroidManifest.xml:9:5-20
+MERGED from [com.github.bumptech.glide:glide:4.15.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\658c618b84e4feb2bce9c40a41446998\transformed\jetified-glide-4.15.1\AndroidManifest.xml:9:5-20
+MERGED from [androidx.core:core:1.13.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\3b28488a3281a0df41b8d0bb0e162ebf\transformed\core-1.13.1\AndroidManifest.xml:28:5-89
+MERGED from [androidx.core:core:1.13.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\3b28488a3281a0df41b8d0bb0e162ebf\transformed\core-1.13.1\AndroidManifest.xml:28:5-89
+MERGED from [androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\2a60dba74ed9e93b92c7deb368d49c5b\transformed\jetified-lifecycle-process-2.7.0\AndroidManifest.xml:23:5-33:19
+MERGED from [androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\2a60dba74ed9e93b92c7deb368d49c5b\transformed\jetified-lifecycle-process-2.7.0\AndroidManifest.xml:23:5-33:19
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\f250861fb9fe1d2ddb96462bed043a0f\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:23:5-53:19
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\f250861fb9fe1d2ddb96462bed043a0f\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:23:5-53:19
+MERGED from [androidx.startup:startup-runtime:1.1.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\dd5cda8951473259fc4f642c2236afe6\transformed\jetified-startup-runtime-1.1.1\AndroidManifest.xml:25:5-31:19
+MERGED from [androidx.startup:startup-runtime:1.1.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\dd5cda8951473259fc4f642c2236afe6\transformed\jetified-startup-runtime-1.1.1\AndroidManifest.xml:25:5-31:19
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\5e7d7ea4cde4f26805d21b6d9295e26a\transformed\versionedparcelable-1.1.1\AndroidManifest.xml:24:5-25:19
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\5e7d7ea4cde4f26805d21b6d9295e26a\transformed\versionedparcelable-1.1.1\AndroidManifest.xml:24:5-25:19
+MERGED from [com.github.bumptech.glide:gifdecoder:4.15.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\68c1971be94972049215ef871f2e883e\transformed\jetified-gifdecoder-4.15.1\AndroidManifest.xml:9:5-20
+MERGED from [com.github.bumptech.glide:gifdecoder:4.15.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\68c1971be94972049215ef871f2e883e\transformed\jetified-gifdecoder-4.15.1\AndroidManifest.xml:9:5-20
+	android:extractNativeLibs
+		INJECTED from C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\android\app\src\debug\AndroidManifest.xml
+	android:appComponentFactory
+		ADDED from [androidx.core:core:1.13.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\3b28488a3281a0df41b8d0bb0e162ebf\transformed\core-1.13.1\AndroidManifest.xml:28:18-86
+	android:name
+		INJECTED from C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\android\app\src\main\AndroidManifest.xml
+manifest
+ADDED from C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\android\app\src\main\AndroidManifest.xml:1:1-54:12
+MERGED from C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\android\app\src\main\AndroidManifest.xml:1:1-54:12
+INJECTED from C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\android\app\src\debug\AndroidManifest.xml:1:1-7:12
+INJECTED from C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\android\app\src\debug\AndroidManifest.xml:1:1-7:12
+INJECTED from C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\android\app\src\debug\AndroidManifest.xml:1:1-7:12
+MERGED from [:photo_manager] C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\build\photo_manager\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:2:1-11:12
+MERGED from [:record_android] C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\build\record_android\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:2:1-9:12
+MERGED from [:shared_preferences_android] C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\build\shared_preferences_android\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:2:1-7:12
+MERGED from [:speech_to_text] C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\build\speech_to_text\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:2:1-7:12
+MERGED from [:webview_flutter_android] C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\build\webview_flutter_android\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:2:1-7:12
+MERGED from [:flutter_sound_record] C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\build\flutter_sound_record\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:2:1-7:12
+MERGED from [:flutter_tts] C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\build\flutter_tts\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.datastore:datastore-core-android:1.1.3] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\5d4995fd15f05089c161585978ad0143\transformed\jetified-datastore-core-release\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.datastore:datastore-preferences-android:1.1.3] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\bc7258e4a1a1945f114a0203eb29ae94\transformed\jetified-datastore-preferences-release\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.datastore:datastore-android:1.1.3] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\fb81cf95fbd8042922f32d178c289e6d\transformed\jetified-datastore-release\AndroidManifest.xml:17:1-22:12
+MERGED from [:audioplayers_android] C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\build\audioplayers_android\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:2:1-7:12
+MERGED from [:local_auth_android] C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\build\local_auth_android\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:2:1-9:12
+MERGED from [:flutter_plugin_android_lifecycle] C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\build\flutter_plugin_android_lifecycle\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:2:1-7:12
+MERGED from [:flutter_sound] C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\build\flutter_sound\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:2:1-7:12
+MERGED from [:path_provider_android] C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\build\path_provider_android\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:2:1-7:12
+MERGED from [:permission_handler_android] C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\build\permission_handler_android\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:2:1-7:12
+MERGED from [:url_launcher_android] C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\build\url_launcher_android\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:2:1-14:12
+MERGED from [com.github.canardoux:flutter_sound_core:9.28.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\4e7eec031afac7fa6f73d9d1db648c47\transformed\jetified-flutter_sound_core-9.28.0\AndroidManifest.xml:2:1-16:12
+MERGED from [androidx.media:media:1.4.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\a23f218d8c1a66560b9510ac66ee24f0\transformed\media-1.4.1\AndroidManifest.xml:17:1-30:12
+MERGED from [androidx.biometric:biometric:1.1.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\a40190fa707300487d9df3608d8b3497\transformed\biometric-1.1.0\AndroidManifest.xml:17:1-29:12
+MERGED from [androidx.preference:preference:1.2.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\b330ff48ceab69a4680d2b36cec3dd8d\transformed\preference-1.2.1\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.appcompat:appcompat:1.2.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\53b5dba3a42cea32a0702cf8a50647ae\transformed\appcompat-1.2.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.browser:browser:1.8.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\37e90539b72b10a88732df90d8f05c86\transformed\browser-1.8.0\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.webkit:webkit:1.12.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\961cfbc2f81fa924f01493e623514de8\transformed\webkit-1.12.1\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.recyclerview:recyclerview:1.0.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\e5c2ee568f6592c3d89f8798564c7886\transformed\recyclerview-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.legacy:legacy-support-core-ui:1.0.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\6bb879d6fadcf5c63bfb4316746ca087\transformed\legacy-support-core-ui-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.slidingpanelayout:slidingpanelayout:1.2.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\c4ef3d4b351d9d792990965420685553\transformed\slidingpanelayout-1.2.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.window:window:1.2.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\f3e3e73872d40b1188f0a49a56ebe707\transformed\jetified-window-1.2.0\AndroidManifest.xml:17:1-31:12
+MERGED from [androidx.window:window-java:1.2.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\2af6814eb1d121b95b12f139a1e823b8\transformed\jetified-window-java-1.2.0\AndroidManifest.xml:17:1-21:12
+MERGED from [androidx.appcompat:appcompat-resources:1.2.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\51736e93bbdb458e6f6cfaa14489ddd0\transformed\jetified-appcompat-resources-1.2.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.drawerlayout:drawerlayout:1.0.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\8fe080e2eeb5f71da8244eaa9b06e0f7\transformed\drawerlayout-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [com.github.bumptech.glide:glide:4.15.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\658c618b84e4feb2bce9c40a41446998\transformed\jetified-glide-4.15.1\AndroidManifest.xml:2:1-11:12
+MERGED from [androidx.fragment:fragment-ktx:1.7.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\46fcd50cc7cdbd5ccb3a13f8fb79d589\transformed\jetified-fragment-ktx-1.7.1\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.fragment:fragment:1.7.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\51ebe07b7ea019a83be5baeecd87a0ed\transformed\fragment-1.7.1\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.activity:activity-ktx:1.8.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\08a5c1286d28cb512acd1fbbf28acba2\transformed\jetified-activity-ktx-1.8.1\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.activity:activity:1.8.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\8c259ad4380244830493d291d4fb15fa\transformed\jetified-activity-1.8.1\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.legacy:legacy-support-core-utils:1.0.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\4de20ac15d3ef63d9c9cd492199ac903\transformed\legacy-support-core-utils-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.loader:loader:1.0.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\6078459d342de2f724d5342ea2cc080f\transformed\loader-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-runtime-ktx:2.7.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\bcc0a8065cd427e15cdd0e4e38b133f3\transformed\jetified-lifecycle-runtime-ktx-2.7.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-livedata-core-ktx:2.7.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\0ee6cf3bca417697593679904e297726\transformed\jetified-lifecycle-livedata-core-ktx-2.7.0\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.7.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\750090ac935bf265b9b0687afc8cedae\transformed\lifecycle-livedata-2.7.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\56c3d94ec6a31b08c10b89c48558443a\transformed\jetified-lifecycle-viewmodel-ktx-2.7.0\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.7.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\a787caf52a06b951ce14a09be774113a\transformed\lifecycle-viewmodel-2.7.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.7.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\21dfd42f8b686659d411fde64512e0fd\transformed\lifecycle-livedata-core-2.7.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.7.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\0b15962206ca8985c2205f494ed78992\transformed\jetified-lifecycle-viewmodel-savedstate-2.7.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.core:core-ktx:1.13.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\25d231b6208f4b9ae7ce0581c6402beb\transformed\jetified-core-ktx-1.13.1\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.viewpager:viewpager:1.0.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\f79501052454ae718fcf207d89f626d1\transformed\viewpager-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\bc38a6ad94781c25e7655d771b7bd12d\transformed\vectordrawable-animated-1.1.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\5d0a529e1e1257da7a2063af9c594d10\transformed\vectordrawable-1.1.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.0.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\5af8da75587c328e0d70c0320643adb6\transformed\coordinatorlayout-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.customview:customview:1.1.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\6ca91b8d721c30ad0a15612145731839\transformed\customview-1.1.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.transition:transition:1.4.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\885029b5366c0acf38e05d7b761e4250\transformed\transition-1.4.1\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.swiperefreshlayout:swiperefreshlayout:1.0.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\581642c4d48f428f2811602098985f45\transformed\swiperefreshlayout-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.asynclayoutinflater:asynclayoutinflater:1.0.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\1c8b5b329c1fa11bba37d22329e0fc2a\transformed\asynclayoutinflater-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.core:core:1.13.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\3b28488a3281a0df41b8d0bb0e162ebf\transformed\core-1.13.1\AndroidManifest.xml:17:1-30:12
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.7.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\ffd05f69b759a36ca6ad95d52e1298af\transformed\lifecycle-runtime-2.7.0\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\2a60dba74ed9e93b92c7deb368d49c5b\transformed\jetified-lifecycle-process-2.7.0\AndroidManifest.xml:17:1-35:12
+MERGED from [androidx.savedstate:savedstate-ktx:1.2.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\5748796b13c3d3968bd9b598264cef87\transformed\jetified-savedstate-ktx-1.2.1\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.savedstate:savedstate:1.2.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\5ffbe21d446512de02963789fc582093\transformed\jetified-savedstate-1.2.1\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.exifinterface:exifinterface:1.3.7] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\beee92ebea07bdbbb1b77cad99d7bb17\transformed\exifinterface-1.3.7\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\f250861fb9fe1d2ddb96462bed043a0f\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:17:1-55:12
+MERGED from [androidx.startup:startup-runtime:1.1.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\dd5cda8951473259fc4f642c2236afe6\transformed\jetified-startup-runtime-1.1.1\AndroidManifest.xml:17:1-33:12
+MERGED from [androidx.tracing:tracing:1.2.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\50ea1ff074ccfeb875ec60d70bac7c62\transformed\jetified-tracing-1.2.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\5e7d7ea4cde4f26805d21b6d9295e26a\transformed\versionedparcelable-1.1.1\AndroidManifest.xml:17:1-27:12
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\83a6a65f4f024443a8fd0579d07d234a\transformed\cursoradapter-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.interpolator:interpolator:1.0.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\a78f6fff4a942c682b33c948ffcacaa9\transformed\interpolator-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [com.github.bumptech.glide:gifdecoder:4.15.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\68c1971be94972049215ef871f2e883e\transformed\jetified-gifdecoder-4.15.1\AndroidManifest.xml:2:1-11:12
+MERGED from [androidx.arch.core:core-runtime:2.2.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\6524e008401e452273bda414a0fd9f6e\transformed\core-runtime-2.2.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.window.extensions.core:core:1.0.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\a48fe73e340d5d4be17f9fc9521852ef\transformed\jetified-core-1.0.0\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.documentfile:documentfile:1.0.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\6654b08aea1ed087ec51680fcc351ee2\transformed\documentfile-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\9ac501a3eefe6960fccf6bade4e1d709\transformed\localbroadcastmanager-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.print:print:1.0.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\5360addd5b5cbb1d996c37bd91c07975\transformed\print-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.annotation:annotation-experimental:1.4.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\20422a67963b82369fab602a299add25\transformed\jetified-annotation-experimental-1.4.1\AndroidManifest.xml:2:1-7:12
+MERGED from [com.getkeepsafe.relinker:relinker:1.4.5] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\5f58ad3c82ad85524b6b45cd0b485b7c\transformed\jetified-relinker-1.4.5\AndroidManifest.xml:2:1-7:12
+	package
+		INJECTED from C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\android\app\src\debug\AndroidManifest.xml
+	android:versionName
+		INJECTED from C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\android\app\src\debug\AndroidManifest.xml
+	android:versionCode
+		INJECTED from C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\android\app\src\debug\AndroidManifest.xml
+	xmlns:android
+		ADDED from C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\android\app\src\main\AndroidManifest.xml:1:11-69
+uses-permission#android.permission.RECORD_AUDIO
+ADDED from C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\android\app\src\main\AndroidManifest.xml:2:1-66
+MERGED from [:record_android] C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\build\record_android\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:7:5-71
+MERGED from [:record_android] C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\build\record_android\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:7:5-71
+MERGED from [com.github.canardoux:flutter_sound_core:9.28.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\4e7eec031afac7fa6f73d9d1db648c47\transformed\jetified-flutter_sound_core-9.28.0\AndroidManifest.xml:10:5-71
+MERGED from [com.github.canardoux:flutter_sound_core:9.28.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\4e7eec031afac7fa6f73d9d1db648c47\transformed\jetified-flutter_sound_core-9.28.0\AndroidManifest.xml:10:5-71
+	android:name
+		ADDED from C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\android\app\src\main\AndroidManifest.xml:2:18-64
+uses-permission#android.permission.INTERNET
+ADDED from C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\android\app\src\main\AndroidManifest.xml:3:5-66
+MERGED from C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\android\app\src\main\AndroidManifest.xml:3:5-66
+MERGED from C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\android\app\src\main\AndroidManifest.xml:3:5-66
+	android:name
+		ADDED from C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\android\app\src\main\AndroidManifest.xml:3:22-64
+uses-permission#android.permission.BLUETOOTH
+ADDED from C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\android\app\src\main\AndroidManifest.xml:4:5-67
+MERGED from [com.github.canardoux:flutter_sound_core:9.28.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\4e7eec031afac7fa6f73d9d1db648c47\transformed\jetified-flutter_sound_core-9.28.0\AndroidManifest.xml:7:5-68
+MERGED from [com.github.canardoux:flutter_sound_core:9.28.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\4e7eec031afac7fa6f73d9d1db648c47\transformed\jetified-flutter_sound_core-9.28.0\AndroidManifest.xml:7:5-68
+	android:name
+		ADDED from C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\android\app\src\main\AndroidManifest.xml:4:22-65
+uses-permission#android.permission.BLUETOOTH_ADMIN
+ADDED from C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\android\app\src\main\AndroidManifest.xml:5:5-73
+	android:name
+		ADDED from C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\android\app\src\main\AndroidManifest.xml:5:22-71
+uses-permission#android.permission.BLUETOOTH_CONNECT
+ADDED from C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\android\app\src\main\AndroidManifest.xml:6:5-75
+	android:name
+		ADDED from C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\android\app\src\main\AndroidManifest.xml:6:22-73
+queries
+ADDED from C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\android\app\src\main\AndroidManifest.xml:48:5-53:15
+MERGED from [androidx.media:media:1.4.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\a23f218d8c1a66560b9510ac66ee24f0\transformed\media-1.4.1\AndroidManifest.xml:24:5-28:15
+MERGED from [androidx.media:media:1.4.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\a23f218d8c1a66560b9510ac66ee24f0\transformed\media-1.4.1\AndroidManifest.xml:24:5-28:15
+intent#action:name:android.intent.action.PROCESS_TEXT+data:mimeType:text/plain
+ADDED from C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\android\app\src\main\AndroidManifest.xml:49:9-52:18
+action#android.intent.action.PROCESS_TEXT
+ADDED from C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\android\app\src\main\AndroidManifest.xml:50:13-72
+	android:name
+		ADDED from C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\android\app\src\main\AndroidManifest.xml:50:21-70
+data
+ADDED from C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\android\app\src\main\AndroidManifest.xml:51:13-50
+	android:mimeType
+		ADDED from C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\android\app\src\main\AndroidManifest.xml:51:19-48
+uses-sdk
+INJECTED from C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\android\app\src\debug\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\android\app\src\debug\AndroidManifest.xml
+INJECTED from C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\android\app\src\debug\AndroidManifest.xml
+MERGED from [:photo_manager] C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\build\photo_manager\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
+MERGED from [:photo_manager] C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\build\photo_manager\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
+MERGED from [:record_android] C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\build\record_android\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
+MERGED from [:record_android] C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\build\record_android\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
+MERGED from [:shared_preferences_android] C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\build\shared_preferences_android\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
+MERGED from [:shared_preferences_android] C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\build\shared_preferences_android\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
+MERGED from [:speech_to_text] C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\build\speech_to_text\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
+MERGED from [:speech_to_text] C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\build\speech_to_text\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
+MERGED from [:webview_flutter_android] C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\build\webview_flutter_android\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
+MERGED from [:webview_flutter_android] C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\build\webview_flutter_android\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
+MERGED from [:flutter_sound_record] C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\build\flutter_sound_record\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
+MERGED from [:flutter_sound_record] C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\build\flutter_sound_record\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
+MERGED from [:flutter_tts] C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\build\flutter_tts\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
+MERGED from [:flutter_tts] C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\build\flutter_tts\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
+MERGED from [androidx.datastore:datastore-core-android:1.1.3] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\5d4995fd15f05089c161585978ad0143\transformed\jetified-datastore-core-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.datastore:datastore-core-android:1.1.3] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\5d4995fd15f05089c161585978ad0143\transformed\jetified-datastore-core-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.datastore:datastore-preferences-android:1.1.3] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\bc7258e4a1a1945f114a0203eb29ae94\transformed\jetified-datastore-preferences-release\AndroidManifest.xml:20:5-44
+MERGED from [androidx.datastore:datastore-preferences-android:1.1.3] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\bc7258e4a1a1945f114a0203eb29ae94\transformed\jetified-datastore-preferences-release\AndroidManifest.xml:20:5-44
+MERGED from [androidx.datastore:datastore-android:1.1.3] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\fb81cf95fbd8042922f32d178c289e6d\transformed\jetified-datastore-release\AndroidManifest.xml:20:5-44
+MERGED from [androidx.datastore:datastore-android:1.1.3] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\fb81cf95fbd8042922f32d178c289e6d\transformed\jetified-datastore-release\AndroidManifest.xml:20:5-44
+MERGED from [:audioplayers_android] C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\build\audioplayers_android\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
+MERGED from [:audioplayers_android] C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\build\audioplayers_android\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
+MERGED from [:local_auth_android] C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\build\local_auth_android\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
+MERGED from [:local_auth_android] C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\build\local_auth_android\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
+MERGED from [:flutter_plugin_android_lifecycle] C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\build\flutter_plugin_android_lifecycle\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
+MERGED from [:flutter_plugin_android_lifecycle] C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\build\flutter_plugin_android_lifecycle\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
+MERGED from [:flutter_sound] C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\build\flutter_sound\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
+MERGED from [:flutter_sound] C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\build\flutter_sound\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
+MERGED from [:path_provider_android] C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\build\path_provider_android\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
+MERGED from [:path_provider_android] C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\build\path_provider_android\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
+MERGED from [:permission_handler_android] C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\build\permission_handler_android\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
+MERGED from [:permission_handler_android] C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\build\permission_handler_android\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
+MERGED from [:url_launcher_android] C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\build\url_launcher_android\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
+MERGED from [:url_launcher_android] C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\build\url_launcher_android\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
+MERGED from [com.github.canardoux:flutter_sound_core:9.28.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\4e7eec031afac7fa6f73d9d1db648c47\transformed\jetified-flutter_sound_core-9.28.0\AndroidManifest.xml:5:5-44
+MERGED from [com.github.canardoux:flutter_sound_core:9.28.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\4e7eec031afac7fa6f73d9d1db648c47\transformed\jetified-flutter_sound_core-9.28.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.media:media:1.4.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\a23f218d8c1a66560b9510ac66ee24f0\transformed\media-1.4.1\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.media:media:1.4.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\a23f218d8c1a66560b9510ac66ee24f0\transformed\media-1.4.1\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.biometric:biometric:1.1.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\a40190fa707300487d9df3608d8b3497\transformed\biometric-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.biometric:biometric:1.1.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\a40190fa707300487d9df3608d8b3497\transformed\biometric-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.preference:preference:1.2.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\b330ff48ceab69a4680d2b36cec3dd8d\transformed\preference-1.2.1\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.preference:preference:1.2.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\b330ff48ceab69a4680d2b36cec3dd8d\transformed\preference-1.2.1\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.appcompat:appcompat:1.2.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\53b5dba3a42cea32a0702cf8a50647ae\transformed\appcompat-1.2.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.appcompat:appcompat:1.2.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\53b5dba3a42cea32a0702cf8a50647ae\transformed\appcompat-1.2.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.browser:browser:1.8.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\37e90539b72b10a88732df90d8f05c86\transformed\browser-1.8.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.browser:browser:1.8.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\37e90539b72b10a88732df90d8f05c86\transformed\browser-1.8.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.webkit:webkit:1.12.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\961cfbc2f81fa924f01493e623514de8\transformed\webkit-1.12.1\AndroidManifest.xml:5:5-44
+MERGED from [androidx.webkit:webkit:1.12.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\961cfbc2f81fa924f01493e623514de8\transformed\webkit-1.12.1\AndroidManifest.xml:5:5-44
+MERGED from [androidx.recyclerview:recyclerview:1.0.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\e5c2ee568f6592c3d89f8798564c7886\transformed\recyclerview-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.recyclerview:recyclerview:1.0.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\e5c2ee568f6592c3d89f8798564c7886\transformed\recyclerview-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.legacy:legacy-support-core-ui:1.0.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\6bb879d6fadcf5c63bfb4316746ca087\transformed\legacy-support-core-ui-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.legacy:legacy-support-core-ui:1.0.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\6bb879d6fadcf5c63bfb4316746ca087\transformed\legacy-support-core-ui-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.slidingpanelayout:slidingpanelayout:1.2.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\c4ef3d4b351d9d792990965420685553\transformed\slidingpanelayout-1.2.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.slidingpanelayout:slidingpanelayout:1.2.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\c4ef3d4b351d9d792990965420685553\transformed\slidingpanelayout-1.2.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.window:window:1.2.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\f3e3e73872d40b1188f0a49a56ebe707\transformed\jetified-window-1.2.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.window:window:1.2.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\f3e3e73872d40b1188f0a49a56ebe707\transformed\jetified-window-1.2.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.window:window-java:1.2.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\2af6814eb1d121b95b12f139a1e823b8\transformed\jetified-window-java-1.2.0\AndroidManifest.xml:19:5-44
+MERGED from [androidx.window:window-java:1.2.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\2af6814eb1d121b95b12f139a1e823b8\transformed\jetified-window-java-1.2.0\AndroidManifest.xml:19:5-44
+MERGED from [androidx.appcompat:appcompat-resources:1.2.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\51736e93bbdb458e6f6cfaa14489ddd0\transformed\jetified-appcompat-resources-1.2.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.appcompat:appcompat-resources:1.2.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\51736e93bbdb458e6f6cfaa14489ddd0\transformed\jetified-appcompat-resources-1.2.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.drawerlayout:drawerlayout:1.0.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\8fe080e2eeb5f71da8244eaa9b06e0f7\transformed\drawerlayout-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.drawerlayout:drawerlayout:1.0.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\8fe080e2eeb5f71da8244eaa9b06e0f7\transformed\drawerlayout-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [com.github.bumptech.glide:glide:4.15.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\658c618b84e4feb2bce9c40a41446998\transformed\jetified-glide-4.15.1\AndroidManifest.xml:5:5-7:41
+MERGED from [com.github.bumptech.glide:glide:4.15.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\658c618b84e4feb2bce9c40a41446998\transformed\jetified-glide-4.15.1\AndroidManifest.xml:5:5-7:41
+MERGED from [androidx.fragment:fragment-ktx:1.7.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\46fcd50cc7cdbd5ccb3a13f8fb79d589\transformed\jetified-fragment-ktx-1.7.1\AndroidManifest.xml:5:5-44
+MERGED from [androidx.fragment:fragment-ktx:1.7.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\46fcd50cc7cdbd5ccb3a13f8fb79d589\transformed\jetified-fragment-ktx-1.7.1\AndroidManifest.xml:5:5-44
+MERGED from [androidx.fragment:fragment:1.7.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\51ebe07b7ea019a83be5baeecd87a0ed\transformed\fragment-1.7.1\AndroidManifest.xml:5:5-44
+MERGED from [androidx.fragment:fragment:1.7.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\51ebe07b7ea019a83be5baeecd87a0ed\transformed\fragment-1.7.1\AndroidManifest.xml:5:5-44
+MERGED from [androidx.activity:activity-ktx:1.8.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\08a5c1286d28cb512acd1fbbf28acba2\transformed\jetified-activity-ktx-1.8.1\AndroidManifest.xml:5:5-44
+MERGED from [androidx.activity:activity-ktx:1.8.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\08a5c1286d28cb512acd1fbbf28acba2\transformed\jetified-activity-ktx-1.8.1\AndroidManifest.xml:5:5-44
+MERGED from [androidx.activity:activity:1.8.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\8c259ad4380244830493d291d4fb15fa\transformed\jetified-activity-1.8.1\AndroidManifest.xml:20:5-44
+MERGED from [androidx.activity:activity:1.8.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\8c259ad4380244830493d291d4fb15fa\transformed\jetified-activity-1.8.1\AndroidManifest.xml:20:5-44
+MERGED from [androidx.legacy:legacy-support-core-utils:1.0.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\4de20ac15d3ef63d9c9cd492199ac903\transformed\legacy-support-core-utils-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.legacy:legacy-support-core-utils:1.0.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\4de20ac15d3ef63d9c9cd492199ac903\transformed\legacy-support-core-utils-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.loader:loader:1.0.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\6078459d342de2f724d5342ea2cc080f\transformed\loader-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.loader:loader:1.0.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\6078459d342de2f724d5342ea2cc080f\transformed\loader-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime-ktx:2.7.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\bcc0a8065cd427e15cdd0e4e38b133f3\transformed\jetified-lifecycle-runtime-ktx-2.7.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime-ktx:2.7.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\bcc0a8065cd427e15cdd0e4e38b133f3\transformed\jetified-lifecycle-runtime-ktx-2.7.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core-ktx:2.7.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\0ee6cf3bca417697593679904e297726\transformed\jetified-lifecycle-livedata-core-ktx-2.7.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core-ktx:2.7.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\0ee6cf3bca417697593679904e297726\transformed\jetified-lifecycle-livedata-core-ktx-2.7.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.7.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\750090ac935bf265b9b0687afc8cedae\transformed\lifecycle-livedata-2.7.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.7.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\750090ac935bf265b9b0687afc8cedae\transformed\lifecycle-livedata-2.7.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\56c3d94ec6a31b08c10b89c48558443a\transformed\jetified-lifecycle-viewmodel-ktx-2.7.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\56c3d94ec6a31b08c10b89c48558443a\transformed\jetified-lifecycle-viewmodel-ktx-2.7.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.7.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\a787caf52a06b951ce14a09be774113a\transformed\lifecycle-viewmodel-2.7.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.7.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\a787caf52a06b951ce14a09be774113a\transformed\lifecycle-viewmodel-2.7.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.7.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\21dfd42f8b686659d411fde64512e0fd\transformed\lifecycle-livedata-core-2.7.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.7.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\21dfd42f8b686659d411fde64512e0fd\transformed\lifecycle-livedata-core-2.7.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.7.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\0b15962206ca8985c2205f494ed78992\transformed\jetified-lifecycle-viewmodel-savedstate-2.7.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.7.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\0b15962206ca8985c2205f494ed78992\transformed\jetified-lifecycle-viewmodel-savedstate-2.7.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.core:core-ktx:1.13.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\25d231b6208f4b9ae7ce0581c6402beb\transformed\jetified-core-ktx-1.13.1\AndroidManifest.xml:5:5-44
+MERGED from [androidx.core:core-ktx:1.13.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\25d231b6208f4b9ae7ce0581c6402beb\transformed\jetified-core-ktx-1.13.1\AndroidManifest.xml:5:5-44
+MERGED from [androidx.viewpager:viewpager:1.0.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\f79501052454ae718fcf207d89f626d1\transformed\viewpager-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.viewpager:viewpager:1.0.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\f79501052454ae718fcf207d89f626d1\transformed\viewpager-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\bc38a6ad94781c25e7655d771b7bd12d\transformed\vectordrawable-animated-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\bc38a6ad94781c25e7655d771b7bd12d\transformed\vectordrawable-animated-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\5d0a529e1e1257da7a2063af9c594d10\transformed\vectordrawable-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\5d0a529e1e1257da7a2063af9c594d10\transformed\vectordrawable-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.0.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\5af8da75587c328e0d70c0320643adb6\transformed\coordinatorlayout-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.0.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\5af8da75587c328e0d70c0320643adb6\transformed\coordinatorlayout-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.customview:customview:1.1.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\6ca91b8d721c30ad0a15612145731839\transformed\customview-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.customview:customview:1.1.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\6ca91b8d721c30ad0a15612145731839\transformed\customview-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.transition:transition:1.4.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\885029b5366c0acf38e05d7b761e4250\transformed\transition-1.4.1\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.transition:transition:1.4.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\885029b5366c0acf38e05d7b761e4250\transformed\transition-1.4.1\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.swiperefreshlayout:swiperefreshlayout:1.0.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\581642c4d48f428f2811602098985f45\transformed\swiperefreshlayout-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.swiperefreshlayout:swiperefreshlayout:1.0.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\581642c4d48f428f2811602098985f45\transformed\swiperefreshlayout-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.asynclayoutinflater:asynclayoutinflater:1.0.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\1c8b5b329c1fa11bba37d22329e0fc2a\transformed\asynclayoutinflater-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.asynclayoutinflater:asynclayoutinflater:1.0.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\1c8b5b329c1fa11bba37d22329e0fc2a\transformed\asynclayoutinflater-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.core:core:1.13.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\3b28488a3281a0df41b8d0bb0e162ebf\transformed\core-1.13.1\AndroidManifest.xml:20:5-44
+MERGED from [androidx.core:core:1.13.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\3b28488a3281a0df41b8d0bb0e162ebf\transformed\core-1.13.1\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.7.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\ffd05f69b759a36ca6ad95d52e1298af\transformed\lifecycle-runtime-2.7.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.7.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\ffd05f69b759a36ca6ad95d52e1298af\transformed\lifecycle-runtime-2.7.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\2a60dba74ed9e93b92c7deb368d49c5b\transformed\jetified-lifecycle-process-2.7.0\AndroidManifest.xml:21:5-44
+MERGED from [androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\2a60dba74ed9e93b92c7deb368d49c5b\transformed\jetified-lifecycle-process-2.7.0\AndroidManifest.xml:21:5-44
+MERGED from [androidx.savedstate:savedstate-ktx:1.2.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\5748796b13c3d3968bd9b598264cef87\transformed\jetified-savedstate-ktx-1.2.1\AndroidManifest.xml:20:5-44
+MERGED from [androidx.savedstate:savedstate-ktx:1.2.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\5748796b13c3d3968bd9b598264cef87\transformed\jetified-savedstate-ktx-1.2.1\AndroidManifest.xml:20:5-44
+MERGED from [androidx.savedstate:savedstate:1.2.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\5ffbe21d446512de02963789fc582093\transformed\jetified-savedstate-1.2.1\AndroidManifest.xml:20:5-44
+MERGED from [androidx.savedstate:savedstate:1.2.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\5ffbe21d446512de02963789fc582093\transformed\jetified-savedstate-1.2.1\AndroidManifest.xml:20:5-44
+MERGED from [androidx.exifinterface:exifinterface:1.3.7] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\beee92ebea07bdbbb1b77cad99d7bb17\transformed\exifinterface-1.3.7\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.exifinterface:exifinterface:1.3.7] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\beee92ebea07bdbbb1b77cad99d7bb17\transformed\exifinterface-1.3.7\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\f250861fb9fe1d2ddb96462bed043a0f\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:21:5-44
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\f250861fb9fe1d2ddb96462bed043a0f\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:21:5-44
+MERGED from [androidx.startup:startup-runtime:1.1.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\dd5cda8951473259fc4f642c2236afe6\transformed\jetified-startup-runtime-1.1.1\AndroidManifest.xml:21:5-23:41
+MERGED from [androidx.startup:startup-runtime:1.1.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\dd5cda8951473259fc4f642c2236afe6\transformed\jetified-startup-runtime-1.1.1\AndroidManifest.xml:21:5-23:41
+MERGED from [androidx.tracing:tracing:1.2.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\50ea1ff074ccfeb875ec60d70bac7c62\transformed\jetified-tracing-1.2.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.tracing:tracing:1.2.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\50ea1ff074ccfeb875ec60d70bac7c62\transformed\jetified-tracing-1.2.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\5e7d7ea4cde4f26805d21b6d9295e26a\transformed\versionedparcelable-1.1.1\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\5e7d7ea4cde4f26805d21b6d9295e26a\transformed\versionedparcelable-1.1.1\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\83a6a65f4f024443a8fd0579d07d234a\transformed\cursoradapter-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\83a6a65f4f024443a8fd0579d07d234a\transformed\cursoradapter-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.interpolator:interpolator:1.0.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\a78f6fff4a942c682b33c948ffcacaa9\transformed\interpolator-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.interpolator:interpolator:1.0.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\a78f6fff4a942c682b33c948ffcacaa9\transformed\interpolator-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [com.github.bumptech.glide:gifdecoder:4.15.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\68c1971be94972049215ef871f2e883e\transformed\jetified-gifdecoder-4.15.1\AndroidManifest.xml:5:5-7:41
+MERGED from [com.github.bumptech.glide:gifdecoder:4.15.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\68c1971be94972049215ef871f2e883e\transformed\jetified-gifdecoder-4.15.1\AndroidManifest.xml:5:5-7:41
+MERGED from [androidx.arch.core:core-runtime:2.2.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\6524e008401e452273bda414a0fd9f6e\transformed\core-runtime-2.2.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.arch.core:core-runtime:2.2.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\6524e008401e452273bda414a0fd9f6e\transformed\core-runtime-2.2.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.window.extensions.core:core:1.0.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\a48fe73e340d5d4be17f9fc9521852ef\transformed\jetified-core-1.0.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.window.extensions.core:core:1.0.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\a48fe73e340d5d4be17f9fc9521852ef\transformed\jetified-core-1.0.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.documentfile:documentfile:1.0.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\6654b08aea1ed087ec51680fcc351ee2\transformed\documentfile-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.documentfile:documentfile:1.0.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\6654b08aea1ed087ec51680fcc351ee2\transformed\documentfile-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\9ac501a3eefe6960fccf6bade4e1d709\transformed\localbroadcastmanager-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\9ac501a3eefe6960fccf6bade4e1d709\transformed\localbroadcastmanager-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.print:print:1.0.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\5360addd5b5cbb1d996c37bd91c07975\transformed\print-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.print:print:1.0.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\5360addd5b5cbb1d996c37bd91c07975\transformed\print-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.annotation:annotation-experimental:1.4.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\20422a67963b82369fab602a299add25\transformed\jetified-annotation-experimental-1.4.1\AndroidManifest.xml:5:5-44
+MERGED from [androidx.annotation:annotation-experimental:1.4.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\20422a67963b82369fab602a299add25\transformed\jetified-annotation-experimental-1.4.1\AndroidManifest.xml:5:5-44
+MERGED from [com.getkeepsafe.relinker:relinker:1.4.5] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\5f58ad3c82ad85524b6b45cd0b485b7c\transformed\jetified-relinker-1.4.5\AndroidManifest.xml:5:5-43
+MERGED from [com.getkeepsafe.relinker:relinker:1.4.5] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\5f58ad3c82ad85524b6b45cd0b485b7c\transformed\jetified-relinker-1.4.5\AndroidManifest.xml:5:5-43
+	android:targetSdkVersion
+		INJECTED from C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\android\app\src\debug\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\android\app\src\debug\AndroidManifest.xml
+uses-permission#android.permission.READ_EXTERNAL_STORAGE
+ADDED from [:photo_manager] C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\build\photo_manager\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:7:5-9:38
+	android:maxSdkVersion
+		ADDED from [:photo_manager] C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\build\photo_manager\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:9:9-35
+	android:name
+		ADDED from [:photo_manager] C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\build\photo_manager\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:8:9-64
+uses-permission#android.permission.USE_BIOMETRIC
+ADDED from [:local_auth_android] C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\build\local_auth_android\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:7:5-72
+MERGED from [androidx.biometric:biometric:1.1.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\a40190fa707300487d9df3608d8b3497\transformed\biometric-1.1.0\AndroidManifest.xml:24:5-72
+MERGED from [androidx.biometric:biometric:1.1.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\a40190fa707300487d9df3608d8b3497\transformed\biometric-1.1.0\AndroidManifest.xml:24:5-72
+	android:name
+		ADDED from [:local_auth_android] C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\build\local_auth_android\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:7:22-69
+activity#io.flutter.plugins.urllauncher.WebViewActivity
+ADDED from [:url_launcher_android] C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\build\url_launcher_android\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:8:9-11:74
+	android:exported
+		ADDED from [:url_launcher_android] C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\build\url_launcher_android\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:10:13-37
+	android:theme
+		ADDED from [:url_launcher_android] C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\build\url_launcher_android\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:11:13-71
+	android:name
+		ADDED from [:url_launcher_android] C:\Users\Motaz\mm Dropbox\Motaz Sammoud\PC\Desktop\pim\integfinal\version1\build\url_launcher_android\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:9:13-74
+uses-permission#android.permission.WAKE_LOCK
+ADDED from [com.github.canardoux:flutter_sound_core:9.28.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\4e7eec031afac7fa6f73d9d1db648c47\transformed\jetified-flutter_sound_core-9.28.0\AndroidManifest.xml:8:5-68
+	android:name
+		ADDED from [com.github.canardoux:flutter_sound_core:9.28.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\4e7eec031afac7fa6f73d9d1db648c47\transformed\jetified-flutter_sound_core-9.28.0\AndroidManifest.xml:8:22-65
+uses-permission#android.permission.MODIFY_AUDIO_SETTINGS
+ADDED from [com.github.canardoux:flutter_sound_core:9.28.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\4e7eec031afac7fa6f73d9d1db648c47\transformed\jetified-flutter_sound_core-9.28.0\AndroidManifest.xml:9:5-80
+	android:name
+		ADDED from [com.github.canardoux:flutter_sound_core:9.28.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\4e7eec031afac7fa6f73d9d1db648c47\transformed\jetified-flutter_sound_core-9.28.0\AndroidManifest.xml:9:22-77
+uses-permission#Manifest.permission.CAPTURE_AUDIO_OUTPUT
+ADDED from [com.github.canardoux:flutter_sound_core:9.28.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\4e7eec031afac7fa6f73d9d1db648c47\transformed\jetified-flutter_sound_core-9.28.0\AndroidManifest.xml:11:5-80
+	android:name
+		ADDED from [com.github.canardoux:flutter_sound_core:9.28.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\4e7eec031afac7fa6f73d9d1db648c47\transformed\jetified-flutter_sound_core-9.28.0\AndroidManifest.xml:11:22-77
+intent#action:name:android.media.browse.MediaBrowserService
+ADDED from [androidx.media:media:1.4.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\a23f218d8c1a66560b9510ac66ee24f0\transformed\media-1.4.1\AndroidManifest.xml:25:9-27:18
+action#android.media.browse.MediaBrowserService
+ADDED from [androidx.media:media:1.4.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\a23f218d8c1a66560b9510ac66ee24f0\transformed\media-1.4.1\AndroidManifest.xml:26:13-79
+	android:name
+		ADDED from [androidx.media:media:1.4.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\a23f218d8c1a66560b9510ac66ee24f0\transformed\media-1.4.1\AndroidManifest.xml:26:21-76
+uses-permission#android.permission.USE_FINGERPRINT
+ADDED from [androidx.biometric:biometric:1.1.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\a40190fa707300487d9df3608d8b3497\transformed\biometric-1.1.0\AndroidManifest.xml:27:5-74
+	android:name
+		ADDED from [androidx.biometric:biometric:1.1.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\a40190fa707300487d9df3608d8b3497\transformed\biometric-1.1.0\AndroidManifest.xml:27:22-71
+uses-library#androidx.window.extensions
+ADDED from [androidx.window:window:1.2.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\f3e3e73872d40b1188f0a49a56ebe707\transformed\jetified-window-1.2.0\AndroidManifest.xml:23:9-25:40
+	android:required
+		ADDED from [androidx.window:window:1.2.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\f3e3e73872d40b1188f0a49a56ebe707\transformed\jetified-window-1.2.0\AndroidManifest.xml:25:13-37
+	android:name
+		ADDED from [androidx.window:window:1.2.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\f3e3e73872d40b1188f0a49a56ebe707\transformed\jetified-window-1.2.0\AndroidManifest.xml:24:13-54
+uses-library#androidx.window.sidecar
+ADDED from [androidx.window:window:1.2.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\f3e3e73872d40b1188f0a49a56ebe707\transformed\jetified-window-1.2.0\AndroidManifest.xml:26:9-28:40
+	android:required
+		ADDED from [androidx.window:window:1.2.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\f3e3e73872d40b1188f0a49a56ebe707\transformed\jetified-window-1.2.0\AndroidManifest.xml:28:13-37
+	android:name
+		ADDED from [androidx.window:window:1.2.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\f3e3e73872d40b1188f0a49a56ebe707\transformed\jetified-window-1.2.0\AndroidManifest.xml:27:13-51
+permission#${applicationId}.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+ADDED from [androidx.core:core:1.13.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\3b28488a3281a0df41b8d0bb0e162ebf\transformed\core-1.13.1\AndroidManifest.xml:22:5-24:47
+	android:protectionLevel
+		ADDED from [androidx.core:core:1.13.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\3b28488a3281a0df41b8d0bb0e162ebf\transformed\core-1.13.1\AndroidManifest.xml:24:9-44
+	android:name
+		ADDED from [androidx.core:core:1.13.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\3b28488a3281a0df41b8d0bb0e162ebf\transformed\core-1.13.1\AndroidManifest.xml:23:9-81
+permission#com.example.version1.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+ADDED from [androidx.core:core:1.13.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\3b28488a3281a0df41b8d0bb0e162ebf\transformed\core-1.13.1\AndroidManifest.xml:22:5-24:47
+	android:protectionLevel
+		ADDED from [androidx.core:core:1.13.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\3b28488a3281a0df41b8d0bb0e162ebf\transformed\core-1.13.1\AndroidManifest.xml:24:9-44
+	android:name
+		ADDED from [androidx.core:core:1.13.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\3b28488a3281a0df41b8d0bb0e162ebf\transformed\core-1.13.1\AndroidManifest.xml:23:9-81
+uses-permission#${applicationId}.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+ADDED from [androidx.core:core:1.13.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\3b28488a3281a0df41b8d0bb0e162ebf\transformed\core-1.13.1\AndroidManifest.xml:26:5-97
+	android:name
+		ADDED from [androidx.core:core:1.13.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\3b28488a3281a0df41b8d0bb0e162ebf\transformed\core-1.13.1\AndroidManifest.xml:26:22-94
+uses-permission#com.example.version1.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+ADDED from [androidx.core:core:1.13.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\3b28488a3281a0df41b8d0bb0e162ebf\transformed\core-1.13.1\AndroidManifest.xml:26:5-97
+	android:name
+		ADDED from [androidx.core:core:1.13.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\3b28488a3281a0df41b8d0bb0e162ebf\transformed\core-1.13.1\AndroidManifest.xml:26:22-94
+provider#androidx.startup.InitializationProvider
+ADDED from [androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\2a60dba74ed9e93b92c7deb368d49c5b\transformed\jetified-lifecycle-process-2.7.0\AndroidManifest.xml:24:9-32:20
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\f250861fb9fe1d2ddb96462bed043a0f\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:24:9-32:20
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\f250861fb9fe1d2ddb96462bed043a0f\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:24:9-32:20
+MERGED from [androidx.startup:startup-runtime:1.1.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\dd5cda8951473259fc4f642c2236afe6\transformed\jetified-startup-runtime-1.1.1\AndroidManifest.xml:26:9-30:34
+MERGED from [androidx.startup:startup-runtime:1.1.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\dd5cda8951473259fc4f642c2236afe6\transformed\jetified-startup-runtime-1.1.1\AndroidManifest.xml:26:9-30:34
+	tools:node
+		ADDED from [androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\2a60dba74ed9e93b92c7deb368d49c5b\transformed\jetified-lifecycle-process-2.7.0\AndroidManifest.xml:28:13-31
+	android:authorities
+		ADDED from [androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\2a60dba74ed9e93b92c7deb368d49c5b\transformed\jetified-lifecycle-process-2.7.0\AndroidManifest.xml:26:13-68
+	android:exported
+		ADDED from [androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\2a60dba74ed9e93b92c7deb368d49c5b\transformed\jetified-lifecycle-process-2.7.0\AndroidManifest.xml:27:13-37
+	android:name
+		ADDED from [androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\2a60dba74ed9e93b92c7deb368d49c5b\transformed\jetified-lifecycle-process-2.7.0\AndroidManifest.xml:25:13-67
+meta-data#androidx.lifecycle.ProcessLifecycleInitializer
+ADDED from [androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\2a60dba74ed9e93b92c7deb368d49c5b\transformed\jetified-lifecycle-process-2.7.0\AndroidManifest.xml:29:13-31:52
+	android:value
+		ADDED from [androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\2a60dba74ed9e93b92c7deb368d49c5b\transformed\jetified-lifecycle-process-2.7.0\AndroidManifest.xml:31:17-49
+	android:name
+		ADDED from [androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\2a60dba74ed9e93b92c7deb368d49c5b\transformed\jetified-lifecycle-process-2.7.0\AndroidManifest.xml:30:17-78
+meta-data#androidx.profileinstaller.ProfileInstallerInitializer
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\f250861fb9fe1d2ddb96462bed043a0f\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:29:13-31:52
+	android:value
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\f250861fb9fe1d2ddb96462bed043a0f\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:31:17-49
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\f250861fb9fe1d2ddb96462bed043a0f\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:30:17-85
+receiver#androidx.profileinstaller.ProfileInstallReceiver
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\f250861fb9fe1d2ddb96462bed043a0f\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:34:9-52:20
+	android:enabled
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\f250861fb9fe1d2ddb96462bed043a0f\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:37:13-35
+	android:exported
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\f250861fb9fe1d2ddb96462bed043a0f\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:38:13-36
+	android:permission
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\f250861fb9fe1d2ddb96462bed043a0f\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:39:13-57
+	android:directBootAware
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\f250861fb9fe1d2ddb96462bed043a0f\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:36:13-44
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\f250861fb9fe1d2ddb96462bed043a0f\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:35:13-76
+intent-filter#action:name:androidx.profileinstaller.action.INSTALL_PROFILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\f250861fb9fe1d2ddb96462bed043a0f\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:40:13-42:29
+action#androidx.profileinstaller.action.INSTALL_PROFILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\f250861fb9fe1d2ddb96462bed043a0f\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:41:17-91
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\f250861fb9fe1d2ddb96462bed043a0f\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:41:25-88
+intent-filter#action:name:androidx.profileinstaller.action.SKIP_FILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\f250861fb9fe1d2ddb96462bed043a0f\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:43:13-45:29
+action#androidx.profileinstaller.action.SKIP_FILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\f250861fb9fe1d2ddb96462bed043a0f\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:44:17-85
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\f250861fb9fe1d2ddb96462bed043a0f\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:44:25-82
+intent-filter#action:name:androidx.profileinstaller.action.SAVE_PROFILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\f250861fb9fe1d2ddb96462bed043a0f\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:46:13-48:29
+action#androidx.profileinstaller.action.SAVE_PROFILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\f250861fb9fe1d2ddb96462bed043a0f\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:47:17-88
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\f250861fb9fe1d2ddb96462bed043a0f\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:47:25-85
+intent-filter#action:name:androidx.profileinstaller.action.BENCHMARK_OPERATION
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\f250861fb9fe1d2ddb96462bed043a0f\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:49:13-51:29
+action#androidx.profileinstaller.action.BENCHMARK_OPERATION
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\f250861fb9fe1d2ddb96462bed043a0f\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:50:17-95
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Motaz\.gradle\caches\8.10.2\transforms\f250861fb9fe1d2ddb96462bed043a0f\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:50:25-92
