@@ -1,0 +1,2 @@
+/Users/Amal/Downloads/chatapp-master/android/app/.cxx/Debug/546y1r4g/armeabi-v7a/CMakeFiles/edit_cache.dir
+/Users/Amal/Downloads/chatapp-master/android/app/.cxx/Debug/546y1r4g/armeabi-v7a/CMakeFiles/rebuild_cache.dir
