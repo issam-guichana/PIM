@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:pim_project/Views/AssistantVocalScreens/AssistantService.dart';
 import 'package:pim_project/Views/PatientInfoForAssistant/PatientInformations.dart';
 import 'package:pim_project/Views/VoiceRecordingPages/VoiceRecordingPage.dart';
+import 'dart:io';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'dart:math' as math;
 
 class Message {
@@ -9,7 +11,8 @@ class Message {
   final bool isUser;
   final DateTime timestamp;
 
-  Message({required this.text, required this.isUser}) : timestamp = DateTime.now();
+  Message({required this.text, required this.isUser})
+      : timestamp = DateTime.now();
 }
 
 class SpeechInteractionPage extends StatefulWidget {
@@ -19,7 +22,8 @@ class SpeechInteractionPage extends StatefulWidget {
   _SpeechInteractionPageState createState() => _SpeechInteractionPageState();
 }
 
-class _SpeechInteractionPageState extends State<SpeechInteractionPage> with SingleTickerProviderStateMixin {
+class _SpeechInteractionPageState extends State<SpeechInteractionPage>
+    with SingleTickerProviderStateMixin {
   final SpeechService _speechService = SpeechService();
   late AnimationController _animationController;
   final ScrollController _scrollController = ScrollController();
@@ -83,7 +87,8 @@ class _SpeechInteractionPageState extends State<SpeechInteractionPage> with Sing
         recognizedWords.contains("فكرني ناخو الدوا") ||
         recognizedWords.contains("فكرني ناخذ الدواء") ||
         recognizedWords.contains("فكرني ناخذ الدوا")) {
-      _speechService.scheduleReminder("خوذ الدوا", DateTime.now().add(const Duration(seconds: 10)));
+      _speechService.scheduleReminder(
+          "خوذ الدوا", DateTime.now().add(const Duration(seconds: 10)));
     }
 
     if (isFinal) {
@@ -134,7 +139,8 @@ class _SpeechInteractionPageState extends State<SpeechInteractionPage> with Sing
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const VoiceRecordingPage()),
+                MaterialPageRoute(
+                    builder: (context) => const VoiceRecordingPage()),
               );
             },
             tooltip: 'Record Voice',
@@ -187,13 +193,15 @@ class _SpeechInteractionPageState extends State<SpeechInteractionPage> with Sing
                   ? Center(
                 child: Card(
                   elevation: 4,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16)),
                   child: Padding(
                     padding: const EdgeInsets.all(20),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(Icons.chat_bubble_outline, size: 80, color: Colors.grey[300]),
+                        Icon(Icons.chat_bubble_outline,
+                            size: 80, color: Colors.grey[300]),
                         const SizedBox(height: 16),
                         Text(
                           'Start the conversation to interact with me',
@@ -216,7 +224,8 @@ class _SpeechInteractionPageState extends State<SpeechInteractionPage> with Sing
                 itemCount: conversationHistory.length,
                 itemBuilder: (context, index) {
                   final message = conversationHistory[index];
-                  return _buildMessageBubble(message: message.text, isUser: message.isUser);
+                  return _buildMessageBubble(
+                      message: message.text, isUser: message.isUser);
                 },
               ),
             ),
@@ -250,9 +259,12 @@ class _SpeechInteractionPageState extends State<SpeechInteractionPage> with Sing
             Padding(
               padding: const EdgeInsets.all(16),
               child: FloatingActionButton(
-                backgroundColor: isListening ? Colors.red : const Color(0xFF723D92),
+                backgroundColor:
+                isListening ? Colors.red : const Color(0xFF723D92),
                 onPressed: _speechService.isSpeechInitialized
-                    ? (isListening ? _speechService.stopListening : _speechService.startListening)
+                    ? (isListening
+                    ? _speechService.stopListening
+                    : _speechService.startListening)
                     : null,
                 child: Icon(
                   isListening ? Icons.stop : Icons.mic,
@@ -260,7 +272,8 @@ class _SpeechInteractionPageState extends State<SpeechInteractionPage> with Sing
                   size: 30,
                 ),
                 elevation: 4,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16)),
               ),
             ),
           ],
@@ -270,22 +283,66 @@ class _SpeechInteractionPageState extends State<SpeechInteractionPage> with Sing
   }
 
   Widget _buildMessageBubble({required String message, required bool isUser}) {
+    String? photoPath;
+    String displayText = message;
+
+    if (!isUser && message.contains('[Photo: ')) {
+      final parts = message.split('[Photo: ');
+      if (parts.length > 1) {
+        displayText = parts[0].trim();
+        photoPath = parts[1].split(']').first;
+      }
+    }
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: Align(
         alignment: isUser ? Alignment.centerRight : Alignment.centerLeft,
         child: Card(
           elevation: 2,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          shape:
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
           color: isUser ? const Color(0xFF723D92) : Colors.grey[200],
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-            child: Text(
-              message,
-              style: TextStyle(
-                color: isUser ? Colors.white : Colors.black87,
-                fontSize: 16,
-              ),
+            child: Column(
+              crossAxisAlignment: isUser
+                  ? CrossAxisAlignment.end
+                  : CrossAxisAlignment.start,
+              children: [
+                Text(
+                  displayText,
+                  style: TextStyle(
+                    color: isUser ? Colors.white : Colors.black87,
+                    fontSize: 16,
+                  ),
+                ),
+                if (photoPath != null) ...[
+                  const SizedBox(height: 8),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: photoPath.startsWith('http')
+                        ? CachedNetworkImage(
+                      imageUrl: photoPath,
+                      width: 100,
+                      height: 100,
+                      fit: BoxFit.cover,
+                      placeholder: (context, url) =>
+                      const CircularProgressIndicator(),
+                      errorWidget: (context, url, error) =>
+                      const Icon(Icons.error),
+                    )
+                        : Image.file(
+                      File(photoPath),
+                      width: 100,
+                      height: 100,
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) =>
+                      const Icon(Icons.error),
+                    ),
+                  ),
+                ],
+              ],
             ),
           ),
         ),
@@ -299,7 +356,8 @@ class WaveformPainter extends CustomPainter {
   final bool isActive;
   final Color color;
 
-  WaveformPainter({required this.animation, required this.isActive, required this.color});
+  WaveformPainter(
+      {required this.animation, required this.isActive, required this.color});
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -330,5 +388,6 @@ class WaveformPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(WaveformPainter oldDelegate) =>
-      isActive != oldDelegate.isActive || animation.value != oldDelegate.animation.value;
+      isActive != oldDelegate.isActive ||
+          animation.value != oldDelegate.animation.value;
 }

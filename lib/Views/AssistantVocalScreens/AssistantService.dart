@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
+import 'package:pim_project/Views/PatientInfoForAssistant/PatientInformations.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -16,7 +17,7 @@ class SpeechService {
   String _aiResponse = '';
   List<Message> _conversationHistory = [];
   final SpeechToText _speechToText = SpeechToText();
-  Function(String, bool)? _onSpeechResult; // Store the callback
+  Function(String, bool)? _onSpeechResult;
   Function(bool, bool, String, String, List<Message>)? _onStatusChange;
 
   static const String _geminiApiUrl =
@@ -26,12 +27,20 @@ class SpeechService {
   Future<String> _getCustomInstruction() async {
     final prefs = await SharedPreferences.getInstance();
     final patientName = prefs.getString('patient_name') ?? 'المريض';
-    final patientFamily = prefs.getString('patient_family') ?? 'غير متوفر';
     final patientTasks = prefs.getString('patient_tasks') ?? 'غير متوفر';
     final patientMedication = prefs.getString('patient_medication') ?? 'غير متوفر';
     final emergencyContact = prefs.getString('emergency_contact') ?? 'غير متوفر';
     final medicalConditions = prefs.getString('medical_conditions') ?? 'غير متوفر';
     final dietaryNeeds = prefs.getString('dietary_needs') ?? 'غير متوفر';
+    final familyJson = prefs.getString('patient_family') ?? '[]';
+    final List<dynamic> familyList = jsonDecode(familyJson);
+    final familyMembers = familyList.map((e) => FamilyMember.fromJson(e)).toList();
+
+    String familyInfo = familyMembers.isEmpty
+        ? 'غير متوفر'
+        : familyMembers
+        .map((m) => '${m.name} (صورة: ${m.photoPath ?? "ما فماش صورة"})')
+        .join(', ');
 
     return '''
 You are a friendly and patient vocal assistant designed to help Alzheimer's patients in Tunisian dialect (Derja) only.
@@ -42,7 +51,7 @@ You are a friendly and patient vocal assistant designed to help Alzheimer's pati
 
 Patient Information:
 - Name: $patientName
-- Family: $patientFamily
+- Family: $familyInfo
 - Daily Tasks: $patientTasks
 - Medication Schedule: $patientMedication
 - Emergency Contact: $emergencyContact
@@ -50,6 +59,8 @@ Patient Information:
 - Dietary Needs: $dietaryNeeds
 
 Use this information to personalize responses, remind about tasks, medication, or dietary needs, mention family members appropriately, and provide emergency contact details when needed.
+
+When the patient asks about a family member (e.g., "شكون عصام؟" or "حكي علي بنتي ليلى"), respond with a short description and include their photo path in the format: [Photo: path/to/photo]. If no photo is available, say "ما فماش صورة لهذا العضو".
 
 Your responses should be:
 - Short (5–7 words)
@@ -72,8 +83,8 @@ Keep the conversation slow, kind, and positive at all times.
     required Function(String, bool) onSpeechResult,
     required Function(bool, bool, String, String, List<Message>) onStatusChange,
   }) async {
-    _onSpeechResult = onSpeechResult; // Store the callback
-    _onStatusChange = onStatusChange; // Store the status change callback
+    _onSpeechResult = onSpeechResult;
+    _onStatusChange = onStatusChange;
     try {
       final enabled = await _speechToText.initialize(
         onStatus: (status) => debugPrint('Speech status: $status'),
@@ -99,7 +110,7 @@ Keep the conversation slow, kind, and positive at all times.
       onResult: (result) {
         _userMessage = result.recognizedWords.toLowerCase();
         _notifyStatus();
-        _onSpeechResult?.call(result.recognizedWords, result.finalResult); // Invoke the callback
+        _onSpeechResult?.call(result.recognizedWords, result.finalResult);
       },
       listenFor: const Duration(seconds: 30),
       pauseFor: const Duration(seconds: 3),
@@ -137,7 +148,8 @@ Keep the conversation slow, kind, and positive at all times.
   bool get isSpeechInitialized => _isSpeechInitialized;
 
   void _notifyStatus() {
-    _onStatusChange?.call(_isListening, _isAIResponding, _userMessage, _aiResponse, _conversationHistory);
+    _onStatusChange?.call(
+        _isListening, _isAIResponding, _userMessage, _aiResponse, _conversationHistory);
   }
 
   String _getConversationContext() {
@@ -172,7 +184,8 @@ Keep the conversation slow, kind, and positive at all times.
               'parts': [
                 {'text': customInstruction},
                 {
-                  'text': 'Current conversation history:\n$conversationContext\nUser\'s latest message: $_userMessage\nPlease respond to this latest message with the conversation context in mind:'
+                  'text':
+                  'Current conversation history:\n$conversationContext\nUser\'s latest message: $_userMessage\nPlease respond to this latest message with the conversation context in mind:'
                 }
               ]
             }
@@ -188,7 +201,8 @@ Keep the conversation slow, kind, and positive at all times.
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
-        _aiResponse = data['candidates'][0]['content']['parts'][0]['text'] ?? 'ما فماش رد من الـ AI';
+        _aiResponse =
+            data['candidates'][0]['content']['parts'][0]['text'] ?? 'ما فماش رد من الـ AI';
         _conversationHistory.add(Message(text: _aiResponse, isUser: false));
         await _speakWithFlutterTTS(_aiResponse);
       } else {
@@ -208,10 +222,11 @@ Keep the conversation slow, kind, and positive at all times.
 
   Future<void> _speakWithPlayHT(String text) async {
     if (text.trim().isEmpty) return;
-    const String apiKey = 'ak-0a793beda67745669bf4aca1c2f98a53'; // Replace with your PlayHT API key
-    const String userId = 'SY9YsgOpgvV6m8dT6URlDqup3Gf2'; // Replace with your PlayHT user ID
+    const String apiKey = 'ak-0a793beda67745669bf4aca1c2f98a53';
+    const String userId = 'SY9YsgOpgvV6m8dT6URlDqup3Gf2';
     final prefs = await SharedPreferences.getInstance();
-    final voiceId = prefs.getString('playht_voice_id') ?? 's3://voice-cloning-zero-shot/d9ff78ba-d016-47f6-b0cd-dd8d6928566d/original/manifest.json';
+    final voiceId = prefs.getString('playht_voice_id') ??
+        's3://voice-cloning-zero-shot/d9ff78ba-d016-47f6-b0cd-dd8d6928566d/original/manifest.json';
 
     try {
       final response = await http.post(
@@ -252,13 +267,19 @@ Keep the conversation slow, kind, and positive at all times.
   Future<void> _speakWithFlutterTTS(String text) async {
     if (text.trim().isEmpty) return;
 
+    // Remove photo path from the text before speaking
+    String cleanText = text;
+    if (text.contains('[Photo: ')) {
+      cleanText = text.split('[Photo: ')[0].trim();
+    }
+
     final FlutterTts flutterTts = FlutterTts();
     try {
       await flutterTts.setLanguage('ar-TN');
       await flutterTts.setSpeechRate(0.5);
       await flutterTts.setVolume(1.0);
       await flutterTts.setPitch(1.0);
-      await flutterTts.speak(text);
+      await flutterTts.speak(cleanText);
     } catch (e) {
       debugPrint('Flutter TTS Exception: $e');
     }
