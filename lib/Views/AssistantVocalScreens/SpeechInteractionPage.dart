@@ -1,11 +1,16 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:pim_project/Views/AssistantVocalScreens/AssistantService.dart';
+import 'package:pim_project/Views/AssistantVocalScreens/FaceRecogService.dart';
 import 'package:pim_project/Views/PatientInfoForAssistant/PatientInformations.dart';
 import 'package:pim_project/Views/VoiceRecordingPages/VoiceRecordingPage.dart';
 import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:math' as math;
+
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Message {
   final String text;
@@ -98,25 +103,53 @@ class _SpeechInteractionPageState extends State<SpeechInteractionPage>
     }
   }
 
-  Future<void> _pickImageFromCamera() async {
-    final XFile? photo = await _picker.pickImage(source: ImageSource.camera);
+  Future<void> _pickImageFromGallery() async {
+    final photo = await _picker.pickImage(source: ImageSource.gallery);
     if (photo != null) {
-      setState(() {
-        conversationHistory
-            .add(Message(text: '[Photo: ${photo.path}]', isUser: true));
-      });
+      await _identifyPersonFromPhoto(photo);
     }
   }
 
-  Future<void> _pickImageFromGallery() async {
-    final XFile? photo = await _picker.pickImage(source: ImageSource.gallery);
+  Future<void> _pickImageFromCamera() async {
+    final photo = await _picker.pickImage(source: ImageSource.camera);
     if (photo != null) {
-      setState(() {
-        conversationHistory
-            .add(Message(text: '[Photo: ${photo.path}]', isUser: true));
-      });
+      await _identifyPersonFromPhoto(photo);
     }
   }
+
+
+  Future<void> _identifyPersonFromPhoto(XFile photo) async {
+    final recognizer = FaceRecognitionService();
+    await recognizer.loadModel();
+
+    final queryEmbedding = await recognizer.getEmbedding(File(photo.path));
+
+    final prefs = await SharedPreferences.getInstance();
+    final familyJson = prefs.getString('patient_family') ?? '[]';
+    final List<dynamic> familyList = jsonDecode(familyJson);
+    final knownEmbeddings = <String, List<double>>{};
+
+    for (var member in familyList) {
+      final name = member['name'];
+      final path = member['photoPath'];
+      if (path != null && File(path).existsSync()) {
+        final emb = await recognizer.getEmbedding(File(path));
+        knownEmbeddings[name] = emb;
+      }
+    }
+
+    final match = recognizer.matchEmbedding(queryEmbedding, knownEmbeddings,threshold: 0.5);
+
+    final responseText = match != null
+        ? "هذي صورة ${match}"
+        : "ما عرفتش شكون هذا في الصورة";
+
+    setState(() {
+      conversationHistory.add(Message(
+          text: '$responseText [Photo: ${photo.path}]', isUser: false));
+    });
+  }
+
 
   @override
   void dispose() {
@@ -503,3 +536,5 @@ class WaveformPainter extends CustomPainter {
       isActive != oldDelegate.isActive ||
       animation.value != oldDelegate.animation.value;
 }
+
+
