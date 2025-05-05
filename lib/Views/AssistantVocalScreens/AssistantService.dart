@@ -220,6 +220,53 @@ Keep the conversation slow, kind, and positive at all times.
     }
   }
 
+  Future<void> _speakWithFishAudio(String text) async {
+    if (text.trim().isEmpty) return;
+
+    // Remove photo path from the text before speaking
+    String cleanText = text;
+    if (text.contains('[Photo: ')) {
+      cleanText = text.split('[Photo: ')[0].trim();
+    }
+
+    const String apiKey = '97a185c112de4437b16c5ce551b36e2d'; // Replace with your Fish Audio API key
+    const String referenceId = '36d3a96a3a2b4c5c9595433bb421dcc5'; // Replace with a valid Arabic model ID from Fish Audio
+
+    try {
+      final response = await http.post(
+        Uri.parse('https://api.fish.audio/v1/tts'),
+        headers: {
+          'Authorization': 'Bearer $apiKey',
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: jsonEncode({
+          'text': cleanText,
+          'reference_id': referenceId,
+          'format': 'mp3',
+          'temperature': 0.7,
+          'top_p': 0.7,
+          'latency': 'normal',
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        final audioUrl = data['audio_url'];
+        if (audioUrl != null) {
+          final player = AudioPlayer();
+          await player.play(UrlSource(audioUrl));
+        } else {
+          debugPrint('No audio URL in response: $data');
+        }
+      } else {
+        debugPrint('Fish Audio TTS Error ${response.statusCode}: ${response.body}');
+      }
+    } catch (e) {
+      debugPrint('Fish Audio TTS Exception: $e');
+    }
+  }
+
   Future<void> _speakWithPlayHT(String text) async {
     if (text.trim().isEmpty) return;
     const String apiKey = 'ak-0a793beda67745669bf4aca1c2f98a53';

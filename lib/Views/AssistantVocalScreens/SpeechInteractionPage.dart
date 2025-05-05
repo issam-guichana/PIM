@@ -161,7 +161,6 @@ class _SpeechInteractionPageState extends State<SpeechInteractionPage>
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: const Color(0xFFF5F5F5),
       appBar: AppBar(
